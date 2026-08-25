@@ -1,0 +1,5 @@
+{
+  "script": "npm install --package-lock=false",
+  "command": "exec 2>&1\nnpm install --package-lock=false",
+  "language": "shell"
+}
