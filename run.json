@@ -559,7 +559,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-25T23:47:07.377050Z",
-  "last_event_at": "2026-08-25T23:47:12.696450Z",
+  "last_event_at": "2026-08-25T23:48:01.945678Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -661,9 +661,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 38,
       "checkpoint": {
-        "timestamp": "2026-08-25T23:47:58.894279Z",
+        "timestamp": "2026-08-25T23:48:01.941938Z",
         "current_node": "dependencies",
         "completed_nodes": [
           "start",
@@ -673,8 +673,90 @@
         "node_retries": {},
         "context_values": {
           "internal.retry_count.start": 0,
+          "internal.retry_count.scope": 0,
+          "internal.work_dir": "/workspace/calculator",
+          "internal.fidelity": "compact",
+          "thread.start.current_node": "scope",
+          "thread.scope.current_node": "dependencies",
+          "current_node": "dependencies",
+          "failure_signature": "",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.thread_id": "scope",
+          "graph.rankdir": "LR",
+          "internal.run_id": "01M0XN41J05Z10J1WFPV7D2NMR",
+          "failure_class": "",
+          "command.output": "blob://sha256/554f662fa7bc54bead601da9cb7d2761a99ba7f8a9cbf3ce6c36b3b8239c0be5",
+          "internal.node_visit_count": 1,
+          "outcome": "succeeded",
+          "internal.retry_count.dependencies": 0
+        },
+        "node_outcomes": {
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/554f662fa7bc54bead601da9cb7d2761a99ba7f8a9cbf3ce6c36b3b8239c0be5"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 46191,
+              "active_time_ms": 46191
+            }
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 128,
+              "active_time_ms": 128
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          }
+        },
+        "next_node_id": "baseline",
+        "git_commit_sha": "66ba75726f01d81d9e7cb60af508ad8e7e9c08b7",
+        "node_visits": {
+          "start": 1,
+          "scope": 1,
+          "dependencies": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 0,
+          "additions": 0,
+          "deletions": 0
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-25T23:48:02.797008Z",
+        "current_node": "baseline",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "internal.retry_count.start": 0,
           "failure_class": "",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.retry_count.baseline": 0,
           "outcome": "succeeded",
           "failure_signature": "",
           "graph.rankdir": "LR",
@@ -683,10 +765,11 @@
           "internal.run_id": "01M0XN41J05Z10J1WFPV7D2NMR",
           "internal.fidelity": "compact",
           "internal.work_dir": "/workspace/calculator",
-          "internal.thread_id": "scope",
-          "current_node": "dependencies",
-          "command.output": "blob://sha256/554f662fa7bc54bead601da9cb7d2761a99ba7f8a9cbf3ce6c36b3b8239c0be5",
+          "internal.thread_id": "dependencies",
+          "current_node": "baseline",
+          "command.output": "blob://sha256/366ff23949cfce4e4e11fbbc6538b38bc22464889cadc6c30123a5bad2c5ac8c",
           "thread.scope.current_node": "dependencies",
+          "thread.dependencies.current_node": "baseline",
           "thread.start.current_node": "scope",
           "internal.retry_count.scope": 0
         },
@@ -722,13 +805,28 @@
               "tool_time_ms": 46191,
               "active_time_ms": 46191
             }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/366ff23949cfce4e4e11fbbc6538b38bc22464889cadc6c30123a5bad2c5ac8c"
+            },
+            "notes": "Script completed: npm run quality 2>&1 || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 845,
+              "active_time_ms": 845
+            }
           }
         },
-        "next_node_id": "baseline",
+        "next_node_id": "refactor",
         "node_visits": {
           "start": 1,
-          "scope": 1,
-          "dependencies": 1
+          "dependencies": 1,
+          "baseline": 1,
+          "scope": 1
         }
       },
       "diff": {}
@@ -761,6 +859,35 @@
   "superseded_by": null,
   "pending_interviews": {},
   "stages": {
+    "baseline@1": {
+      "first_event_seq": 41,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 || true",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-25T23:48:01.944964Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
+    },
     "scope@1": {
       "first_event_seq": 21,
       "prompt": null,
@@ -815,7 +942,12 @@
       "first_event_seq": 31,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: npm install --package-lock=false",
+        "failure_reason": null,
+        "timestamp": "2026-08-25T23:47:58.893175Z"
+      },
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -823,12 +955,28 @@
         "command": "exec 2>&1\nnpm install --package-lock=false",
         "language": "shell"
       },
-      "script_timing": null,
+      "script_timing": {
+        "output": "blob://sha256/554f662fa7bc54bead601da9cb7d2761a99ba7f8a9cbf3ce6c36b3b8239c0be5",
+        "exit_code": 0,
+        "duration_ms": 46191,
+        "termination": "exited",
+        "output_bytes": 653,
+        "live_streaming": true
+      },
       "parallel_results": null,
       "output": null,
+      "output_bytes": 653,
+      "live_streaming": true,
+      "termination": "exited",
       "started_at": "2026-08-25T23:47:12.695567Z",
       "handler": "command",
       "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 46195,
+        "inference_time_ms": 0,
+        "tool_time_ms": 46191,
+        "active_time_ms": 46191
+      },
       "usage": {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -838,7 +986,7 @@
         "cache_write_tokens": 0
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "start@1": {
       "first_event_seq": 17,
