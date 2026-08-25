@@ -5,6 +5,13 @@ digraph RefactorLine {
     start [shape=Mdiamond, label="Start"]
     exit [shape=Msquare, label="Exit"]
 
+    scope [
+        shape=parallelogram
+        label="Check Target Path"
+        script="test -e {{ inputs.target_path }} && printf 'Target: %s\\n' {{ inputs.target_path }}"
+        max_retries=0
+    ]
+
     baseline [
         shape=parallelogram
         label="Record Quality Baseline"
@@ -36,7 +43,10 @@ digraph RefactorLine {
     iteration_limit [shape=diamond, label="Five Iterations Complete?"]
     stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
 
-    start -> baseline -> refactor -> evidence -> validate -> verdict
+    start -> scope
+    scope -> baseline [condition="outcome=succeeded"]
+    scope -> exit
+    baseline -> refactor -> evidence -> validate -> verdict
     verdict -> commit_message [label="Pass", condition="context.verdict=PASS"]
     verdict -> repair [label="Fail", condition="context.verdict=FAIL"]
     verdict -> repair [label="Invalid Verdict"]

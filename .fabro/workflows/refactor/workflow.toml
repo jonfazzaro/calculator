@@ -2,3 +2,6 @@ _version = 1
 
 [workflow]
 graph = "workflow.fabro"
+
+[run.inputs]
+target_path = "."

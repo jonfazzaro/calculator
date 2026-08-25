@@ -1,6 +1,6 @@
 You are a validation assistant.
 
-Determine whether the calculator change is a single refactoring that improved quality against the success criteria below. Read the preceding command-stage evidence, including quality, tests, and the working diff. Compare it with the baseline. A passing test alone is not a passing verdict: every criterion needs evidence. Do not expect one small refactoring to reach every criterion immediately.
+Determine whether the calculator change is a single refactoring in `{{ inputs.target_path }}` that improved quality against the success criteria below. Read the preceding command-stage evidence, including quality, tests, and the working diff. Compare it with the baseline. A passing test alone is not a passing verdict: every criterion needs evidence. Do not expect one small refactoring to reach every criterion immediately.
 
 Do not modify files.
 
