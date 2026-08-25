@@ -12,6 +12,13 @@ digraph RefactorLine {
         max_retries=0
     ]
 
+    dependencies [
+        shape=parallelogram
+        label="Install Dependencies"
+        script="npm install --package-lock=false"
+        max_retries=0
+    ]
+
     baseline [
         shape=parallelogram
         label="Record Quality Baseline"
@@ -44,8 +51,10 @@ digraph RefactorLine {
     stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
 
     start -> scope
-    scope -> baseline [condition="outcome=succeeded"]
+    scope -> dependencies [condition="outcome=succeeded"]
     scope -> exit
+    dependencies -> baseline [condition="outcome=succeeded"]
+    dependencies -> exit
     baseline -> refactor -> evidence -> validate -> verdict
     verdict -> commit_message [label="Pass", condition="context.verdict=PASS"]
     verdict -> repair [label="Fail", condition="context.verdict=FAIL"]
