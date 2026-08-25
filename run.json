@@ -1,0 +1,244 @@
+{
+  "title": "Say hello and demonstrate a basic Fabro workflow",
+  "spec": {
+    "run_id": "01M0XE0FFRZSB6JS7N7HMGZ4NV",
+    "settings": {
+      "project": {
+        "name": null,
+        "description": null,
+        "metadata": {}
+      },
+      "workflow": {
+        "name": null,
+        "description": null,
+        "graph": "workflow.fabro",
+        "metadata": {}
+      },
+      "run": {
+        "goal": {
+          "type": "inline",
+          "value": "Say hello and demonstrate a basic Fabro workflow"
+        },
+        "working_dir": null,
+        "metadata": {},
+        "inputs": {},
+        "model": {
+          "provider": "openrouter",
+          "name": "claude-sonnet-5",
+          "fallbacks": {},
+          "controls": {
+            "reasoning_effort": null,
+            "speed": null
+          }
+        },
+        "git": {
+          "author": null
+        },
+        "prepare": {
+          "steps": [],
+          "timeout_ms": 300000
+        },
+        "execution": {
+          "mode": "normal",
+          "approval": "prompt"
+        },
+        "checkpoint": {
+          "exclude_globs": [],
+          "skip_git_hooks": false,
+          "commit_timeout_ms": 30000
+        },
+        "clone": {
+          "enabled": true,
+          "depth": 100
+        },
+        "run_branch": {
+          "enabled": true,
+          "push": true
+        },
+        "meta_branch": {
+          "enabled": true,
+          "push": true
+        },
+        "environment": {
+          "id": "default",
+          "provider": "docker",
+          "image": {
+            "docker": "node",
+            "dockerfile": null
+          },
+          "resources": {
+            "cpu": 2,
+            "memory": "4GB",
+            "disk": "16GB"
+          },
+          "network": {
+            "mode": "allow_all",
+            "allow": []
+          },
+          "lifecycle": {
+            "preserve": false,
+            "stop_on_terminal": true,
+            "auto_stop": null
+          },
+          "labels": {},
+          "env": {}
+        },
+        "notifications": {},
+        "interviews": {
+          "provider": null,
+          "slack": null
+        },
+        "agent": {
+          "fabro_tools": false,
+          "mcps": {}
+        },
+        "hooks": [],
+        "scm": {
+          "provider": null,
+          "owner": null,
+          "repository": null,
+          "github": null
+        },
+        "pull_request": {
+          "enabled": true,
+          "draft": true,
+          "auto_merge": false,
+          "merge_strategy": "squash"
+        },
+        "artifacts": {
+          "include": []
+        },
+        "integrations": {
+          "github": {
+            "permissions": {}
+          }
+        }
+      }
+    },
+    "graph": {
+      "name": "Hello",
+      "nodes": {
+        "exit": {
+          "id": "exit",
+          "attrs": {
+            "label": {
+              "String": "Exit"
+            },
+            "shape": {
+              "String": "Msquare"
+            }
+          }
+        },
+        "greet": {
+          "id": "greet",
+          "attrs": {
+            "prompt": {
+              "String": "Say hello! Introduce yourself and explain that this is a test of the Fabro workflow engine."
+            },
+            "label": {
+              "String": "Greet"
+            }
+          }
+        },
+        "start": {
+          "id": "start",
+          "attrs": {
+            "shape": {
+              "String": "Mdiamond"
+            },
+            "label": {
+              "String": "Start"
+            }
+          }
+        }
+      },
+      "edges": [
+        {
+          "from": "start",
+          "to": "greet",
+          "attrs": {}
+        },
+        {
+          "from": "greet",
+          "to": "exit",
+          "attrs": {}
+        }
+      ],
+      "attrs": {
+        "rankdir": {
+          "String": "LR"
+        },
+        "goal": {
+          "String": "Say hello and demonstrate a basic Fabro workflow"
+        }
+      }
+    },
+    "graph_source": "digraph Hello {\n    graph [goal=\"Say hello and demonstrate a basic Fabro workflow\"]\n    rankdir=LR\n\n    start [shape=Mdiamond, label=\"Start\"]\n    exit  [shape=Msquare, label=\"Exit\"]\n\n    greet [label=\"Greet\", prompt=\"Say hello! Introduce yourself and explain that this is a test of the Fabro workflow engine.\"]\n\n    start -> greet -> exit\n}\n",
+    "workflow_slug": "hello",
+    "source_directory": "/Users/jon.fazzaro/dev/lean-software-production/fabro-sandbox/calculator",
+    "provenance": {
+      "server": {
+        "version": "0.336.0-nightly.1"
+      },
+      "client": {
+        "user_agent": "fabro-cli/0.336.0-nightly.1",
+        "name": "fabro-cli",
+        "version": "0.336.0-nightly.1"
+      },
+      "subject": {
+        "kind": "user",
+        "identity": {
+          "issuer": "fabro:dev",
+          "subject": "dev"
+        },
+        "login": "dev",
+        "auth_method": "dev_token"
+      }
+    },
+    "manifest_blob": "39b9071eaef3633ecb52bb6356ee612acf38adf682a5e5181f2483615f7b4b62",
+    "definition_blob": "561166ad76b463c496b8a9bf33d6a12e3e117013b4a7cb210cc0dbfe23daaa1c",
+    "spec_blob": "68bc116cc3eca1f14b808f03483c669a4c8f993d5f61ec7084ed9afbe0fb0899",
+    "git": {
+      "origin_url": "https://github.com/jonfazzaro/calculator",
+      "branch": "main",
+      "sha": "9e264321c50d3be451a6da975b921145ae98e71e",
+      "dirty": "dirty"
+    }
+  },
+  "web_url": "http://127.0.0.1:32276/runs/01M0XE0FFRZSB6JS7N7HMGZ4NV",
+  "start": null,
+  "status": {
+    "kind": "starting"
+  },
+  "status_updated_at": "2026-08-25T21:42:49.668956Z",
+  "last_event_at": "2026-08-25T21:42:53.665615Z",
+  "pending_control": null,
+  "checkpoints": [],
+  "conclusion": null,
+  "sandbox": {
+    "kind": "ready",
+    "plan": {
+      "provider": "docker",
+      "image": "node"
+    },
+    "instance": {
+      "provider": "docker",
+      "image": "node",
+      "runtime": {
+        "id": "2cd25410e8da30e9b6de82e7c98f0adb16687906d045f232587a145f5283793d",
+        "working_directory": "/workspace/calculator",
+        "repo_cloned": true,
+        "clone_origin_url": "https://github.com/jonfazzaro/calculator",
+        "clone_branch": "main",
+        "workspace_root": "/workspace",
+        "repos_root": "/repos",
+        "primary_repo_path": "/repos/jonfazzaro/calculator",
+        "primary_repo_link": "/workspace/calculator"
+      }
+    }
+  },
+  "pull_request": null,
+  "superseded_by": null,
+  "pending_interviews": {},
+  "stages": {}
+}
