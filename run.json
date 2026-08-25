@@ -215,7 +215,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-25T21:42:53.764047Z",
-  "last_event_at": "2026-08-25T21:43:02.336013Z",
+  "last_event_at": "2026-08-25T21:43:05.802826Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -255,9 +255,9 @@
       "diff": {}
     },
     {
-      "seq": 0,
+      "seq": 40,
       "checkpoint": {
-        "timestamp": "2026-08-25T21:43:02.342792Z",
+        "timestamp": "2026-08-25T21:43:05.802719Z",
         "current_node": "greet",
         "completed_nodes": [
           "start",
@@ -265,22 +265,22 @@
         ],
         "node_retries": {},
         "context_values": {
-          "current_node": "greet",
-          "response.greet": "Hello! 👋 I'm Claude, a software engineering agent running inside **Fabro**, an environment that lets me use tools like file editing, shell commands, web fetches, and background agents to complete engineering tasks.\n\nThis message itself is a demonstration of a basic Fabro workflow: you gave me a goal, I interpreted it, and I'm responding directly since no code changes or file inspection were needed for a simple greeting. For more involved requests, I'd typically:\n\n1. Read relevant files/code before making changes\n2. Use `Edit`/`Write` to implement changes\n3. Run tests or commands via `Bash` to verify the result\n4. Report back with concrete evidence of what worked\n\nI'm currently sitting in the `calculator` repo on branch `fabro/run/01M0XE0FFRZSB6JS7N7HMGZ4NV`. If you'd like, I can look at the actual codebase and make a small real change to further demonstrate the workflow — just let me know what you'd like me to build or check.",
-          "internal.work_dir": "/workspace/calculator",
-          "last_response": "Hello! 👋 I'm Claude, a software engineering agent running inside **Fabro**, an environment that lets me use tools like file editing, shell commands, web fetches, and background agents to complete e",
-          "internal.run_id": "01M0XE0FFRZSB6JS7N7HMGZ4NV",
-          "internal.thread_id": "start",
-          "internal.retry_count.greet": 0,
-          "internal.retry_count.start": 0,
-          "graph.rankdir": "LR",
-          "internal.fidelity": "compact",
           "failure_class": "",
-          "last_stage": "greet",
-          "outcome": "succeeded",
+          "internal.retry_count.start": 0,
           "failure_signature": "",
-          "internal.node_visit_count": 1,
+          "internal.retry_count.greet": 0,
+          "internal.work_dir": "/workspace/calculator",
+          "outcome": "succeeded",
+          "internal.fidelity": "compact",
           "thread.start.current_node": "greet",
+          "graph.rankdir": "LR",
+          "response.greet": "Hello! 👋 I'm Claude, a software engineering agent running inside **Fabro**, an environment that lets me use tools like file editing, shell commands, web fetches, and background agents to complete engineering tasks.\n\nThis message itself is a demonstration of a basic Fabro workflow: you gave me a goal, I interpreted it, and I'm responding directly since no code changes or file inspection were needed for a simple greeting. For more involved requests, I'd typically:\n\n1. Read relevant files/code before making changes\n2. Use `Edit`/`Write` to implement changes\n3. Run tests or commands via `Bash` to verify the result\n4. Report back with concrete evidence of what worked\n\nI'm currently sitting in the `calculator` repo on branch `fabro/run/01M0XE0FFRZSB6JS7N7HMGZ4NV`. If you'd like, I can look at the actual codebase and make a small real change to further demonstrate the workflow — just let me know what you'd like me to build or check.",
+          "current_node": "greet",
+          "internal.node_visit_count": 1,
+          "internal.thread_id": "start",
+          "internal.run_id": "01M0XE0FFRZSB6JS7N7HMGZ4NV",
+          "last_response": "Hello! 👋 I'm Claude, a software engineering agent running inside **Fabro**, an environment that lets me use tools like file editing, shell commands, web fetches, and background agents to complete e",
+          "last_stage": "greet",
           "graph.goal": "Say hello and demonstrate a basic Fabro workflow"
         },
         "node_outcomes": {
@@ -328,15 +328,74 @@
           }
         },
         "next_node_id": "exit",
+        "git_commit_sha": "617da50e31bb38cfe11fde7d970c57beb3e0c599",
         "node_visits": {
-          "greet": 1,
-          "start": 1
+          "start": 1,
+          "greet": 1
         }
       },
-      "diff": {}
+      "diff": {
+        "summary": {
+          "files_changed": 0,
+          "additions": 0,
+          "deletions": 0
+        }
+      }
     }
   ],
-  "conclusion": null,
+  "conclusion": {
+    "timestamp": "2026-08-25T21:43:05.836042Z",
+    "status": "succeeded",
+    "timing": {
+      "wall_time_ms": 12039,
+      "inference_time_ms": 6900,
+      "tool_time_ms": 0,
+      "active_time_ms": 6900
+    },
+    "final_git_commit_sha": "617da50e31bb38cfe11fde7d970c57beb3e0c599",
+    "stages": [
+      {
+        "stage_id": "start",
+        "stage_label": "start",
+        "timing": {
+          "wall_time_ms": 0,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "greet",
+        "stage_label": "greet",
+        "timing": {
+          "wall_time_ms": 7011,
+          "inference_time_ms": 6900,
+          "tool_time_ms": 0,
+          "active_time_ms": 6900
+        },
+        "billing_usd_micros": 17267,
+        "retries": 0
+      }
+    ],
+    "billing": {
+      "input_tokens": 131,
+      "output_tokens": 331,
+      "total_tokens": 5874,
+      "reasoning_tokens": 22,
+      "cache_read_tokens": 0,
+      "cache_write_tokens": 5390,
+      "total_usd_micros": 17267
+    },
+    "total_retries": 0,
+    "diff": {
+      "summary": {
+        "files_changed": 0,
+        "additions": 0,
+        "deletions": 0
+      }
+    }
+  },
   "sandbox": {
     "kind": "ready",
     "plan": {
@@ -363,11 +422,52 @@
   "superseded_by": null,
   "pending_interviews": {},
   "stages": {
+    "exit@1": {
+      "first_event_seq": 43,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": null,
+        "failure_reason": null,
+        "timestamp": "2026-08-25T21:43:05.802826Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-25T21:43:05.802797Z",
+      "handler": "exit",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
     "greet@1": {
       "first_event_seq": 22,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Stage completed: greet",
+        "failure_reason": null,
+        "timestamp": "2026-08-25T21:43:02.342707Z"
+      },
       "provider_used": {
         "mode": "agent",
         "provider": "openrouter",
@@ -381,7 +481,12 @@
       "started_at": "2026-08-25T21:42:55.329045Z",
       "handler": "agent",
       "graph_visit": 1,
-      "live_inference_ms": 6900,
+      "timing": {
+        "wall_time_ms": 7011,
+        "inference_time_ms": 6900,
+        "tool_time_ms": 0,
+        "active_time_ms": 6900
+      },
       "usage": {
         "input_tokens": 131,
         "output_tokens": 331,
@@ -559,7 +664,7 @@
         "warnings": []
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "start@1": {
       "first_event_seq": 18,
