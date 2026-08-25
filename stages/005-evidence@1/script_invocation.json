@@ -1,0 +1,5 @@
+{
+  "script": "{ printf '%s\\n' '=== QUALITY BEFORE ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF ==='; git diff -- .; }",
+  "command": "exec 2>&1\n{ printf '%s\\n' '=== QUALITY BEFORE ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF ==='; git diff -- .; }",
+  "language": "shell"
+}
