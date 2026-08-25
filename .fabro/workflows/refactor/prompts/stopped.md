@@ -1,0 +1,1 @@
+The refactoring line received two consecutive failed validation verdicts. Do not edit files. Report that the run stopped without committing the current change and direct the engineer to inspect the validator findings.

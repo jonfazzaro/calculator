@@ -1,0 +1,51 @@
+digraph RefactorLine {
+    graph [goal="Make one small, behavior-preserving calculator refactoring per iteration"]
+    rankdir=LR
+
+    start [shape=Mdiamond, label="Start"]
+    exit [shape=Msquare, label="Exit"]
+
+    baseline [
+        shape=parallelogram
+        label="Record Quality Baseline"
+        script="npm run quality 2>&1 || true"
+        max_retries=0
+    ]
+
+    refactor [
+        label="Refactor"
+        prompt="@prompts/refactor.md"
+        max_visits=5
+    ]
+
+    evidence [
+        shape=parallelogram
+        label="Gather Evidence"
+        script="{ printf '%s\\n' '=== QUALITY BEFORE ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF ==='; git diff -- .; }"
+        max_retries=0
+    ]
+
+    validate [shape=tab, label="Validate", prompt="@prompts/validate.md"]
+    validate_after_repair [shape=tab, label="Validate Repair", prompt="@prompts/validate.md"]
+    verdict [shape=diamond, label="Validation Passed?"]
+    repaired_verdict [shape=diamond, label="Repair Passed?"]
+
+    repair [label="Repair", prompt="@prompts/repair.md"]
+    commit_message [shape=tab, label="Write Commit Message", prompt="@prompts/commit-message.md"]
+    commit [label="Commit", prompt="@prompts/commit.md"]
+    iteration_limit [shape=diamond, label="Five Iterations Complete?"]
+    stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
+
+    start -> baseline -> refactor -> evidence -> validate -> verdict
+    verdict -> commit_message [label="Pass", condition="context.verdict=PASS"]
+    verdict -> repair [label="Fail", condition="context.verdict=FAIL"]
+    verdict -> repair [label="Invalid Verdict"]
+    repair -> evidence -> validate_after_repair -> repaired_verdict
+    repaired_verdict -> commit_message [label="Pass", condition="context.verdict=PASS"]
+    repaired_verdict -> stopped [label="Fail", condition="context.verdict=FAIL"]
+    repaired_verdict -> stopped [label="Invalid Verdict"]
+    commit_message -> commit -> iteration_limit
+    iteration_limit -> exit [label="Complete", condition="context.internal.node_visit_count >= 5"]
+    iteration_limit -> baseline [label="Continue"]
+    stopped -> exit
+}
