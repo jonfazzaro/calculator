@@ -1,0 +1,5 @@
+{
+  "mode": "prompt",
+  "provider": "openrouter",
+  "model": "claude-sonnet-5"
+}
