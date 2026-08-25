@@ -528,7 +528,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-25T23:31:33.707215Z",
-  "last_event_at": "2026-08-25T23:31:35.321794Z",
+  "last_event_at": "2026-08-25T23:31:37.867866Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -568,9 +568,9 @@
       "diff": {}
     },
     {
-      "seq": 0,
+      "seq": 28,
       "checkpoint": {
-        "timestamp": "2026-08-25T23:31:35.327723Z",
+        "timestamp": "2026-08-25T23:31:37.865014Z",
         "current_node": "scope",
         "completed_nodes": [
           "start",
@@ -578,21 +578,21 @@
         ],
         "node_retries": {},
         "context_values": {
-          "internal.thread_id": "start",
-          "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
-          "internal.fidelity": "compact",
-          "failure_signature": "",
           "outcome": "succeeded",
-          "internal.run_id": "01M0XM7HMXGBR9YHJKEXCN8YD8",
+          "internal.work_dir": "/workspace/calculator",
+          "internal.fidelity": "compact",
           "internal.node_visit_count": 1,
+          "failure_signature": "",
+          "internal.retry_count.scope": 0,
+          "thread.start.current_node": "scope",
+          "current_node": "scope",
+          "internal.run_id": "01M0XM7HMXGBR9YHJKEXCN8YD8",
+          "internal.retry_count.start": 0,
+          "internal.thread_id": "start",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "failure_class": "",
           "graph.rankdir": "LR",
-          "current_node": "scope",
-          "internal.retry_count.scope": 0,
-          "internal.retry_count.start": 0,
-          "thread.start.current_node": "scope",
-          "internal.work_dir": "/workspace/calculator"
+          "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
         },
         "node_outcomes": {
           "scope": {
@@ -615,7 +615,87 @@
           }
         },
         "next_node_id": "baseline",
+        "git_commit_sha": "9cef3ac5e14b2a2ed25912141085dcf1b4ad685a",
         "node_visits": {
+          "scope": 1,
+          "start": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 0,
+          "additions": 0,
+          "deletions": 0
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-25T23:31:38.189202Z",
+        "current_node": "baseline",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "baseline"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "internal.thread_id": "scope",
+          "command.output": "blob://sha256/6b1346ef62feed7ede6bbed85dd522f311a23db39086de0a32d1c53d5366a335",
+          "internal.retry_count.baseline": 0,
+          "internal.fidelity": "compact",
+          "failure_signature": "",
+          "outcome": "succeeded",
+          "internal.run_id": "01M0XM7HMXGBR9YHJKEXCN8YD8",
+          "internal.node_visit_count": 1,
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "failure_class": "",
+          "graph.rankdir": "LR",
+          "current_node": "baseline",
+          "internal.retry_count.scope": 0,
+          "internal.retry_count.start": 0,
+          "thread.start.current_node": "scope",
+          "internal.work_dir": "/workspace/calculator",
+          "thread.scope.current_node": "baseline"
+        },
+        "node_outcomes": {
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 128,
+              "active_time_ms": 128
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/6b1346ef62feed7ede6bbed85dd522f311a23db39086de0a32d1c53d5366a335"
+            },
+            "notes": "Script completed: npm run quality 2>&1 || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 318,
+              "active_time_ms": 318
+            }
+          }
+        },
+        "next_node_id": "refactor",
+        "node_visits": {
+          "baseline": 1,
           "start": 1,
           "scope": 1
         }
@@ -650,6 +730,35 @@
   "superseded_by": null,
   "pending_interviews": {},
   "stages": {
+    "baseline@1": {
+      "first_event_seq": 31,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 || true",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-25T23:31:37.867300Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
+    },
     "start@1": {
       "first_event_seq": 17,
       "prompt": null,
@@ -690,7 +799,12 @@
       "first_event_seq": 21,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+        "failure_reason": null,
+        "timestamp": "2026-08-25T23:31:35.324775Z"
+      },
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -714,6 +828,12 @@
       "started_at": "2026-08-25T23:31:35.191353Z",
       "handler": "command",
       "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 130,
+        "inference_time_ms": 0,
+        "tool_time_ms": 128,
+        "active_time_ms": 128
+      },
       "usage": {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -723,7 +843,7 @@
         "cache_write_tokens": 0
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     }
   }
 }
