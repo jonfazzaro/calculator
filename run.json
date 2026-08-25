@@ -1,0 +1,557 @@
+{
+  "title": "Make one small, behavior-preserving calculator refactoring per iteration",
+  "spec": {
+    "run_id": "01M0XM7HMXGBR9YHJKEXCN8YD8",
+    "settings": {
+      "project": {
+        "name": null,
+        "description": null,
+        "metadata": {}
+      },
+      "workflow": {
+        "name": null,
+        "description": null,
+        "graph": "workflow.fabro",
+        "metadata": {}
+      },
+      "run": {
+        "goal": {
+          "type": "inline",
+          "value": "Make one small, behavior-preserving calculator refactoring per iteration"
+        },
+        "working_dir": null,
+        "metadata": {},
+        "inputs": {
+          "target_path": "src/index.ts"
+        },
+        "model": {
+          "provider": "openrouter",
+          "name": "claude-sonnet-5",
+          "fallbacks": {},
+          "controls": {
+            "reasoning_effort": null,
+            "speed": null
+          }
+        },
+        "git": {
+          "author": null
+        },
+        "prepare": {
+          "steps": [],
+          "timeout_ms": 300000
+        },
+        "execution": {
+          "mode": "normal",
+          "approval": "prompt"
+        },
+        "checkpoint": {
+          "exclude_globs": [],
+          "skip_git_hooks": false,
+          "commit_timeout_ms": 30000
+        },
+        "clone": {
+          "enabled": true,
+          "depth": 100
+        },
+        "run_branch": {
+          "enabled": true,
+          "push": true
+        },
+        "meta_branch": {
+          "enabled": true,
+          "push": true
+        },
+        "environment": {
+          "id": "default",
+          "provider": "docker",
+          "image": {
+            "docker": "node",
+            "dockerfile": null
+          },
+          "resources": {
+            "cpu": 2,
+            "memory": "4GB",
+            "disk": "16GB"
+          },
+          "network": {
+            "mode": "allow_all",
+            "allow": []
+          },
+          "lifecycle": {
+            "preserve": false,
+            "stop_on_terminal": true,
+            "auto_stop": null
+          },
+          "labels": {},
+          "env": {}
+        },
+        "notifications": {},
+        "interviews": {
+          "provider": null,
+          "slack": null
+        },
+        "agent": {
+          "fabro_tools": false,
+          "mcps": {}
+        },
+        "hooks": [],
+        "scm": {
+          "provider": null,
+          "owner": null,
+          "repository": null,
+          "github": null
+        },
+        "pull_request": {
+          "enabled": true,
+          "draft": true,
+          "auto_merge": false,
+          "merge_strategy": "squash"
+        },
+        "artifacts": {
+          "include": []
+        },
+        "integrations": {
+          "github": {
+            "permissions": {}
+          }
+        }
+      }
+    },
+    "graph": {
+      "name": "RefactorLine",
+      "nodes": {
+        "verdict": {
+          "id": "verdict",
+          "attrs": {
+            "label": {
+              "String": "Validation Passed?"
+            },
+            "shape": {
+              "String": "diamond"
+            }
+          }
+        },
+        "stopped": {
+          "id": "stopped",
+          "attrs": {
+            "shape": {
+              "String": "tab"
+            },
+            "label": {
+              "String": "Stop After Two Failures"
+            },
+            "prompt": {
+              "String": "The refactoring line received two consecutive failed validation verdicts. Do not edit files. Report that the run stopped without committing the current change and direct the engineer to inspect the validator findings.\n"
+            }
+          }
+        },
+        "start": {
+          "id": "start",
+          "attrs": {
+            "shape": {
+              "String": "Mdiamond"
+            },
+            "label": {
+              "String": "Start"
+            }
+          }
+        },
+        "scope": {
+          "id": "scope",
+          "attrs": {
+            "shape": {
+              "String": "parallelogram"
+            },
+            "label": {
+              "String": "Check Target Path"
+            },
+            "max_retries": {
+              "Integer": 0
+            },
+            "script": {
+              "String": "test -e src/index.ts && printf 'Target: %s\\n' src/index.ts"
+            }
+          }
+        },
+        "refactor": {
+          "id": "refactor",
+          "attrs": {
+            "prompt": {
+              "String": "You are a refactoring assistant.\n\nChoose one small, behavior-preserving refactoring in `src/index.ts`. If it is a directory, choose a code file within it. Do not edit code outside that target. Work toward the success criteria below. Improve the design so it is more scannable, readable, and safe to change. One change is one step along the road, not the whole destination.\n\nEdit files directly.\n\nConstraints:\n\n- Do not run tests, npm, shell commands, or external tools.\n- Do not report quality metrics or test results.\n- Keep the response concise.\n\n# Success criteria for the calculator line\n\nThese criteria describe the destination the line is walking toward. A single iteration is one step on that path; it is not expected to reach the destination immediately.\n\n## Passes its tests\n\nThe calculator behaves the same way after every change.\n\nEvidence: `npm test` exits 0 and reports all tests passing.\n\n## Reveals intention\n\nNames of functions, variables, and modules tell the reader what the code does without needing comments to explain them.\n\nEvidence: reading the main source files aloud, the names describe the operations in plain language.\n\n## No duplication\n\nNo two blocks of code perform the same operation in different words.\n\nEvidence: `npm run quality` reports no duplication, or inspection shows no near-identical passages.\n\n## Fewest elements\n\nThere are no unused functions, dead code paths, or unnecessary abstractions.\n\nEvidence: every exported function is exercised by the test suite, and no file contains code that `npm test` would still pass without."
+            },
+            "max_visits": {
+              "Integer": 5
+            },
+            "label": {
+              "String": "Refactor"
+            }
+          }
+        },
+        "validate": {
+          "id": "validate",
+          "attrs": {
+            "prompt": {
+              "String": "You are a validation assistant.\n\nDetermine whether the calculator change is a single refactoring in `src/index.ts` that improved quality against the success criteria below. Read the preceding command-stage evidence, including quality, tests, and the working diff. Compare it with the baseline. A passing test alone is not a passing verdict: every criterion needs evidence. Do not expect one small refactoring to reach every criterion immediately.\n\nDo not modify files.\n\nStart the response with exactly one of these lines:\n\n`VERDICT: PASS`\n\n`VERDICT: FAIL`\n\nThen provide one finding per success criterion in this format:\n\n```text\nFINDINGS:\n- [PASS] <success criterion>: <specific evidence>\n- [FAIL] <success criterion>: <specific evidence>\n```\n\nEnd with exactly one JSON object on its own line. Use the verdict you chose:\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```\n\nor\n\n```json\n{\"context_updates\":{\"verdict\":\"FAIL\"}}\n```\n\n# Success criteria for the calculator line\n\nThese criteria describe the destination the line is walking toward. A single iteration is one step on that path; it is not expected to reach the destination immediately.\n\n## Passes its tests\n\nThe calculator behaves the same way after every change.\n\nEvidence: `npm test` exits 0 and reports all tests passing.\n\n## Reveals intention\n\nNames of functions, variables, and modules tell the reader what the code does without needing comments to explain them.\n\nEvidence: reading the main source files aloud, the names describe the operations in plain language.\n\n## No duplication\n\nNo two blocks of code perform the same operation in different words.\n\nEvidence: `npm run quality` reports no duplication, or inspection shows no near-identical passages.\n\n## Fewest elements\n\nThere are no unused functions, dead code paths, or unnecessary abstractions.\n\nEvidence: every exported function is exercised by the test suite, and no file contains code that `npm test` would still pass without."
+            },
+            "shape": {
+              "String": "tab"
+            },
+            "label": {
+              "String": "Validate"
+            }
+          }
+        },
+        "commit_message": {
+          "id": "commit_message",
+          "attrs": {
+            "shape": {
+              "String": "tab"
+            },
+            "label": {
+              "String": "Write Commit Message"
+            },
+            "prompt": {
+              "String": "You are a commit-message assistant.\n\nGiven the working diff and validator findings from the preceding stages, write the commit message for the completed refactoring. Use a subject line under 72 characters, a blank line, then two or three lines explaining what changed and which success criteria it moved.\n\nDo not run or edit anything. Emit only the commit message.\n\n# Success criteria for the calculator line\n\nThese criteria describe the destination the line is walking toward. A single iteration is one step on that path; it is not expected to reach the destination immediately.\n\n## Passes its tests\n\nThe calculator behaves the same way after every change.\n\nEvidence: `npm test` exits 0 and reports all tests passing.\n\n## Reveals intention\n\nNames of functions, variables, and modules tell the reader what the code does without needing comments to explain them.\n\nEvidence: reading the main source files aloud, the names describe the operations in plain language.\n\n## No duplication\n\nNo two blocks of code perform the same operation in different words.\n\nEvidence: `npm run quality` reports no duplication, or inspection shows no near-identical passages.\n\n## Fewest elements\n\nThere are no unused functions, dead code paths, or unnecessary abstractions.\n\nEvidence: every exported function is exercised by the test suite, and no file contains code that `npm test` would still pass without."
+            }
+          }
+        },
+        "evidence": {
+          "id": "evidence",
+          "attrs": {
+            "max_retries": {
+              "Integer": 0
+            },
+            "script": {
+              "String": "{ printf '%s\\n' '=== QUALITY BEFORE ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF ==='; git diff -- .; }"
+            },
+            "label": {
+              "String": "Gather Evidence"
+            },
+            "shape": {
+              "String": "parallelogram"
+            }
+          }
+        },
+        "exit": {
+          "id": "exit",
+          "attrs": {
+            "shape": {
+              "String": "Msquare"
+            },
+            "label": {
+              "String": "Exit"
+            }
+          }
+        },
+        "repair": {
+          "id": "repair",
+          "attrs": {
+            "label": {
+              "String": "Repair"
+            },
+            "prompt": {
+              "String": "You are a repair assistant.\n\nRead the validator findings and the success criteria below. Make the smallest change in `src/index.ts` that addresses the findings. Do not start a new refactoring, edit outside that target, or look for unrelated problems.\n\nEdit files directly.\n\nConstraints:\n\n- Do not run tests, npm, shell commands, or external tools.\n- Do not report quality metrics or test results.\n- Keep the response concise.\n\n# Success criteria for the calculator line\n\nThese criteria describe the destination the line is walking toward. A single iteration is one step on that path; it is not expected to reach the destination immediately.\n\n## Passes its tests\n\nThe calculator behaves the same way after every change.\n\nEvidence: `npm test` exits 0 and reports all tests passing.\n\n## Reveals intention\n\nNames of functions, variables, and modules tell the reader what the code does without needing comments to explain them.\n\nEvidence: reading the main source files aloud, the names describe the operations in plain language.\n\n## No duplication\n\nNo two blocks of code perform the same operation in different words.\n\nEvidence: `npm run quality` reports no duplication, or inspection shows no near-identical passages.\n\n## Fewest elements\n\nThere are no unused functions, dead code paths, or unnecessary abstractions.\n\nEvidence: every exported function is exercised by the test suite, and no file contains code that `npm test` would still pass without."
+            }
+          }
+        },
+        "iteration_limit": {
+          "id": "iteration_limit",
+          "attrs": {
+            "label": {
+              "String": "Five Iterations Complete?"
+            },
+            "shape": {
+              "String": "diamond"
+            }
+          }
+        },
+        "validate_after_repair": {
+          "id": "validate_after_repair",
+          "attrs": {
+            "label": {
+              "String": "Validate Repair"
+            },
+            "shape": {
+              "String": "tab"
+            },
+            "prompt": {
+              "String": "You are a validation assistant.\n\nDetermine whether the calculator change is a single refactoring in `src/index.ts` that improved quality against the success criteria below. Read the preceding command-stage evidence, including quality, tests, and the working diff. Compare it with the baseline. A passing test alone is not a passing verdict: every criterion needs evidence. Do not expect one small refactoring to reach every criterion immediately.\n\nDo not modify files.\n\nStart the response with exactly one of these lines:\n\n`VERDICT: PASS`\n\n`VERDICT: FAIL`\n\nThen provide one finding per success criterion in this format:\n\n```text\nFINDINGS:\n- [PASS] <success criterion>: <specific evidence>\n- [FAIL] <success criterion>: <specific evidence>\n```\n\nEnd with exactly one JSON object on its own line. Use the verdict you chose:\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```\n\nor\n\n```json\n{\"context_updates\":{\"verdict\":\"FAIL\"}}\n```\n\n# Success criteria for the calculator line\n\nThese criteria describe the destination the line is walking toward. A single iteration is one step on that path; it is not expected to reach the destination immediately.\n\n## Passes its tests\n\nThe calculator behaves the same way after every change.\n\nEvidence: `npm test` exits 0 and reports all tests passing.\n\n## Reveals intention\n\nNames of functions, variables, and modules tell the reader what the code does without needing comments to explain them.\n\nEvidence: reading the main source files aloud, the names describe the operations in plain language.\n\n## No duplication\n\nNo two blocks of code perform the same operation in different words.\n\nEvidence: `npm run quality` reports no duplication, or inspection shows no near-identical passages.\n\n## Fewest elements\n\nThere are no unused functions, dead code paths, or unnecessary abstractions.\n\nEvidence: every exported function is exercised by the test suite, and no file contains code that `npm test` would still pass without."
+            }
+          }
+        },
+        "commit": {
+          "id": "commit",
+          "attrs": {
+            "label": {
+              "String": "Commit"
+            },
+            "prompt": {
+              "String": "Read the commit message from the preceding stage and inspect the current working diff.\n\nCreate one git commit containing only the completed refactoring. Use the preceding message unchanged. Do not make further code changes. If there is no diff, stop and report the problem instead of creating an empty commit.\n"
+            }
+          }
+        },
+        "repaired_verdict": {
+          "id": "repaired_verdict",
+          "attrs": {
+            "label": {
+              "String": "Repair Passed?"
+            },
+            "shape": {
+              "String": "diamond"
+            }
+          }
+        },
+        "baseline": {
+          "id": "baseline",
+          "attrs": {
+            "shape": {
+              "String": "parallelogram"
+            },
+            "max_retries": {
+              "Integer": 0
+            },
+            "script": {
+              "String": "npm run quality 2>&1 || true"
+            },
+            "label": {
+              "String": "Record Quality Baseline"
+            }
+          }
+        }
+      },
+      "edges": [
+        {
+          "from": "start",
+          "to": "scope",
+          "attrs": {}
+        },
+        {
+          "from": "scope",
+          "to": "baseline",
+          "attrs": {
+            "condition": {
+              "String": "outcome=succeeded"
+            }
+          }
+        },
+        {
+          "from": "scope",
+          "to": "exit",
+          "attrs": {}
+        },
+        {
+          "from": "baseline",
+          "to": "refactor",
+          "attrs": {}
+        },
+        {
+          "from": "refactor",
+          "to": "evidence",
+          "attrs": {}
+        },
+        {
+          "from": "evidence",
+          "to": "validate",
+          "attrs": {}
+        },
+        {
+          "from": "validate",
+          "to": "verdict",
+          "attrs": {}
+        },
+        {
+          "from": "verdict",
+          "to": "commit_message",
+          "attrs": {
+            "label": {
+              "String": "Pass"
+            },
+            "condition": {
+              "String": "context.verdict=PASS"
+            }
+          }
+        },
+        {
+          "from": "verdict",
+          "to": "repair",
+          "attrs": {
+            "label": {
+              "String": "Fail"
+            },
+            "condition": {
+              "String": "context.verdict=FAIL"
+            }
+          }
+        },
+        {
+          "from": "verdict",
+          "to": "repair",
+          "attrs": {
+            "label": {
+              "String": "Invalid Verdict"
+            }
+          }
+        },
+        {
+          "from": "repair",
+          "to": "evidence",
+          "attrs": {}
+        },
+        {
+          "from": "evidence",
+          "to": "validate_after_repair",
+          "attrs": {}
+        },
+        {
+          "from": "validate_after_repair",
+          "to": "repaired_verdict",
+          "attrs": {}
+        },
+        {
+          "from": "repaired_verdict",
+          "to": "commit_message",
+          "attrs": {
+            "condition": {
+              "String": "context.verdict=PASS"
+            },
+            "label": {
+              "String": "Pass"
+            }
+          }
+        },
+        {
+          "from": "repaired_verdict",
+          "to": "stopped",
+          "attrs": {
+            "condition": {
+              "String": "context.verdict=FAIL"
+            },
+            "label": {
+              "String": "Fail"
+            }
+          }
+        },
+        {
+          "from": "repaired_verdict",
+          "to": "stopped",
+          "attrs": {
+            "label": {
+              "String": "Invalid Verdict"
+            }
+          }
+        },
+        {
+          "from": "commit_message",
+          "to": "commit",
+          "attrs": {}
+        },
+        {
+          "from": "commit",
+          "to": "iteration_limit",
+          "attrs": {}
+        },
+        {
+          "from": "iteration_limit",
+          "to": "exit",
+          "attrs": {
+            "condition": {
+              "String": "context.internal.node_visit_count >= 5"
+            },
+            "label": {
+              "String": "Complete"
+            }
+          }
+        },
+        {
+          "from": "iteration_limit",
+          "to": "baseline",
+          "attrs": {
+            "label": {
+              "String": "Continue"
+            }
+          }
+        },
+        {
+          "from": "stopped",
+          "to": "exit",
+          "attrs": {}
+        }
+      ],
+      "attrs": {
+        "rankdir": {
+          "String": "LR"
+        },
+        "goal": {
+          "String": "Make one small, behavior-preserving calculator refactoring per iteration"
+        }
+      }
+    },
+    "graph_source": "digraph RefactorLine {\n    graph [goal=\"Make one small, behavior-preserving calculator refactoring per iteration\"]\n    rankdir=LR\n\n    start [shape=Mdiamond, label=\"Start\"]\n    exit [shape=Msquare, label=\"Exit\"]\n\n    scope [\n        shape=parallelogram\n        label=\"Check Target Path\"\n        script=\"test -e {{ inputs.target_path }} && printf 'Target: %s\\\\n' {{ inputs.target_path }}\"\n        max_retries=0\n    ]\n\n    baseline [\n        shape=parallelogram\n        label=\"Record Quality Baseline\"\n        script=\"npm run quality 2>&1 || true\"\n        max_retries=0\n    ]\n\n    refactor [\n        label=\"Refactor\"\n        prompt=\"@prompts/refactor.md\"\n        max_visits=5\n    ]\n\n    evidence [\n        shape=parallelogram\n        label=\"Gather Evidence\"\n        script=\"{ printf '%s\\\\n' '=== QUALITY BEFORE ==='; npm run quality 2>&1 || true; printf '%s\\\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\\\n' '=== WORKING DIFF ==='; git diff -- .; }\"\n        max_retries=0\n    ]\n\n    validate [shape=tab, label=\"Validate\", prompt=\"@prompts/validate.md\"]\n    validate_after_repair [shape=tab, label=\"Validate Repair\", prompt=\"@prompts/validate.md\"]\n    verdict [shape=diamond, label=\"Validation Passed?\"]\n    repaired_verdict [shape=diamond, label=\"Repair Passed?\"]\n\n    repair [label=\"Repair\", prompt=\"@prompts/repair.md\"]\n    commit_message [shape=tab, label=\"Write Commit Message\", prompt=\"@prompts/commit-message.md\"]\n    commit [label=\"Commit\", prompt=\"@prompts/commit.md\"]\n    iteration_limit [shape=diamond, label=\"Five Iterations Complete?\"]\n    stopped [shape=tab, label=\"Stop After Two Failures\", prompt=\"@prompts/stopped.md\"]\n\n    start -> scope\n    scope -> baseline [condition=\"outcome=succeeded\"]\n    scope -> exit\n    baseline -> refactor -> evidence -> validate -> verdict\n    verdict -> commit_message [label=\"Pass\", condition=\"context.verdict=PASS\"]\n    verdict -> repair [label=\"Fail\", condition=\"context.verdict=FAIL\"]\n    verdict -> repair [label=\"Invalid Verdict\"]\n    repair -> evidence -> validate_after_repair -> repaired_verdict\n    repaired_verdict -> commit_message [label=\"Pass\", condition=\"context.verdict=PASS\"]\n    repaired_verdict -> stopped [label=\"Fail\", condition=\"context.verdict=FAIL\"]\n    repaired_verdict -> stopped [label=\"Invalid Verdict\"]\n    commit_message -> commit -> iteration_limit\n    iteration_limit -> exit [label=\"Complete\", condition=\"context.internal.node_visit_count >= 5\"]\n    iteration_limit -> baseline [label=\"Continue\"]\n    stopped -> exit\n}\n",
+    "workflow_slug": "refactor",
+    "source_directory": "/Users/jon.fazzaro/dev/lean-software-production/fabro-sandbox/calculator",
+    "provenance": {
+      "server": {
+        "version": "0.336.0-nightly.1"
+      },
+      "client": {
+        "user_agent": "fabro-cli/0.336.0-nightly.1",
+        "name": "fabro-cli",
+        "version": "0.336.0-nightly.1"
+      },
+      "subject": {
+        "kind": "user",
+        "identity": {
+          "issuer": "fabro:dev",
+          "subject": "dev"
+        },
+        "login": "dev",
+        "auth_method": "dev_token"
+      }
+    },
+    "manifest_blob": "edf1e2bbdd25f7b63913154563b2ec24331bb67364a44894376a2ed19ffc9832",
+    "definition_blob": "532b47e41502b087860c42b277c85f8179d7d66d2dfd34d312ad192c8eeec178",
+    "spec_blob": "c7a01bd231a88376fd7bb9d1b233f22d1654423b083724e3382f5756acb76412",
+    "git": {
+      "origin_url": "https://github.com/jonfazzaro/calculator",
+      "branch": "main",
+      "sha": "8f43599ced22726a3a1db7c2c2aa191afaf1d935",
+      "dirty": "clean"
+    }
+  },
+  "web_url": "http://127.0.0.1:32276/runs/01M0XM7HMXGBR9YHJKEXCN8YD8",
+  "start": null,
+  "status": {
+    "kind": "starting"
+  },
+  "status_updated_at": "2026-08-25T23:31:32.701360Z",
+  "last_event_at": "2026-08-25T23:31:33.606341Z",
+  "pending_control": null,
+  "checkpoints": [],
+  "conclusion": null,
+  "sandbox": {
+    "kind": "ready",
+    "plan": {
+      "provider": "docker",
+      "image": "node"
+    },
+    "instance": {
+      "provider": "docker",
+      "image": "node",
+      "runtime": {
+        "id": "31bf4f16582bd1165fac5263ef2cf3213a4e037ca9ac9d2f439118107838f4f2",
+        "working_directory": "/workspace/calculator",
+        "repo_cloned": true,
+        "clone_origin_url": "https://github.com/jonfazzaro/calculator",
+        "clone_branch": "main",
+        "workspace_root": "/workspace",
+        "repos_root": "/repos",
+        "primary_repo_path": "/repos/jonfazzaro/calculator",
+        "primary_repo_link": "/workspace/calculator"
+      }
+    }
+  },
+  "pull_request": null,
+  "superseded_by": null,
+  "pending_interviews": {},
+  "stages": {}
+}
