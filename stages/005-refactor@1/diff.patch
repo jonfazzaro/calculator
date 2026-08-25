@@ -1,0 +1,65 @@
+diff --git a/src/index.ts b/src/index.ts
+index 0493e45..84f7ec1 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -39,6 +39,20 @@ export function evaluateSpokenExpression(source: string): number {
+     throw new Error("Could not work that out.");
+   };
+ 
++  // Operators are prefix forms: "<word> <first> <connector> <second>".
++  const OPERATORS: Record<string, { connector: string; combine: (first: number, second: number) => number }> = {
++    add: { connector: "and", combine: (first, second) => first + second },
++    subtract: { connector: "from", combine: (first, second) => second - first },
++    multiply: { connector: "by", combine: (first, second) => first * second },
++    divide: {
++      connector: "by",
++      combine: (first, second) => {
++        if (second === 0) fail();
++        return first / second;
++      },
++    },
++  };
++
+   const read = (): number => {
+     const word = pieces[place++];
+     if (!word) fail();
+@@ -54,35 +68,12 @@ export function evaluateSpokenExpression(source: string): number {
+     const numberWord = NUMBER_WORDS[word];
+     if (numberWord !== undefined) return numberWord;
+ 
+-    // Operators are prefix forms. Each branch repeats the same parser work on
+-    // purpose, leaving several safe seams for the refactoring lesson.
+-    if (word === "add") {
+-      const first = read();
+-      if (pieces[place++] !== "and") fail();
+-      const second = read();
+-      return first + second;
+-    }
+-
+-    if (word === "subtract") {
+-      const first = read();
+-      if (pieces[place++] !== "from") fail();
+-      const second = read();
+-      return second - first;
+-    }
+-
+-    if (word === "multiply") {
+-      const first = read();
+-      if (pieces[place++] !== "by") fail();
+-      const second = read();
+-      return first * second;
+-    }
+-
+-    if (word === "divide") {
++    const operator = OPERATORS[word];
++    if (operator) {
+       const first = read();
+-      if (pieces[place++] !== "by") fail();
++      if (pieces[place++] !== operator.connector) fail();
+       const second = read();
+-      if (second === 0) fail();
+-      return first / second;
++      return operator.combine(first, second);
+     }
+ 
+     return fail();
