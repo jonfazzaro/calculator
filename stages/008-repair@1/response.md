@@ -1,0 +1,1 @@
+This extracts the tokenizing logic (lowercasing, spacing parentheses, splitting into words) into a separate `tokenize` function, giving it an intention-revealing name and shrinking `evaluateSpokenExpression` by 6 lines toward the function-size threshold. No behavior changes — the same tokenizing steps run in the same order producing the same `pieces` array.
