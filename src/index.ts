@@ -66,26 +66,31 @@ export function evaluateSpokenExpression(source: string): number {
     },
   };
 
+  const readParenthesized = (): number => {
+    const inside = read();
+    if (pieces[place++] !== ")") fail();
+    return inside;
+  };
+
+  const parseNumberWord = (word: string): number | undefined =>
+    /^\d+$/.test(word) ? Number(word) : NUMBER_WORDS[word];
+
+  const readOperatorExpression = (operator: (typeof operators)[string]): number => {
+    const [first, second] = readOperands(operator.connector);
+    return operator.apply(first, second);
+  };
+
   function read(): number {
     const word = pieces[place++];
     if (!word) fail();
 
-    if (word === "(") {
-      const inside = read();
-      if (pieces[place++] !== ")") fail();
-      return inside;
-    }
+    if (word === "(") return readParenthesized();
 
-    if (/^\d+$/.test(word)) return Number(word);
-
-    const numberWord = NUMBER_WORDS[word];
-    if (numberWord !== undefined) return numberWord;
+    const number = parseNumberWord(word);
+    if (number !== undefined) return number;
 
     const operator = operators[word];
-    if (operator) {
-      const [first, second] = readOperands(operator.connector);
-      return operator.apply(first, second);
-    }
+    if (operator) return readOperatorExpression(operator);
 
     return fail();
   }
