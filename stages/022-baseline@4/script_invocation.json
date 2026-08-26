@@ -1,0 +1,5 @@
+{
+  "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+  "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+  "language": "shell"
+}
