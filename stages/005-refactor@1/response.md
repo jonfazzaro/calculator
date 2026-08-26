@@ -1,0 +1,3 @@
+The refactor consolidates the four operator branches into a single `readBinaryOperation` helper that captures the shared "read first operand → expect connector word → read second operand → combine" pattern, while each operator supplies just its connector word and combining function. This removes the near-identical duplicated blocks (`add`, `subtract`, `multiply`, `divide`) without changing any behavior — same tokenizing, same parsing order, same error paths (including divide-by-zero still calling `fail()`).
+
+I did not run any commands per the constraints; the change is a small, mechanical extraction with no altered control flow or semantics.
