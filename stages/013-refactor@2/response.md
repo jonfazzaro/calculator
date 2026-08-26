@@ -1,0 +1,1 @@
+This replaces the four sequential `if` checks for operators with a lookup table (`OPERATORS`), reducing the cognitive complexity and line count of `read` while keeping behavior identical.
