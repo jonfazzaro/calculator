@@ -1,0 +1,68 @@
+diff --git a/src/index.ts b/src/index.ts
+index 1e0b8cd..0867737 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -16,6 +16,20 @@ const NUMBER_WORDS: Record<string, number> = {
+   twelve: 12,
+ };
+ 
++// Operators are prefix forms: "<operator> <first> <connector> <second>".
++const OPERATORS: Record<string, { connector: string; compute: (first: number, second: number) => number }> = {
++  add: { connector: "and", compute: (first, second) => first + second },
++  subtract: { connector: "from", compute: (first, second) => second - first },
++  multiply: { connector: "by", compute: (first, second) => first * second },
++  divide: {
++    connector: "by",
++    compute: (first, second) => {
++      if (second === 0) throw new Error("Could not work that out.");
++      return first / second;
++    },
++  },
++};
++
+ /**
+  * Evaluate the kata's tiny spoken-expression language.
+  *
+@@ -54,36 +68,13 @@ export function evaluateSpokenExpression(source: string): number {
+     const numberWord = NUMBER_WORDS[word];
+     if (numberWord !== undefined) return numberWord;
+ 
+-    // Operators are prefix forms: "<operator> <first> <connector> <second>".
+-    const readOperands = (connector: string): [number, number] => {
+-      const first = read();
+-      if (pieces[place++] !== connector) fail();
+-      const second = read();
+-      return [first, second];
+-    };
+-
+-    if (word === "add") {
+-      const [first, second] = readOperands("and");
+-      return first + second;
+-    }
+-
+-    if (word === "subtract") {
+-      const [first, second] = readOperands("from");
+-      return second - first;
+-    }
+-
+-    if (word === "multiply") {
+-      const [first, second] = readOperands("by");
+-      return first * second;
+-    }
+-
+-    if (word === "divide") {
+-      const [first, second] = readOperands("by");
+-      if (second === 0) fail();
+-      return first / second;
+-    }
++    const operator = OPERATORS[word];
++    if (!operator) return fail();
+ 
+-    return fail();
++    const first = read();
++    if (pieces[place++] !== operator.connector) fail();
++    const second = read();
++    return operator.compute(first, second);
+   };
+ 
+   const answer = read();

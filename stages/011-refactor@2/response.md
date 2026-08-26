@@ -1,0 +1,1 @@
+This collapses the four near-identical operator branches into a single data-driven lookup (`OPERATORS`), removing duplication while keeping `read()`'s control flow unchanged. Behavior is preserved: same connectors, same compute order, same divide-by-zero failure.
