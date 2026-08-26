@@ -46,6 +46,7 @@ digraph RefactorLine {
 
     repair [label="Repair", prompt="@prompts/repair.md"]
     iteration_limit [shape=diamond, label="Five Iterations Complete?"]
+    summarize [label="Summarize Pull Request", prompt="@prompts/pull-request-summary.md"]
     stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
 
     start -> scope
@@ -61,7 +62,8 @@ digraph RefactorLine {
     repaired_verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
     repaired_verdict -> stopped [label="Fail", condition="context.verdict=FAIL"]
     repaired_verdict -> stopped [label="Invalid Verdict"]
-    iteration_limit -> exit [label="Complete", condition="context.internal.node_visit_count >= 5"]
+    iteration_limit -> summarize [label="Complete", condition="context.internal.node_visit_count >= 5"]
     iteration_limit -> baseline [label="Continue"]
+    summarize -> exit
     stopped -> exit
 }
