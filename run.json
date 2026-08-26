@@ -553,7 +553,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T00:19:31.414108Z",
-  "last_event_at": "2026-08-26T00:31:03.709642Z",
+  "last_event_at": "2026-08-26T00:31:09.549228Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -4035,9 +4035,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 521,
       "checkpoint": {
-        "timestamp": "2026-08-26T00:31:03.719807Z",
+        "timestamp": "2026-08-26T00:31:06.487619Z",
         "current_node": "commit_message",
         "completed_nodes": [
           "start",
@@ -4060,49 +4060,125 @@
         ],
         "node_retries": {},
         "context_values": {
-          "thread.commit.current_node": "iteration_limit",
-          "last_stage": "commit_message",
-          "thread.baseline.current_node": "refactor",
-          "thread.refactor.current_node": "evidence",
-          "current_node": "commit_message",
-          "thread.scope.current_node": "dependencies",
-          "response.refactor": "This replaces the four sequential `if` checks for operators with a lookup table (`OPERATORS`), reducing the cognitive complexity and line count of `read` while keeping behavior identical.",
-          "thread.iteration_limit.current_node": "baseline",
-          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` (from evidence stage) shows `Test Files 1 passed (1)`, `Tests 9 passed (9)`; re-verified independently, same 9/9 passing result with no regressions.\n- [PASS] Reveals intention: The diff (`251dafa` → `4c80709`) replaces four near-identical `if (word === \"add\") return readBinaryOperation(...)` / `\"subtract\"` / `\"multiply\"` / `\"divide\"` branches with a single `OPERATORS` lookup table keyed by operator name, whose entries name `connector` and `combine` — the dispatch logic now reads as \"look up the operator's connector and combine function\" rather than four repeated conditionals, and no comment is needed to explain a decision that the table structure now makes plain (the leftover comment above the lookup was retained but is no longer required for the reader to follow the flow).\n- [PASS] No duplication: The four structurally identical `if (word === X) return readBinaryOperation(...)` lines were collapsed into one `OPERATORS[word]` lookup plus one `readBinaryOperation` call, removing the repeated dispatch pattern; `npm run quality` error count dropped from 5 (baseline) to 3 (now), with the two eliminated errors (`max-lines-per-function` on the arrow, `max-statements`) being byproducts of removing that duplicated branch code.\n- [PASS] Fewest elements: No new unused exports, functions, or dead paths were introduced — `OPERATORS` is consumed immediately in `read()`, and all four operators (`add`, `subtract`, `multiply`, `divide`) remain exercised by the existing 9-test suite; nothing was added that the tests don't already cover.\n\nQuality comparison: baseline (`251dafa`) reported 5 eslint errors (`max-lines-per-function` ×2, `sonarjs/cognitive-complexity` 10→5, `max-statements` 14→12, `complexity` 10→5). Current state reports 3 errors (`max-lines-per-function` on `evaluateSpokenExpression` at 49 lines, `cognitive-complexity` 7→5, `complexity` 7→5) — strictly fewer problems and lower complexity/statement figures than baseline, so quality is no worse (it improved). The only diff to source is confined to `src/index.ts` (16 insertions, 10 deletions), matching the requested target; `dist/*` changes are regenerated build artifacts, not source edits.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
-          "internal.retry_count.verdict": 0,
-          "internal.retry_count.iteration_limit": 0,
-          "internal.run_id": "01M0XPZC2DPGT353ADHJCGC150",
-          "command.output": "blob://sha256/b400867f8fe3d22a51de52b11e5b87604a4b84364d45de17699b680d315982fa",
-          "thread.start.current_node": "scope",
-          "thread.evidence.current_node": "validate",
-          "thread.validate.current_node": "verdict",
-          "thread.commit_message.current_node": "commit",
-          "verdict": "PASS",
-          "failure_signature": "",
-          "internal.retry_count.evidence": 0,
-          "internal.retry_count.scope": 0,
-          "internal.retry_count.commit_message": 0,
-          "internal.work_dir": "/workspace/calculator",
           "failure_class": "",
-          "internal.retry_count.dependencies": 0,
-          "internal.retry_count.commit": 0,
-          "outcome": "succeeded",
           "thread.dependencies.current_node": "baseline",
+          "response.commit_message": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count, moving toward the max-lines-per-function,\ncomplexity, and max-statements ESLint thresholds while keeping\nall 9 tests passing.",
+          "thread.verdict.current_node": "commit_message",
+          "last_response": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count",
+          "thread.iteration_limit.current_node": "baseline",
+          "internal.retry_count.evidence": 0,
+          "thread.scope.current_node": "dependencies",
+          "internal.run_id": "01M0XPZC2DPGT353ADHJCGC150",
+          "internal.retry_count.validate": 0,
+          "verdict": "PASS",
+          "response.commit": "I haven't created a commit yet — here's what I found and what's blocking it.\n\n**The problem: the actual refactoring commit message is not available to me.**\n\nThe completed stages list says stage `commit_message` \"succeeded,\" but the only artifact I can find for it is the wrapper commit `3ec535a`, whose body is just the generic Fabro workflow boilerplate:\n\n```\nfabro(01M0XPZC2DPGT353ADHJCGC150): commit_message (succeeded)\n\nFabro-Run: 01M0XPZC2DPGT353ADHJCGC150\nFabro-Completed: 9\nFabro-Checkpoint: a00e3d599ae2620d6ebdd3b1720ee53af1040c12\n```\n\nThat's a run-tracking commit, not the refactoring commit message itself. The `Fabro-Checkpoint` hash it references (`a00e3d599ae2620...`) doesn't exist in this repo (`git cat-file -t` fails on it), and I couldn't find the actual generated message text anywhere on disk — I checked `/tmp`, `/tmp/fabro`, `.fabro/tmp`, npm caches, node compile caches, and recently-modified files across the filesystem. There's no separate state store I have access to that holds the LLM-authored commit message from that stage.\n\n**Second issue: the working diff doesn't contain the refactoring.**\n\n`git status`/`git diff` right now show only:\n- `dist/cli.js`, `dist/index.js` (built output, already regenerated from `src/index.ts` in commit `c94653f`)\n- `node_modules/.vite/vitest/.../results.json` (a tracked test-runner cache file, changes on every `npm test` run)\n\nThe actual source change — extracting `readBinaryOperation` out of `evaluateSpokenExpression` in `src/index.ts` — was already committed in `c94653f` (\"refactor (succeeded)\"). `src/index.ts` shows no working-tree diff; it's clean. So there's nothing uncommitted in `src/` to commit, and the `dist/*.js` diffs are just rebuild artifacts of a change that's already in history, not new work.\n\n**Bottom line:** I can't safely create \"one commit containing only the completed refactoring\" because (a) the refactoring itself is already committed in `c94653f`, and (b) the only uncommitted diff is regenerated build output plus a test-cache file, not source changes, and (c) I don't have the actual commit-message text the preceding stage was supposed to produce — only a placeholder wrapper message.\n\nI did not create any commit, per the instruction to stop and report rather than commit an empty or wrong diff. To unblock this, I'd need either the actual text the `commit_message` stage produced, or confirmation that the intended commit is simply the `dist/*.js` rebuild output (which I can commit as a build-sync commit, but that isn't \"the completed refactoring\").",
+          "outcome": "succeeded",
+          "internal.retry_count.iteration_limit": 0,
+          "internal.retry_count.commit_message": 0,
+          "command.output": "blob://sha256/b400867f8fe3d22a51de52b11e5b87604a4b84364d45de17699b680d315982fa",
+          "internal.retry_count.commit": 0,
           "graph.rankdir": "LR",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
-          "internal.thread_id": "verdict",
-          "internal.retry_count.start": 0,
-          "last_response": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count",
-          "internal.retry_count.refactor": 0,
-          "internal.retry_count.validate": 0,
-          "response.commit_message": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count, moving toward the max-lines-per-function,\ncomplexity, and max-statements ESLint thresholds while keeping\nall 9 tests passing.",
+          "thread.refactor.current_node": "evidence",
+          "internal.retry_count.scope": 0,
+          "last_stage": "commit_message",
+          "thread.validate.current_node": "verdict",
+          "failure_signature": "",
+          "thread.start.current_node": "scope",
+          "internal.work_dir": "/workspace/calculator",
           "internal.node_visit_count": 2,
-          "thread.verdict.current_node": "commit_message",
+          "internal.retry_count.refactor": 0,
+          "internal.retry_count.verdict": 0,
+          "thread.evidence.current_node": "validate",
+          "internal.fidelity": "compact",
+          "response.refactor": "This replaces the four sequential `if` checks for operators with a lookup table (`OPERATORS`), reducing the cognitive complexity and line count of `read` while keeping behavior identical.",
+          "thread.commit_message.current_node": "commit",
+          "current_node": "commit_message",
           "internal.retry_count.baseline": 0,
-          "response.commit": "I haven't created a commit yet — here's what I found and what's blocking it.\n\n**The problem: the actual refactoring commit message is not available to me.**\n\nThe completed stages list says stage `commit_message` \"succeeded,\" but the only artifact I can find for it is the wrapper commit `3ec535a`, whose body is just the generic Fabro workflow boilerplate:\n\n```\nfabro(01M0XPZC2DPGT353ADHJCGC150): commit_message (succeeded)\n\nFabro-Run: 01M0XPZC2DPGT353ADHJCGC150\nFabro-Completed: 9\nFabro-Checkpoint: a00e3d599ae2620d6ebdd3b1720ee53af1040c12\n```\n\nThat's a run-tracking commit, not the refactoring commit message itself. The `Fabro-Checkpoint` hash it references (`a00e3d599ae2620...`) doesn't exist in this repo (`git cat-file -t` fails on it), and I couldn't find the actual generated message text anywhere on disk — I checked `/tmp`, `/tmp/fabro`, `.fabro/tmp`, npm caches, node compile caches, and recently-modified files across the filesystem. There's no separate state store I have access to that holds the LLM-authored commit message from that stage.\n\n**Second issue: the working diff doesn't contain the refactoring.**\n\n`git status`/`git diff` right now show only:\n- `dist/cli.js`, `dist/index.js` (built output, already regenerated from `src/index.ts` in commit `c94653f`)\n- `node_modules/.vite/vitest/.../results.json` (a tracked test-runner cache file, changes on every `npm test` run)\n\nThe actual source change — extracting `readBinaryOperation` out of `evaluateSpokenExpression` in `src/index.ts` — was already committed in `c94653f` (\"refactor (succeeded)\"). `src/index.ts` shows no working-tree diff; it's clean. So there's nothing uncommitted in `src/` to commit, and the `dist/*.js` diffs are just rebuild artifacts of a change that's already in history, not new work.\n\n**Bottom line:** I can't safely create \"one commit containing only the completed refactoring\" because (a) the refactoring itself is already committed in `c94653f`, and (b) the only uncommitted diff is regenerated build output plus a test-cache file, not source changes, and (c) I don't have the actual commit-message text the preceding stage was supposed to produce — only a placeholder wrapper message.\n\nI did not create any commit, per the instruction to stop and report rather than commit an empty or wrong diff. To unblock this, I'd need either the actual text the `commit_message` stage produced, or confirmation that the intended commit is simply the `dist/*.js` rebuild output (which I can commit as a build-sync commit, but that isn't \"the completed refactoring\").",
-          "internal.fidelity": "compact"
+          "internal.retry_count.dependencies": 0,
+          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` (from evidence stage) shows `Test Files 1 passed (1)`, `Tests 9 passed (9)`; re-verified independently, same 9/9 passing result with no regressions.\n- [PASS] Reveals intention: The diff (`251dafa` → `4c80709`) replaces four near-identical `if (word === \"add\") return readBinaryOperation(...)` / `\"subtract\"` / `\"multiply\"` / `\"divide\"` branches with a single `OPERATORS` lookup table keyed by operator name, whose entries name `connector` and `combine` — the dispatch logic now reads as \"look up the operator's connector and combine function\" rather than four repeated conditionals, and no comment is needed to explain a decision that the table structure now makes plain (the leftover comment above the lookup was retained but is no longer required for the reader to follow the flow).\n- [PASS] No duplication: The four structurally identical `if (word === X) return readBinaryOperation(...)` lines were collapsed into one `OPERATORS[word]` lookup plus one `readBinaryOperation` call, removing the repeated dispatch pattern; `npm run quality` error count dropped from 5 (baseline) to 3 (now), with the two eliminated errors (`max-lines-per-function` on the arrow, `max-statements`) being byproducts of removing that duplicated branch code.\n- [PASS] Fewest elements: No new unused exports, functions, or dead paths were introduced — `OPERATORS` is consumed immediately in `read()`, and all four operators (`add`, `subtract`, `multiply`, `divide`) remain exercised by the existing 9-test suite; nothing was added that the tests don't already cover.\n\nQuality comparison: baseline (`251dafa`) reported 5 eslint errors (`max-lines-per-function` ×2, `sonarjs/cognitive-complexity` 10→5, `max-statements` 14→12, `complexity` 10→5). Current state reports 3 errors (`max-lines-per-function` on `evaluateSpokenExpression` at 49 lines, `cognitive-complexity` 7→5, `complexity` 7→5) — strictly fewer problems and lower complexity/statement figures than baseline, so quality is no worse (it improved). The only diff to source is confined to `src/index.ts` (16 insertions, 10 deletions), matching the requested target; `dist/*` changes are regenerated build artifacts, not source edits.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.baseline.current_node": "refactor",
+          "internal.thread_id": "verdict",
+          "thread.commit.current_node": "iteration_limit",
+          "internal.retry_count.start": 0
         },
         "node_outcomes": {
+          "commit_message": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "commit_message",
+              "response.commit_message": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count, moving toward the max-lines-per-function,\ncomplexity, and max-statements ESLint thresholds while keeping\nall 9 tests passing.",
+              "last_response": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count"
+            },
+            "notes": "Stage completed: commit_message",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 3386,
+                    "output_tokens": 117,
+                    "reasoning_tokens": 0,
+                    "cache_read_tokens": 0,
+                    "cache_write_tokens": 0
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 0,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 7942
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 3572,
+              "tool_time_ms": 0,
+              "active_time_ms": 3572
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/bebadc7abddaca71f697a04e93dad0e34e9f1ba2f24d0584b2d9946072f005d5"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 41690,
+              "active_time_ms": 41690
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/202730e12bd31986c7901aab9676696330ee2c7df42865d000b2ca106482d5aa"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 629,
+              "active_time_ms": 629
+            }
+          },
           "validate": {
             "status": "succeeded",
             "context_updates": {
@@ -4142,47 +4218,18 @@
               "active_time_ms": 136745
             }
           },
-          "verdict": {
-            "status": "succeeded",
-            "notes": "Conditional node evaluated: verdict",
-            "usage": null
-          },
-          "commit_message": {
+          "evidence": {
             "status": "succeeded",
             "context_updates": {
-              "last_stage": "commit_message",
-              "response.commit_message": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count, moving toward the max-lines-per-function,\ncomplexity, and max-statements ESLint thresholds while keeping\nall 9 tests passing.",
-              "last_response": "Extract token-reduction logic from evaluateSpokenExpression\n\nSplit the oversized parsing/evaluation function into smaller,\nnamed helpers to reduce cognitive complexity, line count, and\nstatement count"
+              "command.output": "blob://sha256/b400867f8fe3d22a51de52b11e5b87604a4b84364d45de17699b680d315982fa"
             },
-            "notes": "Stage completed: commit_message",
-            "usage": {
-              "input": {
-                "usage": {
-                  "model": {
-                    "provider": "openrouter",
-                    "model_id": "claude-sonnet-5"
-                  },
-                  "tokens": {
-                    "input_tokens": 3386,
-                    "output_tokens": 117,
-                    "reasoning_tokens": 0,
-                    "cache_read_tokens": 0,
-                    "cache_write_tokens": 0
-                  }
-                },
-                "facts": {
-                  "algorithm": "anthropic",
-                  "cache_write_5m_tokens": 0,
-                  "cache_write_1h_tokens": 0
-                }
-              },
-              "total_usd_micros": 7942
-            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
             "timing": {
               "wall_time_ms": 0,
-              "inference_time_ms": 3572,
-              "tool_time_ms": 0,
-              "active_time_ms": 3572
+              "inference_time_ms": 0,
+              "tool_time_ms": 1543,
+              "active_time_ms": 1543
             }
           },
           "commit": {
@@ -4223,19 +4270,9 @@
               "active_time_ms": 377008
             }
           },
-          "evidence": {
+          "start": {
             "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/b400867f8fe3d22a51de52b11e5b87604a4b84364d45de17699b680d315982fa"
-            },
-            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 1543,
-              "active_time_ms": 1543
-            }
+            "usage": null
           },
           "refactor": {
             "status": "succeeded",
@@ -4278,20 +4315,6 @@
               "active_time_ms": 18945
             }
           },
-          "dependencies": {
-            "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/bebadc7abddaca71f697a04e93dad0e34e9f1ba2f24d0584b2d9946072f005d5"
-            },
-            "notes": "Script completed: npm install --package-lock=false",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 41690,
-              "active_time_ms": 41690
-            }
-          },
           "scope": {
             "status": "succeeded",
             "context_updates": {
@@ -4305,50 +4328,196 @@
               "tool_time_ms": 136,
               "active_time_ms": 136
             }
-          },
-          "iteration_limit": {
-            "status": "succeeded",
-            "notes": "Conditional node evaluated: iteration_limit",
-            "usage": null
-          },
-          "start": {
-            "status": "succeeded",
-            "usage": null
-          },
-          "baseline": {
-            "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/202730e12bd31986c7901aab9676696330ee2c7df42865d000b2ca106482d5aa"
-            },
-            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 629,
-              "active_time_ms": 629
-            }
           }
         },
         "next_node_id": "commit",
+        "git_commit_sha": "c4456c680974e73debffbffc46e7f5b6be7f32a0",
         "node_visits": {
-          "validate": 2,
-          "iteration_limit": 1,
-          "verdict": 2,
-          "scope": 1,
-          "evidence": 2,
-          "dependencies": 1,
           "start": 1,
-          "baseline": 2,
-          "commit_message": 2,
+          "scope": 1,
           "commit": 1,
-          "refactor": 2
+          "evidence": 2,
+          "refactor": 2,
+          "iteration_limit": 1,
+          "commit_message": 2,
+          "baseline": 2,
+          "dependencies": 1,
+          "verdict": 2,
+          "validate": 2
         }
       },
-      "diff": {}
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 24,
+          "deletions": 32
+        }
+      }
     }
   ],
-  "conclusion": null,
+  "conclusion": {
+    "timestamp": "2026-08-26T00:31:09.597230Z",
+    "status": "failed",
+    "timing": {
+      "wall_time_ms": 698138,
+      "inference_time_ms": 594366,
+      "tool_time_ms": 56110,
+      "active_time_ms": 650476
+    },
+    "failure": {
+      "reason": "cancelled",
+      "detail": {
+        "message": "Pipeline cancelled",
+        "category": "canceled"
+      }
+    },
+    "final_git_commit_sha": "c4456c680974e73debffbffc46e7f5b6be7f32a0",
+    "stages": [
+      {
+        "stage_id": "start",
+        "stage_label": "start",
+        "timing": {
+          "wall_time_ms": 0,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "scope",
+        "stage_label": "scope",
+        "timing": {
+          "wall_time_ms": 140,
+          "inference_time_ms": 0,
+          "tool_time_ms": 136,
+          "active_time_ms": 136
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "dependencies",
+        "stage_label": "dependencies",
+        "timing": {
+          "wall_time_ms": 41693,
+          "inference_time_ms": 0,
+          "tool_time_ms": 41690,
+          "active_time_ms": 41690
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "baseline",
+        "stage_label": "baseline",
+        "timing": {
+          "wall_time_ms": 1474,
+          "inference_time_ms": 0,
+          "tool_time_ms": 1468,
+          "active_time_ms": 1468
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "refactor",
+        "stage_label": "refactor",
+        "timing": {
+          "wall_time_ms": 46188,
+          "inference_time_ms": 45751,
+          "tool_time_ms": 222,
+          "active_time_ms": 45973
+        },
+        "billing_usd_micros": 125018,
+        "retries": 0
+      },
+      {
+        "stage_id": "evidence",
+        "stage_label": "evidence",
+        "timing": {
+          "wall_time_ms": 3193,
+          "inference_time_ms": 0,
+          "tool_time_ms": 3184,
+          "active_time_ms": 3184
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "validate",
+        "stage_label": "validate",
+        "timing": {
+          "wall_time_ms": 174056,
+          "inference_time_ms": 169451,
+          "tool_time_ms": 4403,
+          "active_time_ms": 173854
+        },
+        "billing_usd_micros": 275715,
+        "retries": 0
+      },
+      {
+        "stage_id": "verdict",
+        "stage_label": "verdict",
+        "timing": {
+          "wall_time_ms": 2,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "commit_message",
+        "stage_label": "commit_message",
+        "timing": {
+          "wall_time_ms": 7177,
+          "inference_time_ms": 7163,
+          "tool_time_ms": 0,
+          "active_time_ms": 7163
+        },
+        "billing_usd_micros": 13314,
+        "retries": 0
+      },
+      {
+        "stage_id": "commit",
+        "stage_label": "commit",
+        "timing": {
+          "wall_time_ms": 377147,
+          "inference_time_ms": 372001,
+          "tool_time_ms": 5007,
+          "active_time_ms": 377008
+        },
+        "billing_usd_micros": 591158,
+        "retries": 0
+      },
+      {
+        "stage_id": "iteration_limit",
+        "stage_label": "iteration_limit",
+        "timing": {
+          "wall_time_ms": 0,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      }
+    ],
+    "billing": {
+      "input_tokens": 63215,
+      "output_tokens": 10720,
+      "total_tokens": 1274363,
+      "reasoning_tokens": 28809,
+      "cache_read_tokens": 1063289,
+      "cache_write_tokens": 108330,
+      "total_usd_micros": 1005205
+    },
+    "total_retries": 0,
+    "diff": {
+      "patch": "diff --git a/src/index.ts b/src/index.ts\nindex 0493e45..6ac9a11 100644\n--- a/src/index.ts\n+++ b/src/index.ts\n@@ -39,6 +39,19 @@ export function evaluateSpokenExpression(source: string): number {\n     throw new Error(\"Could not work that out.\");\n   };\n \n+  const OPERATORS: Record<string, { connector: string; combine: (first: number, second: number) => number }> = {\n+    add: { connector: \"and\", combine: (first, second) => first + second },\n+    subtract: { connector: \"from\", combine: (first, second) => second - first },\n+    multiply: { connector: \"by\", combine: (first, second) => first * second },\n+    divide: {\n+      connector: \"by\",\n+      combine: (first, second) => {\n+        if (second === 0) fail();\n+        return first / second;\n+      },\n+    },\n+  };\n+\n   const read = (): number => {\n     const word = pieces[place++];\n     if (!word) fail();\n@@ -54,40 +67,19 @@ export function evaluateSpokenExpression(source: string): number {\n     const numberWord = NUMBER_WORDS[word];\n     if (numberWord !== undefined) return numberWord;\n \n-    // Operators are prefix forms. Each branch repeats the same parser work on\n-    // purpose, leaving several safe seams for the refactoring lesson.\n-    if (word === \"add\") {\n-      const first = read();\n-      if (pieces[place++] !== \"and\") fail();\n-      const second = read();\n-      return first + second;\n-    }\n-\n-    if (word === \"subtract\") {\n-      const first = read();\n-      if (pieces[place++] !== \"from\") fail();\n-      const second = read();\n-      return second - first;\n-    }\n-\n-    if (word === \"multiply\") {\n-      const first = read();\n-      if (pieces[place++] !== \"by\") fail();\n-      const second = read();\n-      return first * second;\n-    }\n-\n-    if (word === \"divide\") {\n-      const first = read();\n-      if (pieces[place++] !== \"by\") fail();\n-      const second = read();\n-      if (second === 0) fail();\n-      return first / second;\n-    }\n-\n-    return fail();\n+    // Operators are prefix forms: <operator> <first> <connector> <second>.\n+    const operator = OPERATORS[word];\n+    if (!operator) return fail();\n+    return readBinaryOperation(operator.connector, operator.combine);\n   };\n \n+  function readBinaryOperation(connector: string, combine: (first: number, second: number) => number): number {\n+    const first = read();\n+    if (pieces[place++] !== connector) fail();\n+    const second = read();\n+    return combine(first, second);\n+  }\n+\n   const answer = read();\n   if (place !== pieces.length) fail();\n   return answer;\n",
+      "summary": {
+        "files_changed": 1,
+        "additions": 24,
+        "deletions": 32
+      }
+    }
+  },
   "sandbox": {
     "kind": "ready",
     "plan": {
@@ -4682,7 +4851,12 @@
       "first_event_seq": 514,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Stage completed: commit_message",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:31:03.718789Z"
+      },
       "provider_used": {
         "mode": "prompt",
         "provider": "openrouter",
@@ -4696,6 +4870,12 @@
       "started_at": "2026-08-26T00:31:00.130483Z",
       "handler": "prompt",
       "graph_visit": 2,
+      "timing": {
+        "wall_time_ms": 3579,
+        "inference_time_ms": 3572,
+        "tool_time_ms": 0,
+        "active_time_ms": 3572
+      },
       "usage": {
         "input_tokens": 3386,
         "output_tokens": 117,
@@ -4709,6 +4889,165 @@
         "provider": "openrouter",
         "model_id": "claude-sonnet-5"
       },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "commit@2": {
+      "first_event_seq": 524,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": {
+        "mode": "agent",
+        "provider": "openrouter",
+        "model": "claude-sonnet-5"
+      },
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:31:06.493543Z",
+      "handler": "agent",
+      "graph_visit": 2,
+      "live_inference_ms": 2959,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "permission_level": "full",
+      "agent_tools": [
+        {
+          "name": "Agent",
+          "description": "Launch a child agent for an independent task. Agents run in the background by default and notify the parent when they finish. Set run_in_background to false to wait for the result synchronously.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "AskUserQuestion",
+          "description": "Ask the human up to four questions when a decision is genuinely theirs to make. The UI automatically provides an Other option for custom text.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Bash",
+          "description": "Execute a Bash command in a fresh foreground non-login shell. Use this for searches, git inspection, builds, tests, package managers, and terminal operations. Prefer `rg` for content search and `rg --files` for file discovery. Working-directory and environment changes do not persist between calls. `timeout` is in milliseconds, defaults to 120000, and is capped at 600000.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "shell",
+          "invoked": false
+        },
+        {
+          "name": "Edit",
+          "description": "Edit a file by replacing an exact string. The old_string must be an exact match and unique unless replace_all is true; include surrounding context when needed. Read the file first and preserve existing indentation.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": false
+        },
+        {
+          "name": "Read",
+          "description": "Read files before editing them. Returns line-numbered text and supports offset/limit for large files. Use this instead of shell cat, head, tail, or sed when inspecting repository files.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "read",
+          "invoked": false
+        },
+        {
+          "name": "SendMessage",
+          "description": "Send additional instructions to a background agent by its task ID. A running agent receives them at a safe turn boundary. A completed agent starts another turn in the same session with its existing history.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskCreate",
+          "description": "Create pending tasks in the current session. Use concise subjects, descriptions, optional activeForm text, and metadata. Check TaskList first to avoid duplicate tasks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskGet",
+          "description": "Get one task by taskId, including subject, status, description, owner, blockedBy, and blocks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskList",
+          "description": "List tasks for the current session, including status, owner, and blocking dependencies. Use TaskGet with a taskId for full description and dependency details.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskOutput",
+          "description": "Get a background agent's current status or wait for its final output. Automatic completion notifications make ordinary polling unnecessary.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskStop",
+          "description": "Stop a running or completed background agent by task ID.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskUpdate",
+          "description": "Update an existing task's status, text, owner, metadata, or dependencies. Valid statuses are pending, in_progress, completed, and deleted. After completing a task, call TaskList to find newly unblocked work.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "WebFetch",
+          "description": "Fetch an HTTP or HTTPS URL and answer the supplied prompt from its contents.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Write",
+          "description": "Create new files, or overwrite an existing file only when replacement is explicitly intended. Prefer edit_file for targeted changes to existing files because write_file overwrites the full file content.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": false
+        }
+      ],
       "agent_control": "running",
       "state": "running"
     },
