@@ -517,7 +517,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:01:38.155131Z",
-  "last_event_at": "2026-08-26T13:12:39.517814Z",
+  "last_event_at": "2026-08-26T13:12:42.472785Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -5549,9 +5549,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 605,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:12:39.528696Z",
+        "timestamp": "2026-08-26T13:12:42.472785Z",
         "current_node": "verdict",
         "completed_nodes": [
           "start",
@@ -5583,15 +5583,261 @@
         ],
         "node_retries": {},
         "context_values": {
+          "outcome": "succeeded",
+          "internal.retry_count.dependencies": 0,
+          "thread.dependencies.current_node": "baseline",
+          "internal.retry_count.evidence": 0,
+          "current_node": "verdict",
+          "failure_signature": "",
+          "last_response": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with ",
+          "internal.retry_count.validate": 0,
+          "thread.refactor.current_node": "evidence",
+          "internal.fidelity": "compact",
+          "thread.start.current_node": "scope",
+          "internal.retry_count.iteration_limit": 0,
+          "graph.rankdir": "LR",
+          "internal.retry_count.baseline": 0,
+          "internal.retry_count.scope": 0,
+          "command.output": "blob://sha256/290c897ac48720dca8cb05f4f3c58f484ddc79db21e635ac6117aeb200f0da4f",
+          "failure_class": "",
+          "thread.verdict.current_node": "iteration_limit",
+          "thread.scope.current_node": "dependencies",
+          "thread.baseline.current_node": "refactor",
+          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with no errors.\n- [PASS] Reveals intention: The diff (`git diff 9e26432 HEAD -- src/index.ts`) extracts a named `tokenize(source)` function replacing an inline `.toLowerCase().replace(...).split(...)` chain, and replaces the four `if (word === \"add\") {...} if (word === \"subtract\") {...}` blocks with a `operators` record keyed by plain-language operator names (`add`, `subtract`, `multiply`, `divide`) each carrying an explicit `connector` and `apply` function, and a `readOperands(connector)` helper — names describe the operation in plain terms without added comments.\n- [PASS] No duplication: The four near-identical if-blocks (each doing `read()`, check connector word, `read()`, then apply an operation) were collapsed into one shared `readOperands` helper driven by the `operators` table, removing the structurally duplicated parsing logic that `sonarjs/no-duplicated-branches`-style review would flag. `npx eslint src` reports no duplication findings (the duplication-focused rules `sonarjs/no-identical-functions` and `sonarjs/no-duplicated-branches` are not among the 4 remaining errors).\n- [PASS] Fewest elements (no regression): No unused exports or dead code introduced; `tokenize` and `readOperands` are both used inline, and eslint/knip report no new unused-code findings. This criterion wasn't the focus of this step but shows no regression.\n- [PASS] Quality no worse than baseline / stays within target: Only `src/index.ts` differs in this iteration's diff. Baseline eslint had 4 errors (`max-lines-per-function` 52 lines, `max-statements` 14, `complexity` 7, `sonarjs/cognitive-complexity` 7). Current `npx eslint src` still reports exactly 4 errors on the same rules, with `max-lines-per-function` improved from 52 to 46 lines and the other three unchanged — same error count, one metric measurably better, none worse.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "internal.retry_count.start": 0,
+          "internal.thread_id": "validate",
+          "internal.retry_count.verdict": 0,
+          "response.refactor": "Extracted the tokenizing logic (lowercasing, parenthesis spacing, splitting, and filtering) into a named `tokenize` function, separating \"turn text into words\" from \"parse and evaluate words\" within `evaluateSpokenExpression`. This is a pure extraction with no behavior change—same regex, same order of operations, just given an intention-revealing name and pulled out of the larger function.",
+          "verdict": "PASS",
+          "internal.node_visit_count": 4,
+          "thread.evidence.current_node": "validate",
+          "internal.run_id": "01M0Z2JTK0XJ6PHFM9NPXFY51R",
+          "internal.work_dir": "/workspace/calculator",
+          "internal.retry_count.refactor": 0,
+          "last_stage": "validate",
+          "thread.iteration_limit.current_node": "baseline",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "thread.validate.current_node": "verdict"
+        },
+        "node_outcomes": {
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 134,
+              "active_time_ms": 134
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/290c897ac48720dca8cb05f4f3c58f484ddc79db21e635ac6117aeb200f0da4f"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1760,
+              "active_time_ms": 1760
+            }
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "response.refactor": "Extracted the tokenizing logic (lowercasing, parenthesis spacing, splitting, and filtering) into a named `tokenize` function, separating \"turn text into words\" from \"parse and evaluate words\" within `evaluateSpokenExpression`. This is a pure extraction with no behavior change—same regex, same order of operations, just given an intention-revealing name and pulled out of the larger function.",
+              "last_stage": "refactor",
+              "last_response": "Extracted the tokenizing logic (lowercasing, parenthesis spacing, splitting, and filtering) into a named `tokenize` function, separating \"turn text into words\" from \"parse and evaluate words\" within `"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 7312,
+                    "output_tokens": 808,
+                    "reasoning_tokens": 398,
+                    "cache_read_tokens": 20459,
+                    "cache_write_tokens": 14390
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 14390,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 66752
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 17916,
+              "tool_time_ms": 72,
+              "active_time_ms": 17988
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "verdict": "PASS",
+              "last_response": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with ",
+              "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with no errors.\n- [PASS] Reveals intention: The diff (`git diff 9e26432 HEAD -- src/index.ts`) extracts a named `tokenize(source)` function replacing an inline `.toLowerCase().replace(...).split(...)` chain, and replaces the four `if (word === \"add\") {...} if (word === \"subtract\") {...}` blocks with a `operators` record keyed by plain-language operator names (`add`, `subtract`, `multiply`, `divide`) each carrying an explicit `connector` and `apply` function, and a `readOperands(connector)` helper — names describe the operation in plain terms without added comments.\n- [PASS] No duplication: The four near-identical if-blocks (each doing `read()`, check connector word, `read()`, then apply an operation) were collapsed into one shared `readOperands` helper driven by the `operators` table, removing the structurally duplicated parsing logic that `sonarjs/no-duplicated-branches`-style review would flag. `npx eslint src` reports no duplication findings (the duplication-focused rules `sonarjs/no-identical-functions` and `sonarjs/no-duplicated-branches` are not among the 4 remaining errors).\n- [PASS] Fewest elements (no regression): No unused exports or dead code introduced; `tokenize` and `readOperands` are both used inline, and eslint/knip report no new unused-code findings. This criterion wasn't the focus of this step but shows no regression.\n- [PASS] Quality no worse than baseline / stays within target: Only `src/index.ts` differs in this iteration's diff. Baseline eslint had 4 errors (`max-lines-per-function` 52 lines, `max-statements` 14, `complexity` 7, `sonarjs/cognitive-complexity` 7). Current `npx eslint src` still reports exactly 4 errors on the same rules, with `max-lines-per-function` improved from 52 to 46 lines and the other three unchanged — same error count, one metric measurably better, none worse.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 16634,
+                    "output_tokens": 1736,
+                    "reasoning_tokens": 6072,
+                    "cache_read_tokens": 181343,
+                    "cache_write_tokens": 24840
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 24840,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 209717
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 123832,
+              "tool_time_ms": 2722,
+              "active_time_ms": 126554
+            }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/ceb81c4522cd48f023a1c134334b1d9c23237cd2d42b2e5815ad0624a23b0217"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 739,
+              "active_time_ms": 739
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 42938,
+              "active_time_ms": 42938
+            }
+          }
+        },
+        "next_node_id": "iteration_limit",
+        "git_commit_sha": "ee71fb51c209b8a74ead1663d0d7151199047cf8",
+        "node_visits": {
+          "start": 1,
+          "validate": 4,
+          "scope": 1,
+          "evidence": 4,
+          "refactor": 4,
+          "baseline": 4,
+          "verdict": 4,
+          "dependencies": 1,
+          "iteration_limit": 3
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 41,
+          "deletions": 39
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:12:42.482273Z",
+        "current_node": "iteration_limit",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit"
+        ],
+        "node_retries": {},
+        "context_values": {
           "thread.start.current_node": "scope",
           "last_response": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with ",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "last_stage": "validate",
           "internal.retry_count.evidence": 0,
           "thread.scope.current_node": "dependencies",
-          "internal.thread_id": "validate",
+          "internal.thread_id": "verdict",
           "internal.retry_count.dependencies": 0,
-          "current_node": "verdict",
+          "current_node": "iteration_limit",
           "thread.dependencies.current_node": "baseline",
           "verdict": "PASS",
           "thread.iteration_limit.current_node": "baseline",
@@ -5771,7 +6017,7 @@
             "usage": null
           }
         },
-        "next_node_id": "iteration_limit",
+        "next_node_id": "baseline",
         "node_visits": {
           "refactor": 4,
           "verdict": 4,
@@ -5781,7 +6027,7 @@
           "dependencies": 1,
           "evidence": 4,
           "baseline": 4,
-          "iteration_limit": 3
+          "iteration_limit": 4
         }
       },
       "diff": {}
@@ -6488,6 +6734,42 @@
       "graph_visit": 3,
       "timing": {
         "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "verdict@4": {
+      "first_event_seq": 600,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Conditional node evaluated: verdict",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:12:39.527452Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:12:39.524234Z",
+      "handler": "conditional",
+      "graph_visit": 4,
+      "timing": {
+        "wall_time_ms": 1,
         "inference_time_ms": 0,
         "tool_time_ms": 0,
         "active_time_ms": 0
