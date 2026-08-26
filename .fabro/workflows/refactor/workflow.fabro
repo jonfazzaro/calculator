@@ -22,7 +22,7 @@ digraph RefactorLine {
     baseline [
         shape=parallelogram
         label="Record Quality Baseline"
-        script="npm run quality 2>&1 || true"
+        script="npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true"
         max_retries=0
     ]
 
@@ -35,12 +35,12 @@ digraph RefactorLine {
     evidence [
         shape=parallelogram
         label="Gather Evidence"
-        script="{ printf '%s\\n' '=== QUALITY BEFORE ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF ==='; git diff -- .; }"
+        script="{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }"
         max_retries=0
     ]
 
-    validate [shape=tab, label="Validate", prompt="@prompts/validate.md"]
-    validate_after_repair [shape=tab, label="Validate Repair", prompt="@prompts/validate.md"]
+    validate [label="Validate", prompt="@prompts/validate.md"]
+    validate_after_repair [label="Validate Repair", prompt="@prompts/validate.md"]
     verdict [shape=diamond, label="Validation Passed?"]
     repaired_verdict [shape=diamond, label="Repair Passed?"]
 
