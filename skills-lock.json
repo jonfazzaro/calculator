@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "skills": {
+    "continuous-specification": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "continuous-specification/SKILL.md",
+      "computedHash": "be8aeec53062ea27edde90266e144640c0eeeac842f0f1aa092cbdd188a875d2"
+    },
+    "describe-structure": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "describe-structure/SKILL.md",
+      "computedHash": "502d6d589b1c1fe7f468c6660e7f426097ba52517784b87442fcee719500ee80"
+    },
+    "discovery-trees": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "discovery-trees/SKILL.md",
+      "computedHash": "b8782218714dfcd62d13e32fd21531541c8354c17a8aa13db7df80dbca9668e2"
+    },
+    "ensemble-review": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "ensemble-review/SKILL.md",
+      "computedHash": "0959141634e4837406fd20cdadd575e54c807e42509a02839117254e424d6bfe"
+    },
+    "micro-commits": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "micro-commits/SKILL.md",
+      "computedHash": "ebd237832d79ae3125079e5ee042f7e4a790049747cf1bd2d25d977088da1e01"
+    },
+    "nullables": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "nullables/SKILL.md",
+      "computedHash": "bdf8e8de63a735342dea05dd86e30a7004da0af962a51f4924c2b68bc9431c78"
+    },
+    "refactoring": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "refactoring/SKILL.md",
+      "computedHash": "bcd29ea7c87a864643b6d291b715fb962d99b335af704360e5ebf8aed1a3532d"
+    },
+    "targeted-mutation-testing": {
+      "source": "jonfazzaro/skills",
+      "sourceType": "github",
+      "skillPath": "targeted-mutation-testing/SKILL.md",
+      "computedHash": "945e7ce11a01b8ec8c9ea4707b6f6ff4923d54da30e72764de3af21ae1c8bdec"
+    }
+  }
+}
