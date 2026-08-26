@@ -517,7 +517,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:01:38.155131Z",
-  "last_event_at": "2026-08-26T13:13:11.658230Z",
+  "last_event_at": "2026-08-26T13:13:14.547428Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -6287,9 +6287,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 654,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:13:11.669937Z",
+        "timestamp": "2026-08-26T13:13:14.539777Z",
         "current_node": "refactor",
         "completed_nodes": [
           "start",
@@ -6324,15 +6324,265 @@
         ],
         "node_retries": {},
         "context_values": {
+          "thread.refactor.current_node": "evidence",
+          "internal.thread_id": "baseline",
+          "outcome": "succeeded",
+          "thread.evidence.current_node": "validate",
+          "thread.scope.current_node": "dependencies",
+          "internal.work_dir": "/workspace/calculator",
+          "thread.baseline.current_node": "refactor",
+          "internal.retry_count.scope": 0,
+          "internal.retry_count.start": 0,
+          "internal.retry_count.dependencies": 0,
+          "internal.retry_count.baseline": 0,
+          "internal.retry_count.refactor": 0,
+          "failure_signature": "",
+          "thread.validate.current_node": "verdict",
+          "internal.run_id": "01M0Z2JTK0XJ6PHFM9NPXFY51R",
+          "graph.rankdir": "LR",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "response.refactor": "Refactored `read()` in `src/index.ts` by extracting `readParenthesized`, `parseNumberWord`, and `readOperatorExpression` helpers. This lowers `read`'s statement count and cyclomatic/cognitive complexity while keeping the same parsing logic and names that describe each operation. No behavior changed and no code outside `src/index.ts` was touched.",
+          "verdict": "PASS",
+          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with no errors.\n- [PASS] Reveals intention: The diff (`git diff 9e26432 HEAD -- src/index.ts`) extracts a named `tokenize(source)` function replacing an inline `.toLowerCase().replace(...).split(...)` chain, and replaces the four `if (word === \"add\") {...} if (word === \"subtract\") {...}` blocks with a `operators` record keyed by plain-language operator names (`add`, `subtract`, `multiply`, `divide`) each carrying an explicit `connector` and `apply` function, and a `readOperands(connector)` helper — names describe the operation in plain terms without added comments.\n- [PASS] No duplication: The four near-identical if-blocks (each doing `read()`, check connector word, `read()`, then apply an operation) were collapsed into one shared `readOperands` helper driven by the `operators` table, removing the structurally duplicated parsing logic that `sonarjs/no-duplicated-branches`-style review would flag. `npx eslint src` reports no duplication findings (the duplication-focused rules `sonarjs/no-identical-functions` and `sonarjs/no-duplicated-branches` are not among the 4 remaining errors).\n- [PASS] Fewest elements (no regression): No unused exports or dead code introduced; `tokenize` and `readOperands` are both used inline, and eslint/knip report no new unused-code findings. This criterion wasn't the focus of this step but shows no regression.\n- [PASS] Quality no worse than baseline / stays within target: Only `src/index.ts` differs in this iteration's diff. Baseline eslint had 4 errors (`max-lines-per-function` 52 lines, `max-statements` 14, `complexity` 7, `sonarjs/cognitive-complexity` 7). Current `npx eslint src` still reports exactly 4 errors on the same rules, with `max-lines-per-function` improved from 52 to 46 lines and the other three unchanged — same error count, one metric measurably better, none worse.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.verdict.current_node": "iteration_limit",
+          "thread.dependencies.current_node": "baseline",
+          "internal.retry_count.iteration_limit": 0,
+          "failure_class": "",
+          "internal.retry_count.evidence": 0,
+          "internal.retry_count.verdict": 0,
+          "command.output": "blob://sha256/bd341527b5c7244a1156b637c625db3e50481bc67f9a432081edc3f30ac4d2a3",
+          "current_node": "refactor",
+          "last_response": "Refactored `read()` in `src/index.ts` by extracting `readParenthesized`, `parseNumberWord`, and `readOperatorExpression` helpers. This lowers `read`'s statement count and cyclomatic/cognitive complexi",
+          "internal.node_visit_count": 5,
+          "internal.retry_count.validate": 0,
+          "thread.iteration_limit.current_node": "baseline",
+          "thread.start.current_node": "scope",
+          "last_stage": "refactor",
+          "internal.fidelity": "compact"
+        },
+        "node_outcomes": {
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/290c897ac48720dca8cb05f4f3c58f484ddc79db21e635ac6117aeb200f0da4f"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1760,
+              "active_time_ms": 1760
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 42938,
+              "active_time_ms": 42938
+            }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/bd341527b5c7244a1156b637c625db3e50481bc67f9a432081edc3f30ac4d2a3"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 627,
+              "active_time_ms": 627
+            }
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 134,
+              "active_time_ms": 134
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "response.refactor": "Refactored `read()` in `src/index.ts` by extracting `readParenthesized`, `parseNumberWord`, and `readOperatorExpression` helpers. This lowers `read`'s statement count and cyclomatic/cognitive complexity while keeping the same parsing logic and names that describe each operation. No behavior changed and no code outside `src/index.ts` was touched.",
+              "last_stage": "refactor",
+              "last_response": "Refactored `read()` in `src/index.ts` by extracting `readParenthesized`, `parseNumberWord`, and `readOperatorExpression` helpers. This lowers `read`'s statement count and cyclomatic/cognitive complexi"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 8621,
+                    "output_tokens": 837,
+                    "reasoning_tokens": 1037,
+                    "cache_read_tokens": 21671,
+                    "cache_write_tokens": 15668
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 15668,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 79487
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 22985,
+              "tool_time_ms": 65,
+              "active_time_ms": 23050
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "verdict": "PASS",
+              "last_response": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with ",
+              "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npx vitest run` (invoked via `npm test`) reports `Test Files 1 passed (1)`, `Tests 9 passed (9)` after the refactor; build via `tsc` succeeds with no errors.\n- [PASS] Reveals intention: The diff (`git diff 9e26432 HEAD -- src/index.ts`) extracts a named `tokenize(source)` function replacing an inline `.toLowerCase().replace(...).split(...)` chain, and replaces the four `if (word === \"add\") {...} if (word === \"subtract\") {...}` blocks with a `operators` record keyed by plain-language operator names (`add`, `subtract`, `multiply`, `divide`) each carrying an explicit `connector` and `apply` function, and a `readOperands(connector)` helper — names describe the operation in plain terms without added comments.\n- [PASS] No duplication: The four near-identical if-blocks (each doing `read()`, check connector word, `read()`, then apply an operation) were collapsed into one shared `readOperands` helper driven by the `operators` table, removing the structurally duplicated parsing logic that `sonarjs/no-duplicated-branches`-style review would flag. `npx eslint src` reports no duplication findings (the duplication-focused rules `sonarjs/no-identical-functions` and `sonarjs/no-duplicated-branches` are not among the 4 remaining errors).\n- [PASS] Fewest elements (no regression): No unused exports or dead code introduced; `tokenize` and `readOperands` are both used inline, and eslint/knip report no new unused-code findings. This criterion wasn't the focus of this step but shows no regression.\n- [PASS] Quality no worse than baseline / stays within target: Only `src/index.ts` differs in this iteration's diff. Baseline eslint had 4 errors (`max-lines-per-function` 52 lines, `max-statements` 14, `complexity` 7, `sonarjs/cognitive-complexity` 7). Current `npx eslint src` still reports exactly 4 errors on the same rules, with `max-lines-per-function` improved from 52 to 46 lines and the other three unchanged — same error count, one metric measurably better, none worse.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 16634,
+                    "output_tokens": 1736,
+                    "reasoning_tokens": 6072,
+                    "cache_read_tokens": 181343,
+                    "cache_write_tokens": 24840
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 24840,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 209717
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 123832,
+              "tool_time_ms": 2722,
+              "active_time_ms": 126554
+            }
+          }
+        },
+        "next_node_id": "evidence",
+        "git_commit_sha": "400e1228bdac3b8eef52b3345b7f50cf7351156d",
+        "node_visits": {
+          "scope": 1,
+          "start": 1,
+          "verdict": 4,
+          "iteration_limit": 4,
+          "dependencies": 1,
+          "evidence": 4,
+          "baseline": 5,
+          "refactor": 5,
+          "validate": 4
+        }
+      },
+      "diff": {
+        "patch": "diff --git a/src/index.ts b/src/index.ts\nindex ef5ba66..65a7c20 100644\n--- a/src/index.ts\n+++ b/src/index.ts\n@@ -66,26 +66,31 @@ export function evaluateSpokenExpression(source: string): number {\n     },\n   };\n \n+  const readParenthesized = (): number => {\n+    const inside = read();\n+    if (pieces[place++] !== \")\") fail();\n+    return inside;\n+  };\n+\n+  const parseNumberWord = (word: string): number | undefined =>\n+    /^\\d+$/.test(word) ? Number(word) : NUMBER_WORDS[word];\n+\n+  const readOperatorExpression = (operator: (typeof operators)[string]): number => {\n+    const [first, second] = readOperands(operator.connector);\n+    return operator.apply(first, second);\n+  };\n+\n   function read(): number {\n     const word = pieces[place++];\n     if (!word) fail();\n \n-    if (word === \"(\") {\n-      const inside = read();\n-      if (pieces[place++] !== \")\") fail();\n-      return inside;\n-    }\n-\n-    if (/^\\d+$/.test(word)) return Number(word);\n+    if (word === \"(\") return readParenthesized();\n \n-    const numberWord = NUMBER_WORDS[word];\n-    if (numberWord !== undefined) return numberWord;\n+    const number = parseNumberWord(word);\n+    if (number !== undefined) return number;\n \n     const operator = operators[word];\n-    if (operator) {\n-      const [first, second] = readOperands(operator.connector);\n-      return operator.apply(first, second);\n-    }\n+    if (operator) return readOperatorExpression(operator);\n \n     return fail();\n   }\n",
+        "summary": {
+          "files_changed": 1,
+          "additions": 58,
+          "deletions": 51
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:13:16.204066Z",
+        "current_node": "evidence",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence"
+        ],
+        "node_retries": {},
+        "context_values": {
           "thread.start.current_node": "scope",
           "last_response": "Refactored `read()` in `src/index.ts` by extracting `readParenthesized`, `parseNumberWord`, and `readOperatorExpression` helpers. This lowers `read`'s statement count and cyclomatic/cognitive complexi",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "last_stage": "refactor",
           "internal.retry_count.evidence": 0,
           "thread.scope.current_node": "dependencies",
-          "internal.thread_id": "baseline",
+          "internal.thread_id": "refactor",
           "internal.retry_count.dependencies": 0,
-          "current_node": "refactor",
+          "current_node": "evidence",
           "thread.dependencies.current_node": "baseline",
           "verdict": "PASS",
           "thread.iteration_limit.current_node": "baseline",
@@ -6358,21 +6608,21 @@
           "thread.verdict.current_node": "iteration_limit",
           "internal.work_dir": "/workspace/calculator",
           "internal.retry_count.iteration_limit": 0,
-          "command.output": "blob://sha256/bd341527b5c7244a1156b637c625db3e50481bc67f9a432081edc3f30ac4d2a3"
+          "command.output": "blob://sha256/263089e21b9821510d8284455da9f1cd2a128bf9b07b5e9812262384ffd76b90"
         },
         "node_outcomes": {
           "evidence": {
             "status": "succeeded",
             "context_updates": {
-              "command.output": "blob://sha256/290c897ac48720dca8cb05f4f3c58f484ddc79db21e635ac6117aeb200f0da4f"
+              "command.output": "blob://sha256/263089e21b9821510d8284455da9f1cd2a128bf9b07b5e9812262384ffd76b90"
             },
             "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
             "usage": null,
             "timing": {
               "wall_time_ms": 0,
               "inference_time_ms": 0,
-              "tool_time_ms": 1760,
-              "active_time_ms": 1760
+              "tool_time_ms": 1651,
+              "active_time_ms": 1651
             }
           },
           "iteration_limit": {
@@ -6512,7 +6762,7 @@
             "usage": null
           }
         },
-        "next_node_id": "evidence",
+        "next_node_id": "validate",
         "node_visits": {
           "refactor": 5,
           "verdict": 4,
@@ -6520,7 +6770,7 @@
           "scope": 1,
           "start": 1,
           "dependencies": 1,
-          "evidence": 4,
+          "evidence": 5,
           "baseline": 5,
           "iteration_limit": 4
         }
@@ -7062,7 +7312,12 @@
       "first_event_seq": 626,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Stage completed: refactor",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:13:11.668859Z"
+      },
       "provider_used": {
         "mode": "agent",
         "provider": "openrouter",
@@ -7076,8 +7331,12 @@
       "started_at": "2026-08-26T13:12:48.506818Z",
       "handler": "agent",
       "graph_visit": 5,
-      "live_inference_ms": 22985,
-      "live_tool_ms": 65,
+      "timing": {
+        "wall_time_ms": 23159,
+        "inference_time_ms": 22985,
+        "tool_time_ms": 65,
+        "active_time_ms": 23050
+      },
       "usage": {
         "input_tokens": 8621,
         "output_tokens": 837,
@@ -7255,7 +7514,7 @@
         "warnings": []
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "refactor@3": {
       "first_event_seq": 350,
@@ -9292,6 +9551,35 @@
       },
       "agent_control": "running",
       "state": "succeeded"
+    },
+    "evidence@5": {
+      "first_event_seq": 657,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "command": "exec 2>&1\n{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:13:14.546571Z",
+      "handler": "command",
+      "graph_visit": 5,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
     }
   }
 }

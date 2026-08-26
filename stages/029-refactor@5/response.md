@@ -1,0 +1,1 @@
+Refactored `read()` in `src/index.ts` by extracting `readParenthesized`, `parseNumberWord`, and `readOperatorExpression` helpers. This lowers `read`'s statement count and cyclomatic/cognitive complexity while keeping the same parsing logic and names that describe each operation. No behavior changed and no code outside `src/index.ts` was touched.
