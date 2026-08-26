@@ -1,0 +1,3 @@
+## Summary
+
+Refactored `read()` in `src/index.ts`: replaced four near-identical `if (word === "add"/"subtract"/"multiply"/"divide")` blocks — each parsing operands via a shared `readOperands` closure and then applying its own arithmetic — with a single `OPERATORS` lookup table mapping each operator word to its `connector` and `compute` function. The parsing logic (read first operand, check connector, read second operand) now appears once in `read()` instead of being repeated per operator, and the four arithmetic rules are declared as plain data rather than control flow. Behavior is unchanged: same tokens, same connectors, same divide-by-zero failure path via the passed-in `fail`.
