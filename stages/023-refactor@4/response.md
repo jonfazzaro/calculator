@@ -1,0 +1,1 @@
+This pulls the two literal-parsing checks (digit strings and number words) into a single named `parseLiteral` helper, cutting one branch out of `read` and giving the "is this word a number?" concept an explicit name. Behavior is unchanged — same checks, same order, same fallback to `undefined`.
