@@ -1,0 +1,1 @@
+This removes the duplicated "read operand → check linking word → read second operand → compute" pattern across the four operator branches (`add`, `subtract`, `multiply`, `divide`) into a single `readBinaryOperation` helper, keeping each operator's specific linking word and computation inline and readable. No behavior changes — same tokens, same error conditions, same results.
