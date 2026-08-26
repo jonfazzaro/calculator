@@ -30,6 +30,11 @@ const OPERATORS: Record<string, { connector: string; compute: (first: number, se
   },
 };
 
+function parseLiteral(word: string): number | undefined {
+  if (/^\d+$/.test(word)) return Number(word);
+  return NUMBER_WORDS[word];
+}
+
 function tokenize(source: string): string[] {
   return source
     .toLowerCase()
@@ -67,10 +72,8 @@ export function evaluateSpokenExpression(source: string): number {
       return inside;
     }
 
-    if (/^\d+$/.test(word)) return Number(word);
-
-    const numberWord = NUMBER_WORDS[word];
-    if (numberWord !== undefined) return numberWord;
+    const literal = parseLiteral(word);
+    if (literal !== undefined) return literal;
 
     const operator = OPERATORS[word];
     if (!operator) return fail();
