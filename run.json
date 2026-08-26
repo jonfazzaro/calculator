@@ -518,7 +518,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T00:31:48.079912Z",
-  "last_event_at": "2026-08-26T00:31:52.085744Z",
+  "last_event_at": "2026-08-26T00:32:37.861444Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -620,9 +620,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 38,
       "checkpoint": {
-        "timestamp": "2026-08-26T00:32:35.185743Z",
+        "timestamp": "2026-08-26T00:32:37.855851Z",
         "current_node": "dependencies",
         "completed_nodes": [
           "start",
@@ -631,21 +631,104 @@
         ],
         "node_retries": {},
         "context_values": {
+          "internal.retry_count.dependencies": 0,
+          "failure_signature": "",
+          "thread.scope.current_node": "dependencies",
+          "internal.retry_count.scope": 0,
+          "failure_class": "",
+          "internal.thread_id": "scope",
+          "graph.rankdir": "LR",
+          "internal.work_dir": "/workspace/calculator",
+          "thread.start.current_node": "scope",
+          "current_node": "dependencies",
+          "internal.retry_count.start": 0,
+          "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
+          "internal.node_visit_count": 1,
+          "outcome": "succeeded",
+          "internal.fidelity": "compact"
+        },
+        "node_outcomes": {
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 129,
+              "active_time_ms": 129
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 43094,
+              "active_time_ms": 43094
+            }
+          }
+        },
+        "next_node_id": "baseline",
+        "git_commit_sha": "a504b9daba2c6eea5e37a1cb01e447f6adb303e3",
+        "node_visits": {
+          "scope": 1,
+          "start": 1,
+          "dependencies": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 0,
+          "additions": 0,
+          "deletions": 0
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T00:32:38.701628Z",
+        "current_node": "baseline",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline"
+        ],
+        "node_retries": {},
+        "context_values": {
           "failure_class": "",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "internal.retry_count.dependencies": 0,
-          "current_node": "dependencies",
+          "current_node": "baseline",
+          "internal.retry_count.baseline": 0,
           "outcome": "succeeded",
           "internal.retry_count.start": 0,
-          "internal.thread_id": "scope",
+          "internal.thread_id": "dependencies",
           "internal.fidelity": "compact",
           "internal.node_visit_count": 1,
           "internal.work_dir": "/workspace/calculator",
+          "thread.dependencies.current_node": "baseline",
           "thread.start.current_node": "scope",
           "internal.retry_count.scope": 0,
           "graph.rankdir": "LR",
           "failure_signature": "",
-          "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160",
+          "command.output": "blob://sha256/366ff23949cfce4e4e11fbbc6538b38bc22464889cadc6c30123a5bad2c5ac8c",
           "thread.scope.current_node": "dependencies",
           "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y"
         },
@@ -681,13 +764,28 @@
               "tool_time_ms": 129,
               "active_time_ms": 129
             }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/366ff23949cfce4e4e11fbbc6538b38bc22464889cadc6c30123a5bad2c5ac8c"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 835,
+              "active_time_ms": 835
+            }
           }
         },
-        "next_node_id": "baseline",
+        "next_node_id": "refactor",
         "node_visits": {
-          "start": 1,
           "scope": 1,
-          "dependencies": 1
+          "dependencies": 1,
+          "start": 1,
+          "baseline": 1
         }
       },
       "diff": {}
@@ -720,6 +818,121 @@
   "superseded_by": null,
   "pending_interviews": {},
   "stages": {
+    "start@1": {
+      "first_event_seq": 17,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": null,
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:31:49.514302Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:31:49.509462Z",
+      "handler": "start",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "dependencies@1": {
+      "first_event_seq": 31,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: npm install --package-lock=false",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:32:35.185004Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm install --package-lock=false",
+        "command": "exec 2>&1\nnpm install --package-lock=false",
+        "language": "shell"
+      },
+      "script_timing": {
+        "output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160",
+        "exit_code": 0,
+        "duration_ms": 43094,
+        "termination": "exited",
+        "output_bytes": 653,
+        "live_streaming": true
+      },
+      "parallel_results": null,
+      "output": null,
+      "output_bytes": 653,
+      "live_streaming": true,
+      "termination": "exited",
+      "started_at": "2026-08-26T00:31:52.085105Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 43098,
+        "inference_time_ms": 0,
+        "tool_time_ms": 43094,
+        "active_time_ms": 43094
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "baseline@1": {
+      "first_event_seq": 41,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:32:37.860417Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
+    },
     "scope@1": {
       "first_event_seq": 21,
       "prompt": null,
@@ -769,71 +982,6 @@
       },
       "agent_control": "running",
       "state": "succeeded"
-    },
-    "start@1": {
-      "first_event_seq": 17,
-      "prompt": null,
-      "response": null,
-      "completion": {
-        "outcome": "succeeded",
-        "notes": null,
-        "failure_reason": null,
-        "timestamp": "2026-08-26T00:31:49.514302Z"
-      },
-      "provider_used": null,
-      "diff": null,
-      "script_invocation": null,
-      "script_timing": null,
-      "parallel_results": null,
-      "output": null,
-      "started_at": "2026-08-26T00:31:49.509462Z",
-      "handler": "start",
-      "graph_visit": 1,
-      "timing": {
-        "wall_time_ms": 0,
-        "inference_time_ms": 0,
-        "tool_time_ms": 0,
-        "active_time_ms": 0
-      },
-      "usage": {
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "total_tokens": 0,
-        "reasoning_tokens": 0,
-        "cache_read_tokens": 0,
-        "cache_write_tokens": 0
-      },
-      "agent_control": "running",
-      "state": "succeeded"
-    },
-    "dependencies@1": {
-      "first_event_seq": 31,
-      "prompt": null,
-      "response": null,
-      "completion": null,
-      "provider_used": null,
-      "diff": null,
-      "script_invocation": {
-        "script": "npm install --package-lock=false",
-        "command": "exec 2>&1\nnpm install --package-lock=false",
-        "language": "shell"
-      },
-      "script_timing": null,
-      "parallel_results": null,
-      "output": null,
-      "started_at": "2026-08-26T00:31:52.085105Z",
-      "handler": "command",
-      "graph_visit": 1,
-      "usage": {
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "total_tokens": 0,
-        "reasoning_tokens": 0,
-        "cache_read_tokens": 0,
-        "cache_write_tokens": 0
-      },
-      "agent_control": "running",
-      "state": "running"
     }
   }
 }
