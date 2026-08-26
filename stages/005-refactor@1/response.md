@@ -1,0 +1,1 @@
+This removes the four repeated "parse operand, expect connector word, parse operand" blocks by naming that shared pattern once as `readOperands`, while keeping each operator's own arithmetic (`add`, `from`-order subtraction, `by`, `by`+zero-check) distinct. Behavior is unchanged: same tokenization, same error conditions, same evaluation order.
