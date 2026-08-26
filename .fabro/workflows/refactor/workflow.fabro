@@ -1,9 +1,7 @@
 digraph RefactorLine {
     graph [goal="Make one small, behavior-preserving calculator refactoring per iteration"]
-    rankdir=LR
 
     start [shape=Mdiamond, label="Start"]
-    exit [shape=Msquare, label="Exit"]
 
     scope [
         shape=parallelogram
@@ -40,28 +38,38 @@ digraph RefactorLine {
     ]
 
     validate [label="Validate", prompt="@prompts/validate.md"]
-    validate_after_repair [label="Validate Repair", prompt="@prompts/validate.md"]
     verdict [shape=diamond, label="Validation Passed?"]
-    repaired_verdict [shape=diamond, label="Repair Passed?"]
 
     repair [label="Repair", prompt="@prompts/repair.md"]
+
+    validate_after_repair [label="Validate Repair", prompt="@prompts/validate.md"]
+    repaired_verdict [shape=diamond, label="Repair Passed?"]
+
     iteration_limit [shape=diamond, label="Five Iterations Complete?"]
     summarize [label="Summarize Pull Request", prompt="@prompts/summary.md"]
     stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
 
+    exit [shape=Msquare, label="Exit"]
+
     start -> scope
     scope -> dependencies [condition="outcome=succeeded"]
     scope -> exit
+
     dependencies -> baseline [condition="outcome=succeeded"]
     dependencies -> exit
+
     baseline -> refactor -> evidence -> validate -> verdict
+
     verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
     verdict -> repair [label="Fail", condition="context.verdict=FAIL"]
     verdict -> repair [label="Invalid Verdict"]
+
     repair -> evidence -> validate_after_repair -> repaired_verdict
+
     repaired_verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
     repaired_verdict -> stopped [label="Fail", condition="context.verdict=FAIL"]
     repaired_verdict -> stopped [label="Invalid Verdict"]
+
     iteration_limit -> summarize [label="Complete", condition="context.internal.node_visit_count >= 5"]
     iteration_limit -> baseline [label="Continue"]
     summarize -> exit
