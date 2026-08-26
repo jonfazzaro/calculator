@@ -1,0 +1,5 @@
+{
+  "script": "test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+  "command": "exec 2>&1\ntest -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+  "language": "shell"
+}

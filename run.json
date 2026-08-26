@@ -544,14 +544,110 @@
     }
   },
   "web_url": "http://127.0.0.1:32276/runs/01M0XPZC2DPGT353ADHJCGC150",
-  "start": null,
-  "status": {
-    "kind": "starting"
+  "start": {
+    "start_time": "2026-08-26T00:19:31.414057Z",
+    "run_branch": "fabro/run/01M0XPZC2DPGT353ADHJCGC150",
+    "base_sha": "1be2ed5b3af9b8bb358f9fd370a6778b374cf878"
   },
-  "status_updated_at": "2026-08-26T00:19:30.592976Z",
-  "last_event_at": "2026-08-26T00:19:31.321983Z",
+  "status": {
+    "kind": "running"
+  },
+  "status_updated_at": "2026-08-26T00:19:31.414108Z",
+  "last_event_at": "2026-08-26T00:19:32.854108Z",
   "pending_control": null,
-  "checkpoints": [],
+  "checkpoints": [
+    {
+      "seq": 20,
+      "checkpoint": {
+        "timestamp": "2026-08-26T00:19:32.710927Z",
+        "current_node": "start",
+        "completed_nodes": [
+          "start"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "internal.node_visit_count": 1,
+          "failure_signature": "",
+          "failure_class": "",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.thread_id": null,
+          "outcome": "succeeded",
+          "current_node": "start",
+          "internal.run_id": "01M0XPZC2DPGT353ADHJCGC150",
+          "graph.rankdir": "LR",
+          "internal.fidelity": "compact",
+          "internal.retry_count.start": 0,
+          "internal.work_dir": "/workspace/calculator"
+        },
+        "node_outcomes": {
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          }
+        },
+        "next_node_id": "scope",
+        "node_visits": {
+          "start": 1
+        }
+      },
+      "diff": {}
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T00:19:32.860888Z",
+        "current_node": "scope",
+        "completed_nodes": [
+          "start",
+          "scope"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "failure_signature": "",
+          "internal.retry_count.scope": 0,
+          "current_node": "scope",
+          "internal.work_dir": "/workspace/calculator",
+          "failure_class": "",
+          "outcome": "succeeded",
+          "graph.rankdir": "LR",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.thread_id": "start",
+          "internal.run_id": "01M0XPZC2DPGT353ADHJCGC150",
+          "internal.retry_count.start": 0,
+          "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
+          "thread.start.current_node": "scope",
+          "internal.node_visit_count": 1,
+          "internal.fidelity": "compact"
+        },
+        "node_outcomes": {
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 136,
+              "active_time_ms": 136
+            }
+          }
+        },
+        "next_node_id": "dependencies",
+        "node_visits": {
+          "scope": 1,
+          "start": 1
+        }
+      },
+      "diff": {}
+    }
+  ],
   "conclusion": null,
   "sandbox": {
     "kind": "ready",
@@ -578,5 +674,81 @@
   "pull_request": null,
   "superseded_by": null,
   "pending_interviews": {},
-  "stages": {}
+  "stages": {
+    "scope@1": {
+      "first_event_seq": 21,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+        "command": "exec 2>&1\ntest -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+        "language": "shell"
+      },
+      "script_timing": {
+        "output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
+        "exit_code": 0,
+        "duration_ms": 136,
+        "termination": "exited",
+        "output_bytes": 21,
+        "live_streaming": true
+      },
+      "parallel_results": null,
+      "output": null,
+      "output_bytes": 21,
+      "live_streaming": true,
+      "termination": "exited",
+      "started_at": "2026-08-26T00:19:32.714351Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
+    },
+    "start@1": {
+      "first_event_seq": 17,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": null,
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:19:32.710685Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:19:32.706684Z",
+      "handler": "start",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    }
+  }
 }
