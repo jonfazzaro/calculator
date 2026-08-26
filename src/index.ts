@@ -62,13 +62,17 @@ export function evaluateSpokenExpression(source: string): number {
     throw new Error("Could not work that out.");
   };
 
+  const consume = (expected: string): void => {
+    if (pieces[place++] !== expected) fail();
+  };
+
   const read = (): number => {
     const word = pieces[place++];
     if (!word) fail();
 
     if (word === "(") {
       const inside = read();
-      if (pieces[place++] !== ")") fail();
+      consume(")");
       return inside;
     }
 
@@ -79,7 +83,7 @@ export function evaluateSpokenExpression(source: string): number {
     if (!operator) return fail();
 
     const first = read();
-    if (pieces[place++] !== operator.connector) fail();
+    consume(operator.connector);
     const second = read();
     return operator.compute(first, second);
   };
