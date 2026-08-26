@@ -30,6 +30,16 @@ const OPERATORS: Record<string, { connector: string; compute: (first: number, se
   },
 };
 
+function tokenize(source: string): string[] {
+  return source
+    .toLowerCase()
+    .replace(/\(/g, " ( ")
+    .replace(/\)/g, " ) ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
 /**
  * Evaluate the kata's tiny spoken-expression language.
  *
@@ -39,13 +49,7 @@ const OPERATORS: Record<string, { connector: string; compute: (first: number, se
  * to emulate.
  */
 export function evaluateSpokenExpression(source: string): number {
-  const pieces = source
-    .toLowerCase()
-    .replace(/\(/g, " ( ")
-    .replace(/\)/g, " ) ")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
+  const pieces = tokenize(source);
   let place = 0;
 
   const fail = (): never => {
