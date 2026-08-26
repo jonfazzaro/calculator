@@ -1,0 +1,1 @@
+Extracted the tokenization logic (lowercasing, spacing parentheses, splitting into words) out of `evaluateSpokenExpression` into a new, clearly named `tokenize` function. This reduces the line count and cognitive load of `evaluateSpokenExpression` while giving the tokenizing step an intention-revealing name, with no behavior change.
