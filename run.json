@@ -518,7 +518,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T00:31:48.079912Z",
-  "last_event_at": "2026-08-26T00:46:57.352550Z",
+  "last_event_at": "2026-08-26T00:48:07.732814Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -6537,9 +6537,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 748,
       "checkpoint": {
-        "timestamp": "2026-08-26T00:46:59.005353Z",
+        "timestamp": "2026-08-26T00:47:02.009787Z",
         "current_node": "evidence",
         "completed_nodes": [
           "start",
@@ -6575,6 +6575,256 @@
         ],
         "node_retries": {},
         "context_values": {
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.retry_count.evidence": 0,
+          "internal.thread_id": "refactor",
+          "failure_class": "",
+          "thread.baseline.current_node": "refactor",
+          "thread.validate.current_node": "verdict",
+          "thread.start.current_node": "scope",
+          "internal.fidelity": "compact",
+          "internal.retry_count.baseline": 0,
+          "verdict": "PASS",
+          "internal.retry_count.validate": 0,
+          "internal.retry_count.iteration_limit": 0,
+          "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
+          "thread.evidence.current_node": "validate",
+          "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` output shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit code 0, per the evidence stage and confirmed by re-running `npm test` (9/9 passing, build succeeds).\n- [PASS] Reveals intention: The diff extracts the previously anonymous `read()` closure into named helpers — `nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, and a top-level `parseExpression` — each name stating in plain language what the operation does (get the next word, assert an expected word, read a parenthesized value, read an operator's two operands, read any value). `evaluateSpokenExpression` now reads as \"tokenize, then parse\" instead of mixing tokenizing/parsing/name resolution in one block.\n- [PASS] No duplication: `npm run quality` (post-change) reports only a single `max-lines-per-function` finding for `parseExpression`; no duplication findings from eslint/knip. Manual read of the new code shows no near-identical passages — each helper has a distinct responsibility.\n- [PASS] Fewest elements: Every new helper (`nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, `parseExpression`) is used exactly once inside the parse flow that is exercised by the existing 9 tests (operator evaluation, parenthesized expressions, digit/word numbers, malformed-expression rejection). No dead code was introduced; the extraction only renamed/relocated existing logic.\n```\n\nAdditional evidence:\n- Diff is scoped to `src/index.ts` only (`git diff --stat b60c6f2 HEAD -- src test` → `src/index.ts | 54 ++++++++++++++++++++++++++++++++-----------------------`), matching the requested target and staying in scope — no test files or other source files were touched.\n- Quality regression check: baseline had 4 errors (`max-lines-per-function`, `cognitive-complexity`, `max-statements`, `complexity`) all on the single `evaluateSpokenExpression` function; current quality run shows only 1 error (`max-lines-per-function` on `parseExpression`, 37 lines vs. limit 20). This is a net reduction from 4 problems to 1, with no new categories of error introduced — quality is not worse than baseline and is credibly improved (cognitive-complexity, max-statements, and complexity errors are fully resolved).\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "internal.retry_count.scope": 0,
+          "response.refactor": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line limit, names the cursor's responsibility explicitly, and keeps all parsing logic and behavior unchanged.",
+          "internal.retry_count.verdict": 0,
+          "thread.dependencies.current_node": "baseline",
+          "current_node": "evidence",
+          "last_stage": "refactor",
+          "thread.scope.current_node": "dependencies",
+          "internal.node_visit_count": 5,
+          "thread.verdict.current_node": "iteration_limit",
+          "internal.retry_count.dependencies": 0,
+          "internal.retry_count.refactor": 0,
+          "failure_signature": "",
+          "internal.work_dir": "/workspace/calculator",
+          "command.output": "blob://sha256/92fc08855ca0fa7c1b9383e7c361002e9ed92517b22c3f49562c6d669c989376",
+          "graph.rankdir": "LR",
+          "thread.refactor.current_node": "evidence",
+          "internal.retry_count.start": 0,
+          "thread.iteration_limit.current_node": "baseline",
+          "outcome": "succeeded",
+          "last_response": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line "
+        },
+        "node_outcomes": {
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/92fc08855ca0fa7c1b9383e7c361002e9ed92517b22c3f49562c6d669c989376"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1646,
+              "active_time_ms": 1646
+            }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/8f5f3b2c3ce8fb78690d73a0948667baeba6cb8434f464a06c5e98b943743b35"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 635,
+              "active_time_ms": 635
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 43094,
+              "active_time_ms": 43094
+            }
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "response.refactor": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line limit, names the cursor's responsibility explicitly, and keeps all parsing logic and behavior unchanged.",
+              "last_stage": "refactor",
+              "last_response": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line "
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 8549,
+                    "output_tokens": 1402,
+                    "reasoning_tokens": 1001,
+                    "cache_read_tokens": 20969,
+                    "cache_write_tokens": 15017
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 15017,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 82865
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 25050,
+              "tool_time_ms": 68,
+              "active_time_ms": 25118
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 129,
+              "active_time_ms": 129
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "verdict": "PASS",
+              "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` output shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit code 0, per the evidence stage and confirmed by re-running `npm test` (9/9 passing, build succeeds).\n- [PASS] Reveals intention: The diff extracts the previously anonymous `read()` closure into named helpers — `nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, and a top-level `parseExpression` — each name stating in plain language what the operation does (get the next word, assert an expected word, read a parenthesized value, read an operator's two operands, read any value). `evaluateSpokenExpression` now reads as \"tokenize, then parse\" instead of mixing tokenizing/parsing/name resolution in one block.\n- [PASS] No duplication: `npm run quality` (post-change) reports only a single `max-lines-per-function` finding for `parseExpression`; no duplication findings from eslint/knip. Manual read of the new code shows no near-identical passages — each helper has a distinct responsibility.\n- [PASS] Fewest elements: Every new helper (`nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, `parseExpression`) is used exactly once inside the parse flow that is exercised by the existing 9 tests (operator evaluation, parenthesized expressions, digit/word numbers, malformed-expression rejection). No dead code was introduced; the extraction only renamed/relocated existing logic.\n```\n\nAdditional evidence:\n- Diff is scoped to `src/index.ts` only (`git diff --stat b60c6f2 HEAD -- src test` → `src/index.ts | 54 ++++++++++++++++++++++++++++++++-----------------------`), matching the requested target and staying in scope — no test files or other source files were touched.\n- Quality regression check: baseline had 4 errors (`max-lines-per-function`, `cognitive-complexity`, `max-statements`, `complexity`) all on the single `evaluateSpokenExpression` function; current quality run shows only 1 error (`max-lines-per-function` on `parseExpression`, 37 lines vs. limit 20). This is a net reduction from 4 problems to 1, with no new categories of error introduced — quality is not worse than baseline and is credibly improved (cognitive-complexity, max-statements, and complexity errors are fully resolved).\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "last_response": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` output shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit code 0, per the evidence stage and confirmed by re-running `np"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 16950,
+                    "output_tokens": 2166,
+                    "reasoning_tokens": 4818,
+                    "cache_read_tokens": 188303,
+                    "cache_write_tokens": 25178
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 25178,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 204348
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 114307,
+              "tool_time_ms": 2835,
+              "active_time_ms": 117142
+            }
+          }
+        },
+        "next_node_id": "validate",
+        "git_commit_sha": "db5e303d838d159a6bc9b4c5edeb7edc4b92a63b",
+        "node_visits": {
+          "evidence": 5,
+          "dependencies": 1,
+          "validate": 4,
+          "verdict": 4,
+          "refactor": 5,
+          "start": 1,
+          "baseline": 5,
+          "iteration_limit": 4,
+          "scope": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 60,
+          "deletions": 50
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T00:48:07.744741Z",
+        "current_node": "validate",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate"
+        ],
+        "node_retries": {},
+        "context_values": {
           "thread.refactor.current_node": "evidence",
           "failure_class": "",
           "internal.retry_count.start": 0,
@@ -6582,7 +6832,7 @@
           "thread.dependencies.current_node": "baseline",
           "internal.work_dir": "/workspace/calculator",
           "thread.start.current_node": "scope",
-          "last_stage": "refactor",
+          "last_stage": "validate",
           "verdict": "PASS",
           "internal.retry_count.iteration_limit": 0,
           "command.output": "blob://sha256/92fc08855ca0fa7c1b9383e7c361002e9ed92517b22c3f49562c6d669c989376",
@@ -6593,15 +6843,15 @@
           "internal.retry_count.dependencies": 0,
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "internal.retry_count.evidence": 0,
-          "current_node": "evidence",
+          "current_node": "validate",
           "internal.retry_count.baseline": 0,
           "outcome": "succeeded",
           "thread.baseline.current_node": "refactor",
-          "internal.thread_id": "refactor",
+          "internal.thread_id": "evidence",
           "internal.fidelity": "compact",
           "thread.evidence.current_node": "validate",
           "thread.validate.current_node": "verdict",
-          "last_response": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line ",
+          "last_response": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Te",
           "internal.retry_count.scope": 0,
           "internal.retry_count.refactor": 0,
           "graph.rankdir": "LR",
@@ -6609,7 +6859,7 @@
           "thread.verdict.current_node": "iteration_limit",
           "internal.retry_count.verdict": 0,
           "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
-          "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` output shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit code 0, per the evidence stage and confirmed by re-running `npm test` (9/9 passing, build succeeds).\n- [PASS] Reveals intention: The diff extracts the previously anonymous `read()` closure into named helpers — `nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, and a top-level `parseExpression` — each name stating in plain language what the operation does (get the next word, assert an expected word, read a parenthesized value, read an operator's two operands, read any value). `evaluateSpokenExpression` now reads as \"tokenize, then parse\" instead of mixing tokenizing/parsing/name resolution in one block.\n- [PASS] No duplication: `npm run quality` (post-change) reports only a single `max-lines-per-function` finding for `parseExpression`; no duplication findings from eslint/knip. Manual read of the new code shows no near-identical passages — each helper has a distinct responsibility.\n- [PASS] Fewest elements: Every new helper (`nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, `parseExpression`) is used exactly once inside the parse flow that is exercised by the existing 9 tests (operator evaluation, parenthesized expressions, digit/word numbers, malformed-expression rejection). No dead code was introduced; the extraction only renamed/relocated existing logic.\n```\n\nAdditional evidence:\n- Diff is scoped to `src/index.ts` only (`git diff --stat b60c6f2 HEAD -- src test` → `src/index.ts | 54 ++++++++++++++++++++++++++++++++-----------------------`), matching the requested target and staying in scope — no test files or other source files were touched.\n- Quality regression check: baseline had 4 errors (`max-lines-per-function`, `cognitive-complexity`, `max-statements`, `complexity`) all on the single `evaluateSpokenExpression` function; current quality run shows only 1 error (`max-lines-per-function` on `parseExpression`, 37 lines vs. limit 20). This is a net reduction from 4 problems to 1, with no new categories of error introduced — quality is not worse than baseline and is credibly improved (cognitive-complexity, max-statements, and complexity errors are fully resolved).\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
+          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Test Files 1 passed (1)\", \"Tests 9 passed (9)\").\n- [PASS] Reveals intention: The committed diff (`git show 420bca4 -- src/index.ts`) extracts the inline read-position state in `parseExpression` into a named `createCursor(pieces)` helper exposing `fail`, `nextWord`, `expectWord`, and `atEnd`. These names describe the parsing operations in plain language, improving on the previous unnamed closure variables (`place`) embedded directly in `parseExpression`.\n- [PASS] No duplication: Current `npm run quality` output (as run for verification) reports only the pre-existing `max-lines-per-function` complexity error on `parseExpression`, with no duplication findings from eslint/knip; reading src/index.ts shows no near-identical passages — each operator, connector, and cursor helper is defined once.\n- [PASS] Fewest elements: Every function introduced by `createCursor` (`fail`, `nextWord`, `expectWord`, `atEnd`) is exercised through `parseExpression`, which the test suite reaches via `evaluateSpokenExpression`; no dead code or unused exports were added, and knip reported no new findings.\n- [PASS] Change stays within requested target: `git show 420bca4 -- src/index.ts` (the refactor commit for this iteration) touches only `src/index.ts`; the remaining working-tree diff (`dist/cli.js`, `dist/index.js`, vitest cache) is build/test output regenerated by `npm test`/`npm run quality`, not additional source edits.\n- [PASS] Quality no worse than baseline: Baseline reported one eslint error — `parseExpression` at 37 lines (max 20). After the refactor, quality still reports exactly one error for the same rule, now at 26 lines — a reduction, not a regression, and no new errors or warnings appeared.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
         },
         "node_outcomes": {
           "refactor": {
@@ -6688,10 +6938,10 @@
           "validate": {
             "status": "succeeded",
             "context_updates": {
-              "last_stage": "validate",
+              "last_response": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Te",
               "verdict": "PASS",
-              "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` output shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit code 0, per the evidence stage and confirmed by re-running `npm test` (9/9 passing, build succeeds).\n- [PASS] Reveals intention: The diff extracts the previously anonymous `read()` closure into named helpers — `nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, and a top-level `parseExpression` — each name stating in plain language what the operation does (get the next word, assert an expected word, read a parenthesized value, read an operator's two operands, read any value). `evaluateSpokenExpression` now reads as \"tokenize, then parse\" instead of mixing tokenizing/parsing/name resolution in one block.\n- [PASS] No duplication: `npm run quality` (post-change) reports only a single `max-lines-per-function` finding for `parseExpression`; no duplication findings from eslint/knip. Manual read of the new code shows no near-identical passages — each helper has a distinct responsibility.\n- [PASS] Fewest elements: Every new helper (`nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`, `parseExpression`) is used exactly once inside the parse flow that is exercised by the existing 9 tests (operator evaluation, parenthesized expressions, digit/word numbers, malformed-expression rejection). No dead code was introduced; the extraction only renamed/relocated existing logic.\n```\n\nAdditional evidence:\n- Diff is scoped to `src/index.ts` only (`git diff --stat b60c6f2 HEAD -- src test` → `src/index.ts | 54 ++++++++++++++++++++++++++++++++-----------------------`), matching the requested target and staying in scope — no test files or other source files were touched.\n- Quality regression check: baseline had 4 errors (`max-lines-per-function`, `cognitive-complexity`, `max-statements`, `complexity`) all on the single `evaluateSpokenExpression` function; current quality run shows only 1 error (`max-lines-per-function` on `parseExpression`, 37 lines vs. limit 20). This is a net reduction from 4 problems to 1, with no new categories of error introduced — quality is not worse than baseline and is credibly improved (cognitive-complexity, max-statements, and complexity errors are fully resolved).\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
-              "last_response": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` output shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit code 0, per the evidence stage and confirmed by re-running `np"
+              "last_stage": "validate",
+              "response.validate": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Test Files 1 passed (1)\", \"Tests 9 passed (9)\").\n- [PASS] Reveals intention: The committed diff (`git show 420bca4 -- src/index.ts`) extracts the inline read-position state in `parseExpression` into a named `createCursor(pieces)` helper exposing `fail`, `nextWord`, `expectWord`, and `atEnd`. These names describe the parsing operations in plain language, improving on the previous unnamed closure variables (`place`) embedded directly in `parseExpression`.\n- [PASS] No duplication: Current `npm run quality` output (as run for verification) reports only the pre-existing `max-lines-per-function` complexity error on `parseExpression`, with no duplication findings from eslint/knip; reading src/index.ts shows no near-identical passages — each operator, connector, and cursor helper is defined once.\n- [PASS] Fewest elements: Every function introduced by `createCursor` (`fail`, `nextWord`, `expectWord`, `atEnd`) is exercised through `parseExpression`, which the test suite reaches via `evaluateSpokenExpression`; no dead code or unused exports were added, and knip reported no new findings.\n- [PASS] Change stays within requested target: `git show 420bca4 -- src/index.ts` (the refactor commit for this iteration) touches only `src/index.ts`; the remaining working-tree diff (`dist/cli.js`, `dist/index.js`, vitest cache) is build/test output regenerated by `npm test`/`npm run quality`, not additional source edits.\n- [PASS] Quality no worse than baseline: Baseline reported one eslint error — `parseExpression` at 37 lines (max 20). After the refactor, quality still reports exactly one error for the same rule, now at 26 lines — a reduction, not a regression, and no new errors or warnings appeared.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
             },
             "notes": "Stage completed: validate",
             "usage": {
@@ -6702,26 +6952,26 @@
                     "model_id": "claude-sonnet-5"
                   },
                   "tokens": {
-                    "input_tokens": 16950,
-                    "output_tokens": 2166,
-                    "reasoning_tokens": 4818,
-                    "cache_read_tokens": 188303,
-                    "cache_write_tokens": 25178
+                    "input_tokens": 12886,
+                    "output_tokens": 1213,
+                    "reasoning_tokens": 3241,
+                    "cache_read_tokens": 58809,
+                    "cache_write_tokens": 19518
                   }
                 },
                 "facts": {
                   "algorithm": "anthropic",
-                  "cache_write_5m_tokens": 25178,
+                  "cache_write_5m_tokens": 19518,
                   "cache_write_1h_tokens": 0
                 }
               },
-              "total_usd_micros": 204348
+              "total_usd_micros": 130869
             },
             "timing": {
               "wall_time_ms": 0,
-              "inference_time_ms": 114307,
-              "tool_time_ms": 2835,
-              "active_time_ms": 117142
+              "inference_time_ms": 64135,
+              "tool_time_ms": 1486,
+              "active_time_ms": 65621
             }
           },
           "baseline": {
@@ -6763,10 +7013,10 @@
             "usage": null
           }
         },
-        "next_node_id": "validate",
+        "next_node_id": "verdict",
         "node_visits": {
           "scope": 1,
-          "validate": 4,
+          "validate": 5,
           "start": 1,
           "evidence": 5,
           "verdict": 4,
@@ -7601,6 +7851,216 @@
       },
       "agent_control": "running",
       "state": "succeeded"
+    },
+    "validate@5": {
+      "first_event_seq": 751,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": {
+        "mode": "agent",
+        "provider": "openrouter",
+        "model": "claude-sonnet-5"
+      },
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:47:02.015505Z",
+      "handler": "agent",
+      "graph_visit": 5,
+      "live_inference_ms": 36389,
+      "live_tool_ms": 1483,
+      "usage": {
+        "input_tokens": 11804,
+        "output_tokens": 462,
+        "total_tokens": 72649,
+        "reasoning_tokens": 1574,
+        "cache_read_tokens": 39695,
+        "cache_write_tokens": 19114,
+        "total_usd_micros": 99692
+      },
+      "model": {
+        "provider": "openrouter",
+        "model_id": "claude-sonnet-5"
+      },
+      "permission_level": "full",
+      "agent_tools": [
+        {
+          "name": "Agent",
+          "description": "Launch a child agent for an independent task. Agents run in the background by default and notify the parent when they finish. Set run_in_background to false to wait for the result synchronously.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "AskUserQuestion",
+          "description": "Ask the human up to four questions when a decision is genuinely theirs to make. The UI automatically provides an Other option for custom text.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Bash",
+          "description": "Execute a Bash command in a fresh foreground non-login shell. Use this for searches, git inspection, builds, tests, package managers, and terminal operations. Prefer `rg` for content search and `rg --files` for file discovery. Working-directory and environment changes do not persist between calls. `timeout` is in milliseconds, defaults to 120000, and is capped at 600000.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "shell",
+          "invoked": true
+        },
+        {
+          "name": "Edit",
+          "description": "Edit a file by replacing an exact string. The old_string must be an exact match and unique unless replace_all is true; include surrounding context when needed. Read the file first and preserve existing indentation.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": false
+        },
+        {
+          "name": "Read",
+          "description": "Read files before editing them. Returns line-numbered text and supports offset/limit for large files. Use this instead of shell cat, head, tail, or sed when inspecting repository files.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "read",
+          "invoked": false
+        },
+        {
+          "name": "SendMessage",
+          "description": "Send additional instructions to a background agent by its task ID. A running agent receives them at a safe turn boundary. A completed agent starts another turn in the same session with its existing history.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskCreate",
+          "description": "Create pending tasks in the current session. Use concise subjects, descriptions, optional activeForm text, and metadata. Check TaskList first to avoid duplicate tasks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskGet",
+          "description": "Get one task by taskId, including subject, status, description, owner, blockedBy, and blocks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskList",
+          "description": "List tasks for the current session, including status, owner, and blocking dependencies. Use TaskGet with a taskId for full description and dependency details.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskOutput",
+          "description": "Get a background agent's current status or wait for its final output. Automatic completion notifications make ordinary polling unnecessary.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskStop",
+          "description": "Stop a running or completed background agent by task ID.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskUpdate",
+          "description": "Update an existing task's status, text, owner, metadata, or dependencies. Valid statuses are pending, in_progress, completed, and deleted. After completing a task, call TaskList to find newly unblocked work.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "WebFetch",
+          "description": "Fetch an HTTP or HTTPS URL and answer the supplied prompt from its contents.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Write",
+          "description": "Create new files, or overwrite an existing file only when replacement is explicitly intended. Prefer edit_file for targeted changes to existing files because write_file overwrites the full file content.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": false
+        }
+      ],
+      "context_window": {
+        "provider": "openrouter",
+        "model": "claude-sonnet-5",
+        "context_window_tokens": 1000000,
+        "input_tokens": 19520,
+        "usage_percent": 1.952,
+        "count_method": "response_usage_scaled_breakdown",
+        "staleness": "live",
+        "generated_at": "2026-08-26T00:47:39.431416Z",
+        "event_seq": 779,
+        "breakdown": [
+          {
+            "category": "system_prompt",
+            "tokens": 4102,
+            "usage_percent": 0.4102
+          },
+          {
+            "category": "tools",
+            "tokens": 3001,
+            "usage_percent": 0.3001
+          },
+          {
+            "category": "conversation",
+            "tokens": 12410,
+            "usage_percent": 1.241
+          },
+          {
+            "category": "other",
+            "tokens": 7,
+            "usage_percent": 0.0007
+          }
+        ],
+        "warnings": []
+      },
+      "inference": {
+        "session_id": "72e8a658-2063-49b7-b021-ee3088be1bdc",
+        "started_at": "2026-08-26T00:47:39.989643Z",
+        "requested_model": {
+          "provider": "openrouter",
+          "model_id": "claude-sonnet-5"
+        },
+        "first_output_at": "2026-08-26T00:48:02.313483Z",
+        "first_output_kind": "text",
+        "retries": 0
+      },
+      "agent_control": "running",
+      "state": "running"
     },
     "scope@1": {
       "first_event_seq": 21,
@@ -9090,7 +9550,12 @@
       "first_event_seq": 741,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:46:59.003362Z"
+      },
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -9098,12 +9563,28 @@
         "command": "exec 2>&1\n{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
         "language": "shell"
       },
-      "script_timing": null,
+      "script_timing": {
+        "output": "blob://sha256/92fc08855ca0fa7c1b9383e7c361002e9ed92517b22c3f49562c6d669c989376",
+        "exit_code": 0,
+        "duration_ms": 1646,
+        "termination": "exited",
+        "output_bytes": 1813,
+        "live_streaming": true
+      },
       "parallel_results": null,
       "output": null,
+      "output_bytes": 1813,
+      "live_streaming": true,
+      "termination": "exited",
       "started_at": "2026-08-26T00:46:57.351858Z",
       "handler": "command",
       "graph_visit": 5,
+      "timing": {
+        "wall_time_ms": 1649,
+        "inference_time_ms": 0,
+        "tool_time_ms": 1646,
+        "active_time_ms": 1646
+      },
       "usage": {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -9113,7 +9594,7 @@
         "cache_write_tokens": 0
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "baseline@2": {
       "first_event_seq": 193,
