@@ -534,7 +534,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:19:59.411280Z",
-  "last_event_at": "2026-08-26T13:30:59.474577Z",
+  "last_event_at": "2026-08-26T13:31:02.469525Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -5566,9 +5566,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 623,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:30:59.487021Z",
+        "timestamp": "2026-08-26T13:31:02.469525Z",
         "current_node": "verdict",
         "completed_nodes": [
           "start",
@@ -5600,6 +5600,252 @@
         ],
         "node_retries": {},
         "context_values": {
+          "internal.node_visit_count": 4,
+          "thread.validate.current_node": "verdict",
+          "last_stage": "validate",
+          "internal.work_dir": "/workspace/calculator",
+          "thread.evidence.current_node": "validate",
+          "current_node": "verdict",
+          "internal.thread_id": "validate",
+          "response.validate": "The working tree for `src/index.ts` and `test/` is clean (the refactor was already committed in `a00bf18`), confirming the change is scoped only to `src/index.ts`.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` run shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit via tsc build + vitest with no failures.\n- [PASS] Reveals intention: The new `parseLiteral(word)` function name plainly states its purpose (parse a digit or number-word into a numeric literal), removing the need for inline comments explaining the two-step digit/word check that previously lived inside the `read` closure.\n- [PASS] No duplication: The digit-regex/`NUMBER_WORDS` lookup logic that previously existed only inline is now a single reusable function (`parseLiteral`), and `npm run quality` shows no duplication findings (only complexity/size warnings, which shrank from baseline: lines 28→27, cognitive complexity 8→7, statements 15→14, cyclomatic complexity 8→7).\n- [PASS] Fewest elements: No new unused exports or dead code were introduced; `parseLiteral` is a small, non-exported helper invoked directly by `read`, and it is exercised transitively by the existing 9 passing tests (numeric-literal and number-word test cases).\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.dependencies.current_node": "baseline",
+          "internal.retry_count.iteration_limit": 0,
+          "internal.retry_count.refactor": 0,
+          "thread.verdict.current_node": "iteration_limit",
+          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
+          "internal.retry_count.validate": 0,
+          "failure_class": "",
+          "verdict": "PASS",
+          "thread.scope.current_node": "dependencies",
+          "thread.iteration_limit.current_node": "baseline",
+          "internal.retry_count.start": 0,
+          "internal.retry_count.evidence": 0,
+          "failure_signature": "",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.retry_count.baseline": 0,
+          "outcome": "succeeded",
+          "internal.retry_count.scope": 0,
+          "command.output": "blob://sha256/5a7a1e7d336d04ffd5d203c97eeb782adec611637264939e202a1e829b679de7",
+          "last_response": "The working tree for `src/index.ts` and `test/` is clean (the refactor was already committed in `a00bf18`), confirming the change is scoped only to `src/index.ts`.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- ",
+          "thread.start.current_node": "scope",
+          "internal.retry_count.verdict": 0,
+          "internal.fidelity": "compact",
+          "internal.retry_count.dependencies": 0,
+          "thread.refactor.current_node": "evidence",
+          "thread.baseline.current_node": "refactor",
+          "response.refactor": "This pulls the two literal-parsing checks (digit strings and number words) into a single named `parseLiteral` helper, cutting one branch out of `read` and giving the \"is this word a number?\" concept an explicit name. Behavior is unchanged — same checks, same order, same fallback to `undefined`.",
+          "graph.rankdir": "LR"
+        },
+        "node_outcomes": {
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 122,
+              "active_time_ms": 122
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "response.refactor": "This pulls the two literal-parsing checks (digit strings and number words) into a single named `parseLiteral` helper, cutting one branch out of `read` and giving the \"is this word a number?\" concept an explicit name. Behavior is unchanged — same checks, same order, same fallback to `undefined`.",
+              "last_stage": "refactor",
+              "last_response": "This pulls the two literal-parsing checks (digit strings and number words) into a single named `parseLiteral` helper, cutting one branch out of `read` and giving the \"is this word a number?\" concept a"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 7170,
+                    "output_tokens": 640,
+                    "reasoning_tokens": 542,
+                    "cache_read_tokens": 34838,
+                    "cache_write_tokens": 14638
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 14638,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 69723
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 20934,
+              "tool_time_ms": 115,
+              "active_time_ms": 21049
+            }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 627,
+              "active_time_ms": 627
+            }
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/5a7a1e7d336d04ffd5d203c97eeb782adec611637264939e202a1e829b679de7"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1750,
+              "active_time_ms": 1750
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "response.validate": "The working tree for `src/index.ts` and `test/` is clean (the refactor was already committed in `a00bf18`), confirming the change is scoped only to `src/index.ts`.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` run shows \"Test Files 1 passed (1)\", \"Tests 9 passed (9)\", exit via tsc build + vitest with no failures.\n- [PASS] Reveals intention: The new `parseLiteral(word)` function name plainly states its purpose (parse a digit or number-word into a numeric literal), removing the need for inline comments explaining the two-step digit/word check that previously lived inside the `read` closure.\n- [PASS] No duplication: The digit-regex/`NUMBER_WORDS` lookup logic that previously existed only inline is now a single reusable function (`parseLiteral`), and `npm run quality` shows no duplication findings (only complexity/size warnings, which shrank from baseline: lines 28→27, cognitive complexity 8→7, statements 15→14, cyclomatic complexity 8→7).\n- [PASS] Fewest elements: No new unused exports or dead code were introduced; `parseLiteral` is a small, non-exported helper invoked directly by `read`, and it is exercised transitively by the existing 9 passing tests (numeric-literal and number-word test cases).\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "last_response": "The working tree for `src/index.ts` and `test/` is clean (the refactor was already committed in `a00bf18`), confirming the change is scoped only to `src/index.ts`.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- ",
+              "verdict": "PASS"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 12943,
+                    "output_tokens": 1422,
+                    "reasoning_tokens": 1537,
+                    "cache_read_tokens": 128836,
+                    "cache_write_tokens": 20377
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 20377,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 132185
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 59329,
+              "tool_time_ms": 2436,
+              "active_time_ms": 61765
+            }
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/d148d13d209a7e191eda6dc83e1dc3e16e32e5aba5600a817b1d81bb06c419cf"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 49838,
+              "active_time_ms": 49838
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          }
+        },
+        "next_node_id": "iteration_limit",
+        "git_commit_sha": "413db14d2fc405dca72436fe7da0c9b78e24b065",
+        "node_visits": {
+          "iteration_limit": 3,
+          "dependencies": 1,
+          "start": 1,
+          "verdict": 4,
+          "baseline": 4,
+          "validate": 4,
+          "evidence": 4,
+          "refactor": 4,
+          "scope": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 38,
+          "deletions": 42
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:31:02.476892Z",
+        "current_node": "iteration_limit",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit"
+        ],
+        "node_retries": {},
+        "context_values": {
           "internal.retry_count.verdict": 0,
           "failure_class": "",
           "thread.refactor.current_node": "evidence",
@@ -5626,11 +5872,11 @@
           "response.refactor": "This pulls the two literal-parsing checks (digit strings and number words) into a single named `parseLiteral` helper, cutting one branch out of `read` and giving the \"is this word a number?\" concept an explicit name. Behavior is unchanged — same checks, same order, same fallback to `undefined`.",
           "internal.retry_count.start": 0,
           "thread.verdict.current_node": "iteration_limit",
-          "current_node": "verdict",
+          "current_node": "iteration_limit",
           "outcome": "succeeded",
           "thread.validate.current_node": "verdict",
           "failure_signature": "",
-          "internal.thread_id": "validate",
+          "internal.thread_id": "verdict",
           "internal.retry_count.evidence": 0,
           "thread.scope.current_node": "dependencies",
           "internal.retry_count.refactor": 0,
@@ -5788,11 +6034,11 @@
             "usage": null
           }
         },
-        "next_node_id": "iteration_limit",
+        "next_node_id": "baseline",
         "node_visits": {
           "validate": 4,
           "start": 1,
-          "iteration_limit": 3,
+          "iteration_limit": 4,
           "dependencies": 1,
           "verdict": 4,
           "scope": 1,
@@ -7539,6 +7785,42 @@
         "inference_time_ms": 0,
         "tool_time_ms": 1750,
         "active_time_ms": 1750
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "verdict@4": {
+      "first_event_seq": 618,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Conditional node evaluated: verdict",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:30:59.486067Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:30:59.482290Z",
+      "handler": "conditional",
+      "graph_visit": 4,
+      "timing": {
+        "wall_time_ms": 1,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
       },
       "usage": {
         "input_tokens": 0,
