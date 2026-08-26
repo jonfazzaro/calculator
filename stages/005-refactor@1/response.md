@@ -1,0 +1,1 @@
+Extracted the repeated "read operand, expect connector word, read operand" pattern from the `add`/`subtract`/`multiply`/`divide` branches into a shared `readOperands(connector)` helper. This removes the duplicated parsing logic while keeping each operator's own arithmetic distinct, and preserves behavior exactly (same error points, same read order, same result computation).
