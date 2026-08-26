@@ -54,35 +54,22 @@ export function evaluateSpokenExpression(source: string): number {
     const numberWord = NUMBER_WORDS[word];
     if (numberWord !== undefined) return numberWord;
 
-    // Operators are prefix forms. Each branch repeats the same parser work on
-    // purpose, leaving several safe seams for the refactoring lesson.
-    if (word === "add") {
+    // Operators are prefix forms: <operator> <operand> <linkingWord> <operand>.
+    const readBinaryOperation = (linkingWord: string, compute: (first: number, second: number) => number): number => {
       const first = read();
-      if (pieces[place++] !== "and") fail();
+      if (pieces[place++] !== linkingWord) fail();
       const second = read();
-      return first + second;
-    }
+      return compute(first, second);
+    };
 
-    if (word === "subtract") {
-      const first = read();
-      if (pieces[place++] !== "from") fail();
-      const second = read();
-      return second - first;
-    }
-
-    if (word === "multiply") {
-      const first = read();
-      if (pieces[place++] !== "by") fail();
-      const second = read();
-      return first * second;
-    }
-
+    if (word === "add") return readBinaryOperation("and", (first, second) => first + second);
+    if (word === "subtract") return readBinaryOperation("from", (first, second) => second - first);
+    if (word === "multiply") return readBinaryOperation("by", (first, second) => first * second);
     if (word === "divide") {
-      const first = read();
-      if (pieces[place++] !== "by") fail();
-      const second = read();
-      if (second === 0) fail();
-      return first / second;
+      return readBinaryOperation("by", (first, second) => {
+        if (second === 0) fail();
+        return first / second;
+      });
     }
 
     return fail();
