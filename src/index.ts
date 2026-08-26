@@ -54,33 +54,31 @@ export function evaluateSpokenExpression(source: string): number {
     const numberWord = NUMBER_WORDS[word];
     if (numberWord !== undefined) return numberWord;
 
-    // Operators are prefix forms. Each branch repeats the same parser work on
-    // purpose, leaving several safe seams for the refactoring lesson.
-    if (word === "add") {
+    // Operators are prefix forms: <operator> <first> <connector> <second>.
+    const readOperands = (connector: string): [number, number] => {
       const first = read();
-      if (pieces[place++] !== "and") fail();
+      if (pieces[place++] !== connector) fail();
       const second = read();
+      return [first, second];
+    };
+
+    if (word === "add") {
+      const [first, second] = readOperands("and");
       return first + second;
     }
 
     if (word === "subtract") {
-      const first = read();
-      if (pieces[place++] !== "from") fail();
-      const second = read();
+      const [first, second] = readOperands("from");
       return second - first;
     }
 
     if (word === "multiply") {
-      const first = read();
-      if (pieces[place++] !== "by") fail();
-      const second = read();
+      const [first, second] = readOperands("by");
       return first * second;
     }
 
     if (word === "divide") {
-      const first = read();
-      if (pieces[place++] !== "by") fail();
-      const second = read();
+      const [first, second] = readOperands("by");
       if (second === 0) fail();
       return first / second;
     }
