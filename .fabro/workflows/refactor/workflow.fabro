@@ -46,7 +46,7 @@ digraph RefactorLine {
 
     repair [label="Repair", prompt="@prompts/repair.md"]
     iteration_limit [shape=diamond, label="Five Iterations Complete?"]
-    summarize [label="Summarize Pull Request", prompt="@prompts/pull-request-summary.md"]
+    summarize [label="Summarize Pull Request", prompt="@prompts/summary.md"]
     stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
 
     start -> scope
