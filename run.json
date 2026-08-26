@@ -534,7 +534,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:19:59.411280Z",
-  "last_event_at": "2026-08-26T13:36:00.610499Z",
+  "last_event_at": "2026-08-26T13:36:04.057701Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -7555,9 +7555,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 870,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:36:00.628399Z",
+        "timestamp": "2026-08-26T13:36:03.447886Z",
         "current_node": "summarize",
         "completed_nodes": [
           "start",
@@ -7597,45 +7597,142 @@
         ],
         "node_retries": {},
         "context_values": {
-          "internal.retry_count.verdict": 0,
-          "failure_class": "",
-          "thread.refactor.current_node": "evidence",
-          "last_response": "Only `src/index.ts` changed across all iterations, converging into a single consolidated diff. This gives me enough evidence to write the PR summary.\n\n```text\nPR_TITLE: Extract operator table and toke",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
-          "last_stage": "summarize",
-          "graph.rankdir": "LR",
-          "response.validate": "All evidence confirms the change. Let me summarize findings.\n\n**VERDICT: PASS**\n\nThe refactor extracted a small `consume(expected)` helper in `src/index.ts` (`git diff 6fd10d2 -- src/index.ts`, lines 65–67, 75, 86) that replaces two identical `if (pieces[place++] !== X) fail();` guard blocks. Tests pass, current quality (2 eslint errors) is strictly better than the recorded baseline (4 eslint errors), and no unrelated files were touched.\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full suite and reported \"9 tests | 9 passed\" with exit code 0.\n- [PASS] Reveals intention: the new `consume(expected)` helper (src/index.ts:65-67) names the \"read one token and assert it matches\" operation explicitly, replacing two inline `if (pieces[place++] !== X) fail();` checks that previously required reading the surrounding context to understand.\n- [PASS] No duplication: `git diff 6fd10d2 -- src/index.ts` shows both call sites (`consume(\")\")` at line 75 and `consume(operator.connector)` at line 86) now share one implementation instead of repeating the same guard expression in two places; `npm run quality` no longer reports duplicated-branch related complexity errors that flagged this function.\n- [PASS] Fewest elements: `consume` is a small, used-twice private helper (not exported, not dead code); all three exported functions (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) remain exercised by test/calculator.test.ts, and no unused code was introduced.\n```\n\nQuality comparison: baseline had 4 eslint errors (max-lines-per-function, sonarjs/cognitive-complexity, max-statements, complexity); current run shows only 2 (max-lines-per-function, max-statements) — a net improvement with no new violations. The diff touches only `src/index.ts` in the requested target file plus expected build artifacts (`dist/*`, test cache), staying within scope.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
-          "thread.iteration_limit.current_node": "summarize",
-          "internal.retry_count.validate": 0,
-          "internal.node_visit_count": 1,
-          "internal.fidelity": "compact",
-          "verdict": "PASS",
-          "command.output": "blob://sha256/0f0fde66e9357b2695432052623c6a0b1ac596a09502db39c8823278dd8d419f",
-          "internal.retry_count.baseline": 0,
-          "response.summarize": "Only `src/index.ts` changed across all iterations, converging into a single consolidated diff. This gives me enough evidence to write the PR summary.\n\n```text\nPR_TITLE: Extract operator table and tokenizer in spoken-expression parser\n\nPR_BODY:\n## Summary\n- Replaced the repeated `add`/`subtract`/`multiply`/`divide` if-chains with a single `OPERATORS` lookup table that pairs each operator's connector word with its compute function, removing duplicated parsing logic.\n- Extracted `tokenize` and `parseLiteral` helper functions from `evaluateSpokenExpression`, and added a shared `consume` helper for expected-token checks, shrinking the main parser to satisfy function-size and complexity limits.\n- No behavior changes: expression parsing, error handling (including divide-by-zero), and supported number/operator vocabulary remain identical.\n\n## Validation\n- `npm test`\n- `npm run quality`\n```",
-          "internal.retry_count.dependencies": 0,
-          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
-          "thread.evidence.current_node": "validate",
-          "thread.dependencies.current_node": "baseline",
-          "internal.retry_count.scope": 0,
-          "thread.start.current_node": "scope",
-          "thread.baseline.current_node": "refactor",
-          "internal.work_dir": "/workspace/calculator",
-          "response.refactor": "Extracted the repeated \"consume an expected token or fail\" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated index-checking code, shortens `read` by two statements, and gives the pattern a name that states its intent. Behavior is unchanged—same tokens are consumed and the same errors thrown.",
           "internal.retry_count.start": 0,
+          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
+          "outcome": "succeeded",
+          "internal.thread_id": "iteration_limit",
+          "response.summarize": "Only `src/index.ts` changed across all iterations, converging into a single consolidated diff. This gives me enough evidence to write the PR summary.\n\n```text\nPR_TITLE: Extract operator table and tokenizer in spoken-expression parser\n\nPR_BODY:\n## Summary\n- Replaced the repeated `add`/`subtract`/`multiply`/`divide` if-chains with a single `OPERATORS` lookup table that pairs each operator's connector word with its compute function, removing duplicated parsing logic.\n- Extracted `tokenize` and `parseLiteral` helper functions from `evaluateSpokenExpression`, and added a shared `consume` helper for expected-token checks, shrinking the main parser to satisfy function-size and complexity limits.\n- No behavior changes: expression parsing, error handling (including divide-by-zero), and supported number/operator vocabulary remain identical.\n\n## Validation\n- `npm test`\n- `npm run quality`\n```",
+          "response.validate": "All evidence confirms the change. Let me summarize findings.\n\n**VERDICT: PASS**\n\nThe refactor extracted a small `consume(expected)` helper in `src/index.ts` (`git diff 6fd10d2 -- src/index.ts`, lines 65–67, 75, 86) that replaces two identical `if (pieces[place++] !== X) fail();` guard blocks. Tests pass, current quality (2 eslint errors) is strictly better than the recorded baseline (4 eslint errors), and no unrelated files were touched.\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full suite and reported \"9 tests | 9 passed\" with exit code 0.\n- [PASS] Reveals intention: the new `consume(expected)` helper (src/index.ts:65-67) names the \"read one token and assert it matches\" operation explicitly, replacing two inline `if (pieces[place++] !== X) fail();` checks that previously required reading the surrounding context to understand.\n- [PASS] No duplication: `git diff 6fd10d2 -- src/index.ts` shows both call sites (`consume(\")\")` at line 75 and `consume(operator.connector)` at line 86) now share one implementation instead of repeating the same guard expression in two places; `npm run quality` no longer reports duplicated-branch related complexity errors that flagged this function.\n- [PASS] Fewest elements: `consume` is a small, used-twice private helper (not exported, not dead code); all three exported functions (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) remain exercised by test/calculator.test.ts, and no unused code was introduced.\n```\n\nQuality comparison: baseline had 4 eslint errors (max-lines-per-function, sonarjs/cognitive-complexity, max-statements, complexity); current run shows only 2 (max-lines-per-function, max-statements) — a net improvement with no new violations. The diff touches only `src/index.ts` in the requested target file plus expected build artifacts (`dist/*`, test cache), staying within scope.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.refactor.current_node": "evidence",
+          "failure_class": "",
+          "internal.retry_count.scope": 0,
+          "internal.node_visit_count": 1,
+          "thread.start.current_node": "scope",
+          "command.output": "blob://sha256/0f0fde66e9357b2695432052623c6a0b1ac596a09502db39c8823278dd8d419f",
+          "thread.validate.current_node": "verdict",
+          "internal.retry_count.baseline": 0,
+          "verdict": "PASS",
+          "internal.retry_count.refactor": 0,
+          "thread.evidence.current_node": "validate",
+          "thread.iteration_limit.current_node": "summarize",
+          "internal.retry_count.dependencies": 0,
+          "thread.dependencies.current_node": "baseline",
+          "internal.retry_count.iteration_limit": 0,
+          "internal.work_dir": "/workspace/calculator",
           "thread.verdict.current_node": "iteration_limit",
           "current_node": "summarize",
-          "outcome": "succeeded",
-          "thread.validate.current_node": "verdict",
           "failure_signature": "",
-          "internal.thread_id": "iteration_limit",
           "internal.retry_count.evidence": 0,
-          "thread.scope.current_node": "dependencies",
-          "internal.retry_count.refactor": 0,
+          "internal.retry_count.validate": 0,
+          "graph.rankdir": "LR",
+          "response.refactor": "Extracted the repeated \"consume an expected token or fail\" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated index-checking code, shortens `read` by two statements, and gives the pattern a name that states its intent. Behavior is unchanged—same tokens are consumed and the same errors thrown.",
+          "internal.retry_count.verdict": 0,
+          "internal.fidelity": "compact",
           "internal.retry_count.summarize": 0,
-          "internal.retry_count.iteration_limit": 0
+          "last_response": "Only `src/index.ts` changed across all iterations, converging into a single consolidated diff. This gives me enough evidence to write the PR summary.\n\n```text\nPR_TITLE: Extract operator table and toke",
+          "last_stage": "summarize",
+          "thread.baseline.current_node": "refactor",
+          "thread.scope.current_node": "dependencies"
         },
         "node_outcomes": {
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 122,
+              "active_time_ms": 122
+            }
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/0f0fde66e9357b2695432052623c6a0b1ac596a09502db39c8823278dd8d419f"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1644,
+              "active_time_ms": 1644
+            }
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "Extracted the repeated \"consume an expected token or fail\" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated in",
+              "response.refactor": "Extracted the repeated \"consume an expected token or fail\" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated index-checking code, shortens `read` by two statements, and gives the pattern a name that states its intent. Behavior is unchanged—same tokens are consumed and the same errors thrown.",
+              "last_stage": "refactor"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 8446,
+                    "output_tokens": 735,
+                    "reasoning_tokens": 440,
+                    "cache_read_tokens": 21675,
+                    "cache_write_tokens": 15602
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 15602,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 71982
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 17455,
+              "tool_time_ms": 71,
+              "active_time_ms": 17526
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/2929f76a5ee678a4451c0280138a2ab4908a33387dab806595741b4f28b43c49"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 633,
+              "active_time_ms": 633
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
           "summarize": {
             "status": "succeeded",
             "context_updates": {
@@ -7688,65 +7785,6 @@
               "active_time_ms": 49838
             }
           },
-          "baseline": {
-            "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/2929f76a5ee678a4451c0280138a2ab4908a33387dab806595741b4f28b43c49"
-            },
-            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 633,
-              "active_time_ms": 633
-            }
-          },
-          "start": {
-            "status": "succeeded",
-            "usage": null
-          },
-          "refactor": {
-            "status": "succeeded",
-            "context_updates": {
-              "last_response": "Extracted the repeated \"consume an expected token or fail\" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated in",
-              "response.refactor": "Extracted the repeated \"consume an expected token or fail\" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated index-checking code, shortens `read` by two statements, and gives the pattern a name that states its intent. Behavior is unchanged—same tokens are consumed and the same errors thrown.",
-              "last_stage": "refactor"
-            },
-            "notes": "Stage completed: refactor",
-            "usage": {
-              "input": {
-                "usage": {
-                  "model": {
-                    "provider": "openrouter",
-                    "model_id": "claude-sonnet-5"
-                  },
-                  "tokens": {
-                    "input_tokens": 8446,
-                    "output_tokens": 735,
-                    "reasoning_tokens": 440,
-                    "cache_read_tokens": 21675,
-                    "cache_write_tokens": 15602
-                  }
-                },
-                "facts": {
-                  "algorithm": "anthropic",
-                  "cache_write_5m_tokens": 15602,
-                  "cache_write_1h_tokens": 0
-                }
-              },
-              "total_usd_micros": 71982
-            },
-            "files_touched": [
-              "/workspace/calculator/src/index.ts"
-            ],
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 17455,
-              "tool_time_ms": 71,
-              "active_time_ms": 17526
-            }
-          },
           "validate": {
             "status": "succeeded",
             "context_updates": {
@@ -7785,64 +7823,176 @@
               "tool_time_ms": 4075,
               "active_time_ms": 230260
             }
-          },
-          "iteration_limit": {
-            "status": "succeeded",
-            "notes": "Conditional node evaluated: iteration_limit",
-            "usage": null
-          },
-          "evidence": {
-            "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/0f0fde66e9357b2695432052623c6a0b1ac596a09502db39c8823278dd8d419f"
-            },
-            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 1644,
-              "active_time_ms": 1644
-            }
-          },
-          "scope": {
-            "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
-            },
-            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 122,
-              "active_time_ms": 122
-            }
-          },
-          "verdict": {
-            "status": "succeeded",
-            "notes": "Conditional node evaluated: verdict",
-            "usage": null
           }
         },
         "next_node_id": "exit",
+        "git_commit_sha": "886543f68d434929fce181e1e8dd99e45736dece",
         "node_visits": {
-          "validate": 5,
-          "start": 1,
-          "iteration_limit": 5,
-          "summarize": 1,
-          "dependencies": 1,
           "verdict": 5,
-          "scope": 1,
           "baseline": 5,
+          "refactor": 5,
+          "start": 1,
           "evidence": 5,
-          "refactor": 5
+          "dependencies": 1,
+          "summarize": 1,
+          "validate": 5,
+          "iteration_limit": 5,
+          "scope": 1
         }
       },
-      "diff": {}
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 43,
+          "deletions": 43
+        }
+      }
     }
   ],
-  "conclusion": null,
+  "conclusion": {
+    "timestamp": "2026-08-26T13:36:03.535449Z",
+    "status": "succeeded",
+    "timing": {
+      "wall_time_ms": 950730,
+      "inference_time_ms": 771367,
+      "tool_time_ms": 76307,
+      "active_time_ms": 847674
+    },
+    "final_git_commit_sha": "886543f68d434929fce181e1e8dd99e45736dece",
+    "stages": [
+      {
+        "stage_id": "start",
+        "stage_label": "start",
+        "timing": {
+          "wall_time_ms": 0,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "scope",
+        "stage_label": "scope",
+        "timing": {
+          "wall_time_ms": 125,
+          "inference_time_ms": 0,
+          "tool_time_ms": 122,
+          "active_time_ms": 122
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "dependencies",
+        "stage_label": "dependencies",
+        "timing": {
+          "wall_time_ms": 49843,
+          "inference_time_ms": 0,
+          "tool_time_ms": 49838,
+          "active_time_ms": 49838
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "baseline",
+        "stage_label": "baseline",
+        "timing": {
+          "wall_time_ms": 3390,
+          "inference_time_ms": 0,
+          "tool_time_ms": 3370,
+          "active_time_ms": 3370
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "refactor",
+        "stage_label": "refactor",
+        "timing": {
+          "wall_time_ms": 98082,
+          "inference_time_ms": 97102,
+          "tool_time_ms": 430,
+          "active_time_ms": 97532
+        },
+        "billing_usd_micros": 317598,
+        "retries": 0
+      },
+      {
+        "stage_id": "evidence",
+        "stage_label": "evidence",
+        "timing": {
+          "wall_time_ms": 8356,
+          "inference_time_ms": 0,
+          "tool_time_ms": 8338,
+          "active_time_ms": 8338
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "validate",
+        "stage_label": "validate",
+        "timing": {
+          "wall_time_ms": 664879,
+          "inference_time_ms": 650704,
+          "tool_time_ms": 13640,
+          "active_time_ms": 664344
+        },
+        "billing_usd_micros": 1003252,
+        "retries": 0
+      },
+      {
+        "stage_id": "verdict",
+        "stage_label": "verdict",
+        "timing": {
+          "wall_time_ms": 5,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "iteration_limit",
+        "stage_label": "iteration_limit",
+        "timing": {
+          "wall_time_ms": 5,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "summarize",
+        "stage_label": "summarize",
+        "timing": {
+          "wall_time_ms": 24249,
+          "inference_time_ms": 23561,
+          "tool_time_ms": 569,
+          "active_time_ms": 24130
+        },
+        "billing_usd_micros": 86521,
+        "retries": 0
+      }
+    ],
+    "billing": {
+      "input_tokens": 111934,
+      "output_tokens": 15270,
+      "total_tokens": 1545579,
+      "reasoning_tokens": 31051,
+      "cache_read_tokens": 1194791,
+      "cache_write_tokens": 192533,
+      "total_usd_micros": 1407371
+    },
+    "total_retries": 0,
+    "diff": {
+      "patch": "diff --git a/src/index.ts b/src/index.ts\nindex 0493e45..222f364 100644\n--- a/src/index.ts\n+++ b/src/index.ts\n@@ -16,6 +16,35 @@ const NUMBER_WORDS: Record<string, number> = {\n   twelve: 12,\n };\n \n+// Operators are prefix forms: \"<operator> <first> <connector> <second>\".\n+const OPERATORS: Record<string, { connector: string; compute: (first: number, second: number) => number }> = {\n+  add: { connector: \"and\", compute: (first, second) => first + second },\n+  subtract: { connector: \"from\", compute: (first, second) => second - first },\n+  multiply: { connector: \"by\", compute: (first, second) => first * second },\n+  divide: {\n+    connector: \"by\",\n+    compute: (first, second) => {\n+      if (second === 0) throw new Error(\"Could not work that out.\");\n+      return first / second;\n+    },\n+  },\n+};\n+\n+function parseLiteral(word: string): number | undefined {\n+  if (/^\\d+$/.test(word)) return Number(word);\n+  return NUMBER_WORDS[word];\n+}\n+\n+function tokenize(source: string): string[] {\n+  return source\n+    .toLowerCase()\n+    .replace(/\\(/g, \" ( \")\n+    .replace(/\\)/g, \" ) \")\n+    .trim()\n+    .split(/\\s+/)\n+    .filter(Boolean);\n+}\n+\n /**\n  * Evaluate the kata's tiny spoken-expression language.\n  *\n@@ -25,13 +54,7 @@ const NUMBER_WORDS: Record<string, number> = {\n  * to emulate.\n  */\n export function evaluateSpokenExpression(source: string): number {\n-  const pieces = source\n-    .toLowerCase()\n-    .replace(/\\(/g, \" ( \")\n-    .replace(/\\)/g, \" ) \")\n-    .trim()\n-    .split(/\\s+/)\n-    .filter(Boolean);\n+  const pieces = tokenize(source);\n   let place = 0;\n \n   const fail = (): never => {\n@@ -39,53 +62,30 @@ export function evaluateSpokenExpression(source: string): number {\n     throw new Error(\"Could not work that out.\");\n   };\n \n+  const consume = (expected: string): void => {\n+    if (pieces[place++] !== expected) fail();\n+  };\n+\n   const read = (): number => {\n     const word = pieces[place++];\n     if (!word) fail();\n \n     if (word === \"(\") {\n       const inside = read();\n-      if (pieces[place++] !== \")\") fail();\n+      consume(\")\");\n       return inside;\n     }\n \n-    if (/^\\d+$/.test(word)) return Number(word);\n+    const literal = parseLiteral(word);\n+    if (literal !== undefined) return literal;\n \n-    const numberWord = NUMBER_WORDS[word];\n-    if (numberWord !== undefined) return numberWord;\n-\n-    // Operators are prefix forms. Each branch repeats the same parser work on\n-    // purpose, leaving several safe seams for the refactoring lesson.\n-    if (word === \"add\") {\n-      const first = read();\n-      if (pieces[place++] !== \"and\") fail();\n-      const second = read();\n-      return first + second;\n-    }\n-\n-    if (word === \"subtract\") {\n-      const first = read();\n-      if (pieces[place++] !== \"from\") fail();\n-      const second = read();\n-      return second - first;\n-    }\n-\n-    if (word === \"multiply\") {\n-      const first = read();\n-      if (pieces[place++] !== \"by\") fail();\n-      const second = read();\n-      return first * second;\n-    }\n-\n-    if (word === \"divide\") {\n-      const first = read();\n-      if (pieces[place++] !== \"by\") fail();\n-      const second = read();\n-      if (second === 0) fail();\n-      return first / second;\n-    }\n+    const operator = OPERATORS[word];\n+    if (!operator) return fail();\n \n-    return fail();\n+    const first = read();\n+    consume(operator.connector);\n+    const second = read();\n+    return operator.compute(first, second);\n   };\n \n   const answer = read();\n",
+      "summary": {
+        "files_changed": 1,
+        "additions": 43,
+        "deletions": 43
+      }
+    }
+  },
   "sandbox": {
     "kind": "ready",
     "plan": {
@@ -8073,6 +8223,42 @@
           }
         ],
         "warnings": []
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "exit@1": {
+      "first_event_seq": 873,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": null,
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:36:03.448011Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:36:03.447986Z",
+      "handler": "exit",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
       },
       "agent_control": "running",
       "state": "succeeded"
@@ -8389,7 +8575,12 @@
       "first_event_seq": 828,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Stage completed: summarize",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:36:00.626610Z"
+      },
       "provider_used": {
         "mode": "agent",
         "provider": "openrouter",
@@ -8403,8 +8594,12 @@
       "started_at": "2026-08-26T13:35:36.373923Z",
       "handler": "agent",
       "graph_visit": 1,
-      "live_inference_ms": 23561,
-      "live_tool_ms": 568,
+      "timing": {
+        "wall_time_ms": 24249,
+        "inference_time_ms": 23561,
+        "tool_time_ms": 569,
+        "active_time_ms": 24130
+      },
       "usage": {
         "input_tokens": 10527,
         "output_tokens": 726,
@@ -8582,7 +8777,7 @@
         "warnings": []
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "verdict@2": {
       "first_event_seq": 300,
