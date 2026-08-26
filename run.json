@@ -518,7 +518,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T00:31:48.079912Z",
-  "last_event_at": "2026-08-26T00:48:14.169486Z",
+  "last_event_at": "2026-08-26T00:48:17.927723Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -7287,9 +7287,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 809,
       "checkpoint": {
-        "timestamp": "2026-08-26T00:48:14.178991Z",
+        "timestamp": "2026-08-26T00:48:17.154109Z",
         "current_node": "iteration_limit",
         "completed_nodes": [
           "start",
@@ -7328,43 +7328,62 @@
         ],
         "node_retries": {},
         "context_values": {
-          "thread.refactor.current_node": "evidence",
-          "failure_class": "",
-          "internal.retry_count.start": 0,
-          "internal.node_visit_count": 5,
-          "thread.dependencies.current_node": "baseline",
-          "internal.work_dir": "/workspace/calculator",
-          "thread.start.current_node": "scope",
-          "last_stage": "validate",
-          "verdict": "PASS",
-          "internal.retry_count.iteration_limit": 0,
-          "command.output": "blob://sha256/92fc08855ca0fa7c1b9383e7c361002e9ed92517b22c3f49562c6d669c989376",
-          "thread.iteration_limit.current_node": "baseline",
-          "internal.retry_count.validate": 0,
-          "thread.scope.current_node": "dependencies",
-          "response.refactor": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line limit, names the cursor's responsibility explicitly, and keeps all parsing logic and behavior unchanged.",
-          "internal.retry_count.dependencies": 0,
-          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
-          "internal.retry_count.evidence": 0,
-          "current_node": "iteration_limit",
-          "internal.retry_count.baseline": 0,
-          "outcome": "succeeded",
-          "thread.baseline.current_node": "refactor",
-          "internal.thread_id": "verdict",
-          "internal.fidelity": "compact",
-          "thread.evidence.current_node": "validate",
-          "thread.validate.current_node": "verdict",
           "last_response": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Te",
-          "internal.retry_count.scope": 0,
-          "internal.retry_count.refactor": 0,
-          "graph.rankdir": "LR",
-          "failure_signature": "",
+          "current_node": "iteration_limit",
+          "thread.evidence.current_node": "validate",
+          "outcome": "succeeded",
           "thread.verdict.current_node": "iteration_limit",
+          "command.output": "blob://sha256/92fc08855ca0fa7c1b9383e7c361002e9ed92517b22c3f49562c6d669c989376",
+          "graph.rankdir": "LR",
+          "internal.retry_count.dependencies": 0,
+          "internal.retry_count.evidence": 0,
+          "internal.retry_count.refactor": 0,
+          "internal.retry_count.start": 0,
           "internal.retry_count.verdict": 0,
+          "last_stage": "validate",
+          "thread.iteration_limit.current_node": "baseline",
+          "internal.retry_count.baseline": 0,
+          "thread.refactor.current_node": "evidence",
+          "internal.work_dir": "/workspace/calculator",
+          "response.refactor": "Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line limit, names the cursor's responsibility explicitly, and keeps all parsing logic and behavior unchanged.",
+          "internal.node_visit_count": 5,
+          "thread.baseline.current_node": "refactor",
+          "thread.dependencies.current_node": "baseline",
+          "thread.start.current_node": "scope",
+          "failure_class": "",
+          "internal.retry_count.iteration_limit": 0,
+          "internal.retry_count.scope": 0,
           "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
-          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Test Files 1 passed (1)\", \"Tests 9 passed (9)\").\n- [PASS] Reveals intention: The committed diff (`git show 420bca4 -- src/index.ts`) extracts the inline read-position state in `parseExpression` into a named `createCursor(pieces)` helper exposing `fail`, `nextWord`, `expectWord`, and `atEnd`. These names describe the parsing operations in plain language, improving on the previous unnamed closure variables (`place`) embedded directly in `parseExpression`.\n- [PASS] No duplication: Current `npm run quality` output (as run for verification) reports only the pre-existing `max-lines-per-function` complexity error on `parseExpression`, with no duplication findings from eslint/knip; reading src/index.ts shows no near-identical passages — each operator, connector, and cursor helper is defined once.\n- [PASS] Fewest elements: Every function introduced by `createCursor` (`fail`, `nextWord`, `expectWord`, `atEnd`) is exercised through `parseExpression`, which the test suite reaches via `evaluateSpokenExpression`; no dead code or unused exports were added, and knip reported no new findings.\n- [PASS] Change stays within requested target: `git show 420bca4 -- src/index.ts` (the refactor commit for this iteration) touches only `src/index.ts`; the remaining working-tree diff (`dist/cli.js`, `dist/index.js`, vitest cache) is build/test output regenerated by `npm test`/`npm run quality`, not additional source edits.\n- [PASS] Quality no worse than baseline: Baseline reported one eslint error — `parseExpression` at 37 lines (max 20). After the refactor, quality still reports exactly one error for the same rule, now at 26 lines — a reduction, not a regression, and no new errors or warnings appeared.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
+          "internal.fidelity": "compact",
+          "failure_signature": "",
+          "internal.thread_id": "verdict",
+          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence shows `npm test` (tsc build + vitest) completed with all 9 tests in test/calculator.test.ts passing, exit path clean (\"Test Files 1 passed (1)\", \"Tests 9 passed (9)\").\n- [PASS] Reveals intention: The committed diff (`git show 420bca4 -- src/index.ts`) extracts the inline read-position state in `parseExpression` into a named `createCursor(pieces)` helper exposing `fail`, `nextWord`, `expectWord`, and `atEnd`. These names describe the parsing operations in plain language, improving on the previous unnamed closure variables (`place`) embedded directly in `parseExpression`.\n- [PASS] No duplication: Current `npm run quality` output (as run for verification) reports only the pre-existing `max-lines-per-function` complexity error on `parseExpression`, with no duplication findings from eslint/knip; reading src/index.ts shows no near-identical passages — each operator, connector, and cursor helper is defined once.\n- [PASS] Fewest elements: Every function introduced by `createCursor` (`fail`, `nextWord`, `expectWord`, `atEnd`) is exercised through `parseExpression`, which the test suite reaches via `evaluateSpokenExpression`; no dead code or unused exports were added, and knip reported no new findings.\n- [PASS] Change stays within requested target: `git show 420bca4 -- src/index.ts` (the refactor commit for this iteration) touches only `src/index.ts`; the remaining working-tree diff (`dist/cli.js`, `dist/index.js`, vitest cache) is build/test output regenerated by `npm test`/`npm run quality`, not additional source edits.\n- [PASS] Quality no worse than baseline: Baseline reported one eslint error — `parseExpression` at 37 lines (max 20). After the refactor, quality still reports exactly one error for the same rule, now at 26 lines — a reduction, not a regression, and no new errors or warnings appeared.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.validate.current_node": "verdict",
+          "thread.scope.current_node": "dependencies",
+          "internal.retry_count.validate": 0,
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "verdict": "PASS"
         },
         "node_outcomes": {
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 43094,
+              "active_time_ms": 43094
+            }
+          },
           "refactor": {
             "status": "succeeded",
             "context_updates": {
@@ -7405,24 +7424,6 @@
               "tool_time_ms": 68,
               "active_time_ms": 25118
             }
-          },
-          "dependencies": {
-            "status": "succeeded",
-            "context_updates": {
-              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
-            },
-            "notes": "Script completed: npm install --package-lock=false",
-            "usage": null,
-            "timing": {
-              "wall_time_ms": 0,
-              "inference_time_ms": 0,
-              "tool_time_ms": 43094,
-              "active_time_ms": 43094
-            }
-          },
-          "start": {
-            "status": "succeeded",
-            "usage": null
           },
           "scope": {
             "status": "succeeded",
@@ -7505,34 +7506,181 @@
               "active_time_ms": 1646
             }
           },
-          "verdict": {
-            "status": "succeeded",
-            "notes": "Conditional node evaluated: verdict",
-            "usage": null
-          },
           "iteration_limit": {
             "status": "succeeded",
             "notes": "Conditional node evaluated: iteration_limit",
             "usage": null
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
           }
         },
         "next_node_id": "exit",
+        "git_commit_sha": "518b2ae37b14a1425293fb25b93382d79dc9938a",
         "node_visits": {
+          "start": 1,
+          "iteration_limit": 5,
+          "baseline": 5,
+          "refactor": 5,
+          "dependencies": 1,
           "scope": 1,
           "validate": 5,
-          "start": 1,
-          "evidence": 5,
           "verdict": 5,
-          "iteration_limit": 5,
-          "dependencies": 1,
-          "baseline": 5,
-          "refactor": 5
+          "evidence": 5
         }
       },
-      "diff": {}
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 60,
+          "deletions": 50
+        }
+      }
     }
   ],
-  "conclusion": null,
+  "conclusion": {
+    "timestamp": "2026-08-26T00:48:17.231274Z",
+    "status": "failed",
+    "timing": {
+      "wall_time_ms": 960017,
+      "inference_time_ms": 798199,
+      "tool_time_ms": 69846,
+      "active_time_ms": 868045
+    },
+    "failure": {
+      "reason": "publish_failed",
+      "detail": {
+        "message": "failed to create pull request",
+        "causes": [
+          "Authentication failed creating pull request (403)"
+        ],
+        "category": "deterministic"
+      }
+    },
+    "final_git_commit_sha": "518b2ae37b14a1425293fb25b93382d79dc9938a",
+    "stages": [
+      {
+        "stage_id": "start",
+        "stage_label": "start",
+        "timing": {
+          "wall_time_ms": 0,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "scope",
+        "stage_label": "scope",
+        "timing": {
+          "wall_time_ms": 132,
+          "inference_time_ms": 0,
+          "tool_time_ms": 129,
+          "active_time_ms": 129
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "dependencies",
+        "stage_label": "dependencies",
+        "timing": {
+          "wall_time_ms": 43098,
+          "inference_time_ms": 0,
+          "tool_time_ms": 43094,
+          "active_time_ms": 43094
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "baseline",
+        "stage_label": "baseline",
+        "timing": {
+          "wall_time_ms": 3394,
+          "inference_time_ms": 0,
+          "tool_time_ms": 3378,
+          "active_time_ms": 3378
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "refactor",
+        "stage_label": "refactor",
+        "timing": {
+          "wall_time_ms": 150295,
+          "inference_time_ms": 149149,
+          "tool_time_ms": 600,
+          "active_time_ms": 149749
+        },
+        "billing_usd_micros": 393351,
+        "retries": 0
+      },
+      {
+        "stage_id": "evidence",
+        "stage_label": "evidence",
+        "timing": {
+          "wall_time_ms": 8277,
+          "inference_time_ms": 0,
+          "tool_time_ms": 8258,
+          "active_time_ms": 8258
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "validate",
+        "stage_label": "validate",
+        "timing": {
+          "wall_time_ms": 663945,
+          "inference_time_ms": 649050,
+          "tool_time_ms": 14387,
+          "active_time_ms": 663437
+        },
+        "billing_usd_micros": 931406,
+        "retries": 0
+      },
+      {
+        "stage_id": "verdict",
+        "stage_label": "verdict",
+        "timing": {
+          "wall_time_ms": 4,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "iteration_limit",
+        "stage_label": "iteration_limit",
+        "timing": {
+          "wall_time_ms": 4,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      }
+    ],
+    "billing": {
+      "input_tokens": 103327,
+      "output_tokens": 15939,
+      "total_tokens": 1317282,
+      "reasoning_tokens": 32576,
+      "cache_read_tokens": 991590,
+      "cache_write_tokens": 173850,
+      "total_usd_micros": 1324757
+    },
+    "total_retries": 0,
+    "diff": {
+      "patch": "diff --git a/src/index.ts b/src/index.ts\nindex 0493e45..6287d9e 100644\n--- a/src/index.ts\n+++ b/src/index.ts\n@@ -16,22 +16,32 @@ const NUMBER_WORDS: Record<string, number> = {\n   twelve: 12,\n };\n \n-/**\n- * Evaluate the kata's tiny spoken-expression language.\n- *\n- * This is intentionally a single, inconvenient starting point for the kata:\n- * it tokenises, parses, performs arithmetic, formats results, and knows about\n- * command-line output. The behaviour is covered; the structure is not a model\n- * to emulate.\n- */\n-export function evaluateSpokenExpression(source: string): number {\n-  const pieces = source\n+type Compute = (first: number, second: number, fail: () => never) => number;\n+\n+/** Prefix operators are spoken as: <operator> <first> <connector> <second>. */\n+const OPERATORS: Record<string, { connector: string; compute: Compute }> = {\n+  add: { connector: \"and\", compute: (first, second) => first + second },\n+  subtract: { connector: \"from\", compute: (first, second) => second - first },\n+  multiply: { connector: \"by\", compute: (first, second) => first * second },\n+  divide: {\n+    connector: \"by\",\n+    compute: (first, second, fail) => (second === 0 ? fail() : first / second),\n+  },\n+};\n+\n+/** Split spoken-expression source into its words and parentheses. */\n+function tokenize(source: string): string[] {\n+  return source\n     .toLowerCase()\n     .replace(/\\(/g, \" ( \")\n     .replace(/\\)/g, \" ) \")\n     .trim()\n     .split(/\\s+/)\n     .filter(Boolean);\n+}\n+\n+/** A read position over the tokenised words, with the kata's shared failure. */\n+function createCursor(pieces: string[]) {\n   let place = 0;\n \n   const fail = (): never => {\n@@ -39,60 +49,60 @@ export function evaluateSpokenExpression(source: string): number {\n     throw new Error(\"Could not work that out.\");\n   };\n \n-  const read = (): number => {\n+  const nextWord = (): string => {\n     const word = pieces[place++];\n     if (!word) fail();\n+    return word;\n+  };\n+\n+  const expectWord = (expected: string): void => {\n+    if (nextWord() !== expected) fail();\n+  };\n+\n+  const atEnd = (): boolean => place === pieces.length;\n \n-    if (word === \"(\") {\n-      const inside = read();\n-      if (pieces[place++] !== \")\") fail();\n-      return inside;\n-    }\n+  return { fail, nextWord, expectWord, atEnd };\n+}\n+\n+/** Parse the tokenised spoken-expression words into their numeric result. */\n+function parseExpression(pieces: string[]): number {\n+  const cursor = createCursor(pieces);\n \n+  const readParenthesized = (): number => {\n+    const inside = readValue();\n+    cursor.expectWord(\")\");\n+    return inside;\n+  };\n+\n+  const readOperatorExpression = (operator: (typeof OPERATORS)[string]): number => {\n+    const first = readValue();\n+    cursor.expectWord(operator.connector);\n+    const second = readValue();\n+    return operator.compute(first, second, cursor.fail);\n+  };\n+\n+  const readValue = (): number => {\n+    const word = cursor.nextWord();\n+    if (word === \"(\") return readParenthesized();\n     if (/^\\d+$/.test(word)) return Number(word);\n \n     const numberWord = NUMBER_WORDS[word];\n     if (numberWord !== undefined) return numberWord;\n \n-    // Operators are prefix forms. Each branch repeats the same parser work on\n-    // purpose, leaving several safe seams for the refactoring lesson.\n-    if (word === \"add\") {\n-      const first = read();\n-      if (pieces[place++] !== \"and\") fail();\n-      const second = read();\n-      return first + second;\n-    }\n-\n-    if (word === \"subtract\") {\n-      const first = read();\n-      if (pieces[place++] !== \"from\") fail();\n-      const second = read();\n-      return second - first;\n-    }\n-\n-    if (word === \"multiply\") {\n-      const first = read();\n-      if (pieces[place++] !== \"by\") fail();\n-      const second = read();\n-      return first * second;\n-    }\n-\n-    if (word === \"divide\") {\n-      const first = read();\n-      if (pieces[place++] !== \"by\") fail();\n-      const second = read();\n-      if (second === 0) fail();\n-      return first / second;\n-    }\n-\n-    return fail();\n+    const operator = OPERATORS[word];\n+    return operator ? readOperatorExpression(operator) : cursor.fail();\n   };\n \n-  const answer = read();\n-  if (place !== pieces.length) fail();\n+  const answer = readValue();\n+  if (!cursor.atEnd()) cursor.fail();\n   return answer;\n }\n \n+/** Evaluate the kata's tiny spoken-expression language. */\n+export function evaluateSpokenExpression(source: string): number {\n+  return parseExpression(tokenize(source));\n+}\n+\n export function formatAnswer(answer: number): string {\n   return `Result: ${answer}`;\n }\n",
+      "summary": {
+        "files_changed": 1,
+        "additions": 60,
+        "deletions": 50
+      }
+    }
+  },
   "sandbox": {
     "kind": "ready",
     "plan": {
@@ -9165,6 +9313,42 @@
       "agent_control": "running",
       "state": "succeeded"
     },
+    "iteration_limit@5": {
+      "first_event_seq": 804,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Conditional node evaluated: iteration_limit",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:48:14.178294Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:48:14.174614Z",
+      "handler": "conditional",
+      "graph_visit": 5,
+      "timing": {
+        "wall_time_ms": 1,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
     "iteration_limit@4": {
       "first_event_seq": 692,
       "prompt": null,
@@ -9705,6 +9889,42 @@
         "inference_time_ms": 0,
         "tool_time_ms": 1748,
         "active_time_ms": 1748
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "exit@1": {
+      "first_event_seq": 812,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": null,
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:48:17.154233Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:48:17.154210Z",
+      "handler": "exit",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
       },
       "usage": {
         "input_tokens": 0,
