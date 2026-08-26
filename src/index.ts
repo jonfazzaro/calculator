@@ -39,7 +39,29 @@ export function evaluateSpokenExpression(source: string): number {
     throw new Error("Could not work that out.");
   };
 
-  const read = (): number => {
+  // Operators are prefix forms: an operator word, an operand, a connector
+  // word, and a second operand.
+  const readOperands = (connector: string): [number, number] => {
+    const first = read();
+    if (pieces[place++] !== connector) fail();
+    const second = read();
+    return [first, second];
+  };
+
+  const operators: Record<string, { connector: string; apply: (first: number, second: number) => number }> = {
+    add: { connector: "and", apply: (first, second) => first + second },
+    subtract: { connector: "from", apply: (first, second) => second - first },
+    multiply: { connector: "by", apply: (first, second) => first * second },
+    divide: {
+      connector: "by",
+      apply: (first, second) => {
+        if (second === 0) fail();
+        return first / second;
+      },
+    },
+  };
+
+  function read(): number {
     const word = pieces[place++];
     if (!word) fail();
 
@@ -54,28 +76,6 @@ export function evaluateSpokenExpression(source: string): number {
     const numberWord = NUMBER_WORDS[word];
     if (numberWord !== undefined) return numberWord;
 
-    // Operators are prefix forms: an operator word, an operand, a connector
-    // word, and a second operand.
-    const readOperands = (connector: string): [number, number] => {
-      const first = read();
-      if (pieces[place++] !== connector) fail();
-      const second = read();
-      return [first, second];
-    };
-
-    const operators: Record<string, { connector: string; apply: (first: number, second: number) => number }> = {
-      add: { connector: "and", apply: (first, second) => first + second },
-      subtract: { connector: "from", apply: (first, second) => second - first },
-      multiply: { connector: "by", apply: (first, second) => first * second },
-      divide: {
-        connector: "by",
-        apply: (first, second) => {
-          if (second === 0) fail();
-          return first / second;
-        },
-      },
-    };
-
     const operator = operators[word];
     if (operator) {
       const [first, second] = readOperands(operator.connector);
@@ -83,7 +83,7 @@ export function evaluateSpokenExpression(source: string): number {
     }
 
     return fail();
-  };
+  }
 
   const answer = read();
   if (place !== pieces.length) fail();
