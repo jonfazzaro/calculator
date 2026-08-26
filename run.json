@@ -534,7 +534,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:19:59.411280Z",
-  "last_event_at": "2026-08-26T13:22:38.332849Z",
+  "last_event_at": "2026-08-26T13:22:41.095154Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -1552,9 +1552,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 155,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:22:38.343815Z",
+        "timestamp": "2026-08-26T13:22:41.088005Z",
         "current_node": "iteration_limit",
         "completed_nodes": [
           "start",
@@ -1569,42 +1569,145 @@
         ],
         "node_retries": {},
         "context_values": {
-          "internal.retry_count.verdict": 0,
-          "failure_class": "",
-          "thread.refactor.current_node": "evidence",
-          "last_response": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the di",
-          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
-          "last_stage": "validate",
-          "graph.rankdir": "LR",
-          "response.validate": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the diff scoped to `src/index.ts`, and tests pass per the recorded evidence.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence stage recorded `npm test` result: \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" after the refactor, and `test/calculator.test.ts` exercises `evaluateSpokenExpression`, `formatAnswer`, and `runCli` including all four operators (add/subtract/multiply/divide) and error paths, so behavior is unchanged.\n- [PASS] Reveals intention: The diff (git show cf59af4 -- src/index.ts) extracts a `readOperands(connector)` helper with a clear comment \"Operators are prefix forms: '<operator> <first> <connector> <second>'\", replacing a vaguer comment about repeated parser work; the name and parameter (`connector`) describe the operation in plain language without needing further explanation.\n- [PASS] No duplication: Before the refactor, all four operator branches (`add`, `subtract`, `multiply`, `divide`) repeated the identical three-line pattern (`read()`, check connector word, `read()`). The refactor collapses this into one `readOperands` call per branch, removing the duplicated logic while preserving branch-specific arithmetic and the `divide`-by-zero guard.\n- [PASS] Fewest elements: The single added helper (`readOperands`) is used by all four branches immediately, so it is not dead code or an unused abstraction; no unused functions or new dead paths were introduced, and `dist/index.js`/`dist/cli.js` build artifacts changed only as a byproduct of rebuilding `src/index.ts`, not as new untested surface. The diff stat for `src/index.ts` is small (11 insertions, 13 deletions), staying within the single target file scoped in the \"scope\" stage.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
-          "internal.retry_count.validate": 0,
-          "internal.node_visit_count": 1,
-          "internal.fidelity": "compact",
-          "verdict": "PASS",
-          "command.output": "blob://sha256/05c636928c024006246a981ae942a4f99eb8ee160e51c0c0c050131f1124367e",
-          "internal.retry_count.baseline": 0,
-          "internal.retry_count.dependencies": 0,
-          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
-          "thread.evidence.current_node": "validate",
-          "thread.dependencies.current_node": "baseline",
-          "internal.retry_count.scope": 0,
-          "thread.start.current_node": "scope",
-          "thread.baseline.current_node": "refactor",
           "internal.work_dir": "/workspace/calculator",
-          "response.refactor": "I extracted the repeated \"read first operand, expect a connector word, read second operand\" pattern shared by `add`/`subtract`/`multiply`/`divide` into a local `readOperands(connector)` helper, removing the near-identical duplicated code while keeping each operator's own arithmetic and connector word inline. Behavior is unchanged — parsing order, error conditions (missing connector, division by zero), and results are identical.",
+          "last_stage": "validate",
+          "thread.dependencies.current_node": "baseline",
+          "internal.node_visit_count": 1,
           "internal.retry_count.start": 0,
-          "thread.verdict.current_node": "iteration_limit",
-          "current_node": "iteration_limit",
-          "outcome": "succeeded",
           "thread.validate.current_node": "verdict",
-          "failure_signature": "",
-          "internal.thread_id": "verdict",
+          "verdict": "PASS",
+          "current_node": "iteration_limit",
           "internal.retry_count.evidence": 0,
-          "thread.scope.current_node": "dependencies",
+          "thread.baseline.current_node": "refactor",
+          "graph.rankdir": "LR",
+          "outcome": "succeeded",
+          "response.validate": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the diff scoped to `src/index.ts`, and tests pass per the recorded evidence.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence stage recorded `npm test` result: \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" after the refactor, and `test/calculator.test.ts` exercises `evaluateSpokenExpression`, `formatAnswer`, and `runCli` including all four operators (add/subtract/multiply/divide) and error paths, so behavior is unchanged.\n- [PASS] Reveals intention: The diff (git show cf59af4 -- src/index.ts) extracts a `readOperands(connector)` helper with a clear comment \"Operators are prefix forms: '<operator> <first> <connector> <second>'\", replacing a vaguer comment about repeated parser work; the name and parameter (`connector`) describe the operation in plain language without needing further explanation.\n- [PASS] No duplication: Before the refactor, all four operator branches (`add`, `subtract`, `multiply`, `divide`) repeated the identical three-line pattern (`read()`, check connector word, `read()`). The refactor collapses this into one `readOperands` call per branch, removing the duplicated logic while preserving branch-specific arithmetic and the `divide`-by-zero guard.\n- [PASS] Fewest elements: The single added helper (`readOperands`) is used by all four branches immediately, so it is not dead code or an unused abstraction; no unused functions or new dead paths were introduced, and `dist/index.js`/`dist/cli.js` build artifacts changed only as a byproduct of rebuilding `src/index.ts`, not as new untested surface. The diff stat for `src/index.ts` is small (11 insertions, 13 deletions), staying within the single target file scoped in the \"scope\" stage.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.start.current_node": "scope",
+          "response.refactor": "I extracted the repeated \"read first operand, expect a connector word, read second operand\" pattern shared by `add`/`subtract`/`multiply`/`divide` into a local `readOperands(connector)` helper, removing the near-identical duplicated code while keeping each operator's own arithmetic and connector word inline. Behavior is unchanged — parsing order, error conditions (missing connector, division by zero), and results are identical.",
+          "internal.retry_count.scope": 0,
+          "internal.retry_count.baseline": 0,
+          "internal.thread_id": "verdict",
+          "thread.verdict.current_node": "iteration_limit",
+          "command.output": "blob://sha256/05c636928c024006246a981ae942a4f99eb8ee160e51c0c0c050131f1124367e",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "internal.retry_count.refactor": 0,
-          "internal.retry_count.iteration_limit": 0
+          "last_response": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the di",
+          "thread.scope.current_node": "dependencies",
+          "failure_class": "",
+          "thread.evidence.current_node": "validate",
+          "internal.retry_count.dependencies": 0,
+          "thread.refactor.current_node": "evidence",
+          "internal.retry_count.validate": 0,
+          "internal.retry_count.verdict": 0,
+          "failure_signature": "",
+          "internal.retry_count.iteration_limit": 0,
+          "internal.fidelity": "compact",
+          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2"
         },
         "node_outcomes": {
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "I extracted the repeated \"read first operand, expect a connector word, read second operand\" pattern shared by `add`/`subtract`/`multiply`/`divide` into a local `readOperands(connector)` helper, removi",
+              "response.refactor": "I extracted the repeated \"read first operand, expect a connector word, read second operand\" pattern shared by `add`/`subtract`/`multiply`/`divide` into a local `readOperands(connector)` helper, removing the near-identical duplicated code while keeping each operator's own arithmetic and connector word inline. Behavior is unchanged — parsing order, error conditions (missing connector, division by zero), and results are identical.",
+              "last_stage": "refactor"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 3885,
+                    "output_tokens": 995,
+                    "reasoning_tokens": 194,
+                    "cache_read_tokens": 16373,
+                    "cache_write_tokens": 10529
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 10529,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 49257
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 20463,
+              "tool_time_ms": 78,
+              "active_time_ms": 20541
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "response.validate": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the diff scoped to `src/index.ts`, and tests pass per the recorded evidence.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence stage recorded `npm test` result: \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" after the refactor, and `test/calculator.test.ts` exercises `evaluateSpokenExpression`, `formatAnswer`, and `runCli` including all four operators (add/subtract/multiply/divide) and error paths, so behavior is unchanged.\n- [PASS] Reveals intention: The diff (git show cf59af4 -- src/index.ts) extracts a `readOperands(connector)` helper with a clear comment \"Operators are prefix forms: '<operator> <first> <connector> <second>'\", replacing a vaguer comment about repeated parser work; the name and parameter (`connector`) describe the operation in plain language without needing further explanation.\n- [PASS] No duplication: Before the refactor, all four operator branches (`add`, `subtract`, `multiply`, `divide`) repeated the identical three-line pattern (`read()`, check connector word, `read()`). The refactor collapses this into one `readOperands` call per branch, removing the duplicated logic while preserving branch-specific arithmetic and the `divide`-by-zero guard.\n- [PASS] Fewest elements: The single added helper (`readOperands`) is used by all four branches immediately, so it is not dead code or an unused abstraction; no unused functions or new dead paths were introduced, and `dist/index.js`/`dist/cli.js` build artifacts changed only as a byproduct of rebuilding `src/index.ts`, not as new untested surface. The diff stat for `src/index.ts` is small (11 insertions, 13 deletions), staying within the single target file scoped in the \"scope\" stage.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "last_response": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the di",
+              "verdict": "PASS"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 9647,
+                    "output_tokens": 1295,
+                    "reasoning_tokens": 2550,
+                    "cache_read_tokens": 59144,
+                    "cache_write_tokens": 16102
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 16102,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 109829
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 61548,
+              "tool_time_ms": 705,
+              "active_time_ms": 62253
+            }
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/05c636928c024006246a981ae942a4f99eb8ee160e51c0c0c050131f1124367e"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1651,
+              "active_time_ms": 1651
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
           "dependencies": {
             "status": "succeeded",
             "context_updates": {
@@ -1631,6 +1734,132 @@
               "inference_time_ms": 0,
               "tool_time_ms": 847,
               "active_time_ms": 847
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 122,
+              "active_time_ms": 122
+            }
+          }
+        },
+        "next_node_id": "baseline",
+        "git_commit_sha": "1cdd6562f012b94a7c1161842a562fd55db235dd",
+        "node_visits": {
+          "start": 1,
+          "dependencies": 1,
+          "evidence": 1,
+          "refactor": 1,
+          "verdict": 1,
+          "iteration_limit": 1,
+          "scope": 1,
+          "validate": 1,
+          "baseline": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 11,
+          "deletions": 13
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:22:41.731124Z",
+        "current_node": "baseline",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "internal.retry_count.verdict": 0,
+          "failure_class": "",
+          "thread.refactor.current_node": "evidence",
+          "last_response": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the di",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "last_stage": "validate",
+          "graph.rankdir": "LR",
+          "response.validate": "All checks confirm the evidence. The refactor extracted a `readOperands` helper to eliminate duplicated \"read first, expect connector, read second\" logic across the four operator branches, kept the diff scoped to `src/index.ts`, and tests pass per the recorded evidence.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence stage recorded `npm test` result: \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" after the refactor, and `test/calculator.test.ts` exercises `evaluateSpokenExpression`, `formatAnswer`, and `runCli` including all four operators (add/subtract/multiply/divide) and error paths, so behavior is unchanged.\n- [PASS] Reveals intention: The diff (git show cf59af4 -- src/index.ts) extracts a `readOperands(connector)` helper with a clear comment \"Operators are prefix forms: '<operator> <first> <connector> <second>'\", replacing a vaguer comment about repeated parser work; the name and parameter (`connector`) describe the operation in plain language without needing further explanation.\n- [PASS] No duplication: Before the refactor, all four operator branches (`add`, `subtract`, `multiply`, `divide`) repeated the identical three-line pattern (`read()`, check connector word, `read()`). The refactor collapses this into one `readOperands` call per branch, removing the duplicated logic while preserving branch-specific arithmetic and the `divide`-by-zero guard.\n- [PASS] Fewest elements: The single added helper (`readOperands`) is used by all four branches immediately, so it is not dead code or an unused abstraction; no unused functions or new dead paths were introduced, and `dist/index.js`/`dist/cli.js` build artifacts changed only as a byproduct of rebuilding `src/index.ts`, not as new untested surface. The diff stat for `src/index.ts` is small (11 insertions, 13 deletions), staying within the single target file scoped in the \"scope\" stage.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.iteration_limit.current_node": "baseline",
+          "internal.retry_count.validate": 0,
+          "internal.node_visit_count": 2,
+          "internal.fidelity": "compact",
+          "verdict": "PASS",
+          "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310",
+          "internal.retry_count.baseline": 0,
+          "internal.retry_count.dependencies": 0,
+          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
+          "thread.evidence.current_node": "validate",
+          "thread.dependencies.current_node": "baseline",
+          "internal.retry_count.scope": 0,
+          "thread.start.current_node": "scope",
+          "thread.baseline.current_node": "refactor",
+          "internal.work_dir": "/workspace/calculator",
+          "response.refactor": "I extracted the repeated \"read first operand, expect a connector word, read second operand\" pattern shared by `add`/`subtract`/`multiply`/`divide` into a local `readOperands(connector)` helper, removing the near-identical duplicated code while keeping each operator's own arithmetic and connector word inline. Behavior is unchanged — parsing order, error conditions (missing connector, division by zero), and results are identical.",
+          "internal.retry_count.start": 0,
+          "thread.verdict.current_node": "iteration_limit",
+          "current_node": "baseline",
+          "outcome": "succeeded",
+          "thread.validate.current_node": "verdict",
+          "failure_signature": "",
+          "internal.thread_id": "iteration_limit",
+          "internal.retry_count.evidence": 0,
+          "thread.scope.current_node": "dependencies",
+          "internal.retry_count.refactor": 0,
+          "internal.retry_count.iteration_limit": 0
+        },
+        "node_outcomes": {
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/d148d13d209a7e191eda6dc83e1dc3e16e32e5aba5600a817b1d81bb06c419cf"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 49838,
+              "active_time_ms": 49838
+            }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 630,
+              "active_time_ms": 630
             }
           },
           "start": {
@@ -1756,7 +1985,7 @@
             "usage": null
           }
         },
-        "next_node_id": "baseline",
+        "next_node_id": "refactor",
         "node_visits": {
           "validate": 1,
           "start": 1,
@@ -1764,7 +1993,7 @@
           "dependencies": 1,
           "verdict": 1,
           "scope": 1,
-          "baseline": 1,
+          "baseline": 2,
           "evidence": 1,
           "refactor": 1
         }
@@ -2451,6 +2680,35 @@
       "agent_control": "running",
       "state": "succeeded"
     },
+    "baseline@2": {
+      "first_event_seq": 158,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:22:41.094012Z",
+      "handler": "command",
+      "graph_visit": 2,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
+    },
     "start@1": {
       "first_event_seq": 17,
       "prompt": null,
@@ -2472,6 +2730,42 @@
       "graph_visit": 1,
       "timing": {
         "wall_time_ms": 0,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "iteration_limit@1": {
+      "first_event_seq": 150,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Conditional node evaluated: iteration_limit",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:22:38.342708Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:22:38.339578Z",
+      "handler": "conditional",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 1,
         "inference_time_ms": 0,
         "tool_time_ms": 0,
         "active_time_ms": 0
