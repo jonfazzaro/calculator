@@ -518,7 +518,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T00:31:48.079912Z",
-  "last_event_at": "2026-08-26T00:43:24.583713Z",
+  "last_event_at": "2026-08-26T00:44:11.980741Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -4579,9 +4579,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 559,
       "checkpoint": {
-        "timestamp": "2026-08-26T00:43:24.593882Z",
+        "timestamp": "2026-08-26T00:43:27.070204Z",
         "current_node": "baseline",
         "completed_nodes": [
           "start",
@@ -4609,43 +4609,89 @@
         ],
         "node_retries": {},
         "context_values": {
-          "thread.refactor.current_node": "evidence",
-          "failure_class": "",
-          "internal.retry_count.start": 0,
-          "internal.node_visit_count": 4,
-          "thread.dependencies.current_node": "baseline",
+          "thread.iteration_limit.current_node": "baseline",
+          "outcome": "succeeded",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "thread.scope.current_node": "dependencies",
+          "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
+          "graph.rankdir": "LR",
           "internal.work_dir": "/workspace/calculator",
           "thread.start.current_node": "scope",
-          "last_stage": "validate",
-          "verdict": "PASS",
-          "internal.retry_count.iteration_limit": 0,
-          "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854",
-          "thread.iteration_limit.current_node": "baseline",
-          "internal.retry_count.validate": 0,
-          "thread.scope.current_node": "dependencies",
-          "response.refactor": "Extracted a `tokenize` function from `evaluateSpokenExpression`, naming the \"turn spoken text into words\" step and shrinking the main function. Behavior is unchanged—same regex/split/filter logic, just given a name and pulled out.",
-          "internal.retry_count.dependencies": 0,
-          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
-          "internal.retry_count.evidence": 0,
           "current_node": "baseline",
           "internal.retry_count.baseline": 0,
-          "outcome": "succeeded",
+          "thread.verdict.current_node": "iteration_limit",
           "thread.baseline.current_node": "refactor",
-          "internal.thread_id": "iteration_limit",
           "internal.fidelity": "compact",
           "thread.evidence.current_node": "validate",
-          "thread.validate.current_node": "verdict",
-          "last_response": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got s",
+          "internal.node_visit_count": 4,
+          "internal.thread_id": "iteration_limit",
           "internal.retry_count.scope": 0,
-          "internal.retry_count.refactor": 0,
-          "graph.rankdir": "LR",
+          "response.validate": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got smaller by extracting `tokenize`). Same error count, but not worse, and the extraction is a real improvement toward the size/duplication goal.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran build + vitest and reported \"9 tests\" all passed, \"Test Files 1 passed (1)\", exit 0.\n- [PASS] Reveals intention: The new `tokenize(source: string): string[]` function (src/index.ts:33) is a plainly named, documented (\"Split spoken-expression source into its words and parentheses.\") extraction that clearly names what the block does, versus an inline unnamed regex pipeline previously embedded in `evaluateSpokenExpression`.\n- [PASS] No duplication: `npm run quality` reports the same eslint findings as baseline (no new duplication findings), and inspection shows the tokenizing logic now exists in exactly one place (`tokenize`) instead of being inlined; no near-identical passages found elsewhere in src/index.ts.\n- [PASS] Fewest elements: `tokenize` is exported-free (module-private) and is exercised indirectly through every test that calls `evaluateSpokenExpression` (all 9 tests exercise tokenize); no dead code was introduced. Quality error count is unchanged (4 errors before and after), and the flagged function's line count dropped from 34 to 28 lines, moving toward — not away from — the size limit, confirming a real, non-regressive step.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
           "failure_signature": "",
-          "thread.verdict.current_node": "iteration_limit",
+          "internal.retry_count.start": 0,
+          "internal.retry_count.iteration_limit": 0,
+          "thread.dependencies.current_node": "baseline",
+          "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854",
+          "internal.retry_count.validate": 0,
+          "thread.refactor.current_node": "evidence",
+          "response.refactor": "Extracted a `tokenize` function from `evaluateSpokenExpression`, naming the \"turn spoken text into words\" step and shrinking the main function. Behavior is unchanged—same regex/split/filter logic, just given a name and pulled out.",
+          "internal.retry_count.dependencies": 0,
+          "internal.retry_count.evidence": 0,
           "internal.retry_count.verdict": 0,
-          "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
-          "response.validate": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got smaller by extracting `tokenize`). Same error count, but not worse, and the extraction is a real improvement toward the size/duplication goal.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran build + vitest and reported \"9 tests\" all passed, \"Test Files 1 passed (1)\", exit 0.\n- [PASS] Reveals intention: The new `tokenize(source: string): string[]` function (src/index.ts:33) is a plainly named, documented (\"Split spoken-expression source into its words and parentheses.\") extraction that clearly names what the block does, versus an inline unnamed regex pipeline previously embedded in `evaluateSpokenExpression`.\n- [PASS] No duplication: `npm run quality` reports the same eslint findings as baseline (no new duplication findings), and inspection shows the tokenizing logic now exists in exactly one place (`tokenize`) instead of being inlined; no near-identical passages found elsewhere in src/index.ts.\n- [PASS] Fewest elements: `tokenize` is exported-free (module-private) and is exercised indirectly through every test that calls `evaluateSpokenExpression` (all 9 tests exercise tokenize); no dead code was introduced. Quality error count is unchanged (4 errors before and after), and the flagged function's line count dropped from 34 to 28 lines, moving toward — not away from — the size limit, confirming a real, non-regressive step.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
+          "failure_class": "",
+          "last_response": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got s",
+          "internal.retry_count.refactor": 0,
+          "thread.validate.current_node": "verdict",
+          "last_stage": "validate",
+          "verdict": "PASS"
         },
         "node_outcomes": {
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 43094,
+              "active_time_ms": 43094
+            }
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 129,
+              "active_time_ms": 129
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 627,
+              "active_time_ms": 627
+            }
+          },
           "refactor": {
             "status": "succeeded",
             "context_updates": {
@@ -4685,6 +4731,202 @@
               "inference_time_ms": 26486,
               "tool_time_ms": 227,
               "active_time_ms": 26713
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "response.validate": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got smaller by extracting `tokenize`). Same error count, but not worse, and the extraction is a real improvement toward the size/duplication goal.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran build + vitest and reported \"9 tests\" all passed, \"Test Files 1 passed (1)\", exit 0.\n- [PASS] Reveals intention: The new `tokenize(source: string): string[]` function (src/index.ts:33) is a plainly named, documented (\"Split spoken-expression source into its words and parentheses.\") extraction that clearly names what the block does, versus an inline unnamed regex pipeline previously embedded in `evaluateSpokenExpression`.\n- [PASS] No duplication: `npm run quality` reports the same eslint findings as baseline (no new duplication findings), and inspection shows the tokenizing logic now exists in exactly one place (`tokenize`) instead of being inlined; no near-identical passages found elsewhere in src/index.ts.\n- [PASS] Fewest elements: `tokenize` is exported-free (module-private) and is exercised indirectly through every test that calls `evaluateSpokenExpression` (all 9 tests exercise tokenize); no dead code was introduced. Quality error count is unchanged (4 errors before and after), and the flagged function's line count dropped from 34 to 28 lines, moving toward — not away from — the size limit, confirming a real, non-regressive step.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "last_stage": "validate",
+              "verdict": "PASS",
+              "last_response": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got s"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 13461,
+                    "output_tokens": 1753,
+                    "reasoning_tokens": 4253,
+                    "cache_read_tokens": 167096,
+                    "cache_write_tokens": 21869
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 21869,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 175075
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 111658,
+              "tool_time_ms": 3307,
+              "active_time_ms": 114965
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/72a6a6bc3f34c73bc4e8a240ea4a0d18e0d899e58607686b8892b6b105a2e58c"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1545,
+              "active_time_ms": 1545
+            }
+          }
+        },
+        "next_node_id": "refactor",
+        "git_commit_sha": "b60c6f26f4b2eb4838a157e390019de6f786b4be",
+        "node_visits": {
+          "evidence": 3,
+          "iteration_limit": 3,
+          "start": 1,
+          "baseline": 4,
+          "refactor": 3,
+          "verdict": 3,
+          "dependencies": 1,
+          "scope": 1,
+          "validate": 3
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 31,
+          "deletions": 38
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T00:44:11.992563Z",
+        "current_node": "refactor",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "thread.refactor.current_node": "evidence",
+          "failure_class": "",
+          "internal.retry_count.start": 0,
+          "internal.node_visit_count": 4,
+          "thread.dependencies.current_node": "baseline",
+          "internal.work_dir": "/workspace/calculator",
+          "thread.start.current_node": "scope",
+          "last_stage": "refactor",
+          "verdict": "PASS",
+          "internal.retry_count.iteration_limit": 0,
+          "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854",
+          "thread.iteration_limit.current_node": "baseline",
+          "internal.retry_count.validate": 0,
+          "thread.scope.current_node": "dependencies",
+          "response.refactor": "This iteration extracted the recursive-descent parser out of `evaluateSpokenExpression` into a named `parseExpression` function, and split its inner `read` closure into small, intention-revealing helpers (`nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`). This reduces the size and cognitive complexity of the outer function while keeping the same tokenize → parse pipeline and identical error/behavior semantics — no logic changed, only decomposition and naming.",
+          "internal.retry_count.dependencies": 0,
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.retry_count.evidence": 0,
+          "current_node": "refactor",
+          "internal.retry_count.baseline": 0,
+          "outcome": "succeeded",
+          "thread.baseline.current_node": "refactor",
+          "internal.thread_id": "baseline",
+          "internal.fidelity": "compact",
+          "thread.evidence.current_node": "validate",
+          "thread.validate.current_node": "verdict",
+          "last_response": "This iteration extracted the recursive-descent parser out of `evaluateSpokenExpression` into a named `parseExpression` function, and split its inner `read` closure into small, intention-revealing help",
+          "internal.retry_count.scope": 0,
+          "internal.retry_count.refactor": 0,
+          "graph.rankdir": "LR",
+          "failure_signature": "",
+          "thread.verdict.current_node": "iteration_limit",
+          "internal.retry_count.verdict": 0,
+          "internal.run_id": "01M0XQNVAZEBH8JYJM5J3VEX8Y",
+          "response.validate": "The refactor reduced `evaluateSpokenExpression`'s line count from 34 to 28 (still over the 20-line limit, so the same 4 errors remain flagged, but the underlying metric improved — the function got smaller by extracting `tokenize`). Same error count, but not worse, and the extraction is a real improvement toward the size/duplication goal.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran build + vitest and reported \"9 tests\" all passed, \"Test Files 1 passed (1)\", exit 0.\n- [PASS] Reveals intention: The new `tokenize(source: string): string[]` function (src/index.ts:33) is a plainly named, documented (\"Split spoken-expression source into its words and parentheses.\") extraction that clearly names what the block does, versus an inline unnamed regex pipeline previously embedded in `evaluateSpokenExpression`.\n- [PASS] No duplication: `npm run quality` reports the same eslint findings as baseline (no new duplication findings), and inspection shows the tokenizing logic now exists in exactly one place (`tokenize`) instead of being inlined; no near-identical passages found elsewhere in src/index.ts.\n- [PASS] Fewest elements: `tokenize` is exported-free (module-private) and is exercised indirectly through every test that calls `evaluateSpokenExpression` (all 9 tests exercise tokenize); no dead code was introduced. Quality error count is unchanged (4 errors before and after), and the flagged function's line count dropped from 34 to 28 lines, moving toward — not away from — the size limit, confirming a real, non-regressive step.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```"
+        },
+        "node_outcomes": {
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "This iteration extracted the recursive-descent parser out of `evaluateSpokenExpression` into a named `parseExpression` function, and split its inner `read` closure into small, intention-revealing help",
+              "response.refactor": "This iteration extracted the recursive-descent parser out of `evaluateSpokenExpression` into a named `parseExpression` function, and split its inner `read` closure into small, intention-revealing helpers (`nextWord`, `expectWord`, `readParenthesized`, `readOperatorExpression`, `readValue`). This reduces the size and cognitive complexity of the outer function while keeping the same tokenize → parse pipeline and identical error/behavior semantics — no logic changed, only decomposition and naming.",
+              "last_stage": "refactor"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 7830,
+                    "output_tokens": 1369,
+                    "reasoning_tokens": 2918,
+                    "cache_read_tokens": 20455,
+                    "cache_write_tokens": 14388
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 14388,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 98591
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 44753,
+              "tool_time_ms": 63,
+              "active_time_ms": 44816
             }
           },
           "dependencies": {
@@ -4797,7 +5039,7 @@
             "usage": null
           }
         },
-        "next_node_id": "refactor",
+        "next_node_id": "evidence",
         "node_visits": {
           "scope": 1,
           "validate": 3,
@@ -4807,7 +5049,7 @@
           "iteration_limit": 3,
           "dependencies": 1,
           "baseline": 4,
-          "refactor": 3
+          "refactor": 4
         }
       },
       "diff": {}
@@ -4840,6 +5082,205 @@
   "superseded_by": null,
   "pending_interviews": {},
   "stages": {
+    "refactor@4": {
+      "first_event_seq": 562,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": {
+        "mode": "agent",
+        "provider": "openrouter",
+        "model": "claude-sonnet-5"
+      },
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T00:43:27.074253Z",
+      "handler": "agent",
+      "graph_visit": 4,
+      "live_inference_ms": 44752,
+      "live_tool_ms": 62,
+      "usage": {
+        "input_tokens": 7830,
+        "output_tokens": 1369,
+        "total_tokens": 46960,
+        "reasoning_tokens": 2918,
+        "cache_read_tokens": 20455,
+        "cache_write_tokens": 14388,
+        "total_usd_micros": 98591
+      },
+      "model": {
+        "provider": "openrouter",
+        "model_id": "claude-sonnet-5"
+      },
+      "permission_level": "full",
+      "agent_tools": [
+        {
+          "name": "Agent",
+          "description": "Launch a child agent for an independent task. Agents run in the background by default and notify the parent when they finish. Set run_in_background to false to wait for the result synchronously.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "AskUserQuestion",
+          "description": "Ask the human up to four questions when a decision is genuinely theirs to make. The UI automatically provides an Other option for custom text.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Bash",
+          "description": "Execute a Bash command in a fresh foreground non-login shell. Use this for searches, git inspection, builds, tests, package managers, and terminal operations. Prefer `rg` for content search and `rg --files` for file discovery. Working-directory and environment changes do not persist between calls. `timeout` is in milliseconds, defaults to 120000, and is capped at 600000.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "shell",
+          "invoked": false
+        },
+        {
+          "name": "Edit",
+          "description": "Edit a file by replacing an exact string. The old_string must be an exact match and unique unless replace_all is true; include surrounding context when needed. Read the file first and preserve existing indentation.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": true
+        },
+        {
+          "name": "Read",
+          "description": "Read files before editing them. Returns line-numbered text and supports offset/limit for large files. Use this instead of shell cat, head, tail, or sed when inspecting repository files.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "read",
+          "invoked": true
+        },
+        {
+          "name": "SendMessage",
+          "description": "Send additional instructions to a background agent by its task ID. A running agent receives them at a safe turn boundary. A completed agent starts another turn in the same session with its existing history.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskCreate",
+          "description": "Create pending tasks in the current session. Use concise subjects, descriptions, optional activeForm text, and metadata. Check TaskList first to avoid duplicate tasks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskGet",
+          "description": "Get one task by taskId, including subject, status, description, owner, blockedBy, and blocks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskList",
+          "description": "List tasks for the current session, including status, owner, and blocking dependencies. Use TaskGet with a taskId for full description and dependency details.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskOutput",
+          "description": "Get a background agent's current status or wait for its final output. Automatic completion notifications make ordinary polling unnecessary.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskStop",
+          "description": "Stop a running or completed background agent by task ID.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskUpdate",
+          "description": "Update an existing task's status, text, owner, metadata, or dependencies. Valid statuses are pending, in_progress, completed, and deleted. After completing a task, call TaskList to find newly unblocked work.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "WebFetch",
+          "description": "Fetch an HTTP or HTTPS URL and answer the supplied prompt from its contents.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Write",
+          "description": "Create new files, or overwrite an existing file only when replacement is explicitly intended. Prefer edit_file for targeted changes to existing files because write_file overwrites the full file content.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": false
+        }
+      ],
+      "context_window": {
+        "provider": "openrouter",
+        "model": "claude-sonnet-5",
+        "context_window_tokens": 1000000,
+        "input_tokens": 15549,
+        "usage_percent": 1.5549,
+        "count_method": "response_usage_scaled_breakdown",
+        "staleness": "live",
+        "generated_at": "2026-08-26T00:44:11.980596Z",
+        "event_seq": 583,
+        "breakdown": [
+          {
+            "category": "system_prompt",
+            "tokens": 2816,
+            "usage_percent": 0.2816
+          },
+          {
+            "category": "tools",
+            "tokens": 2061,
+            "usage_percent": 0.2061
+          },
+          {
+            "category": "conversation",
+            "tokens": 10666,
+            "usage_percent": 1.0666
+          },
+          {
+            "category": "other",
+            "tokens": 6,
+            "usage_percent": 0.0006
+          }
+        ],
+        "warnings": []
+      },
+      "agent_control": "running",
+      "state": "running"
+    },
     "iteration_limit@3": {
       "first_event_seq": 544,
       "prompt": null,
@@ -5790,7 +6231,12 @@
       "first_event_seq": 552,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T00:43:24.591517Z"
+      },
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -5814,6 +6260,12 @@
       "started_at": "2026-08-26T00:43:23.953651Z",
       "handler": "command",
       "graph_visit": 4,
+      "timing": {
+        "wall_time_ms": 630,
+        "inference_time_ms": 0,
+        "tool_time_ms": 627,
+        "active_time_ms": 627
+      },
       "usage": {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -5823,7 +6275,7 @@
         "cache_write_tokens": 0
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "refactor@2": {
       "first_event_seq": 203,
