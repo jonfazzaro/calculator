@@ -1,0 +1,1 @@
+Extracted the token-cursor state (`place`, `fail`, `nextWord`, `expectWord`, end-check) out of `parseExpression` into a small `createCursor` helper. This shortens `parseExpression` toward the 20-line limit, names the cursor's responsibility explicitly, and keeps all parsing logic and behavior unchanged.

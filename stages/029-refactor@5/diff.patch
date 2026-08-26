@@ -1,0 +1,64 @@
+diff --git a/src/index.ts b/src/index.ts
+index a83b4b4..6287d9e 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -40,8 +40,8 @@ function tokenize(source: string): string[] {
+     .filter(Boolean);
+ }
+ 
+-/** Parse the tokenised spoken-expression words into their numeric result. */
+-function parseExpression(pieces: string[]): number {
++/** A read position over the tokenised words, with the kata's shared failure. */
++function createCursor(pieces: string[]) {
+   let place = 0;
+ 
+   const fail = (): never => {
+@@ -59,21 +59,30 @@ function parseExpression(pieces: string[]): number {
+     if (nextWord() !== expected) fail();
+   };
+ 
++  const atEnd = (): boolean => place === pieces.length;
++
++  return { fail, nextWord, expectWord, atEnd };
++}
++
++/** Parse the tokenised spoken-expression words into their numeric result. */
++function parseExpression(pieces: string[]): number {
++  const cursor = createCursor(pieces);
++
+   const readParenthesized = (): number => {
+     const inside = readValue();
+-    expectWord(")");
++    cursor.expectWord(")");
+     return inside;
+   };
+ 
+   const readOperatorExpression = (operator: (typeof OPERATORS)[string]): number => {
+     const first = readValue();
+-    expectWord(operator.connector);
++    cursor.expectWord(operator.connector);
+     const second = readValue();
+-    return operator.compute(first, second, fail);
++    return operator.compute(first, second, cursor.fail);
+   };
+ 
+   const readValue = (): number => {
+-    const word = nextWord();
++    const word = cursor.nextWord();
+     if (word === "(") return readParenthesized();
+     if (/^\d+$/.test(word)) return Number(word);
+ 
+@@ -81,11 +90,11 @@ function parseExpression(pieces: string[]): number {
+     if (numberWord !== undefined) return numberWord;
+ 
+     const operator = OPERATORS[word];
+-    return operator ? readOperatorExpression(operator) : fail();
++    return operator ? readOperatorExpression(operator) : cursor.fail();
+   };
+ 
+   const answer = readValue();
+-  if (place !== pieces.length) fail();
++  if (!cursor.atEnd()) cursor.fail();
+   return answer;
+ }
+ 
