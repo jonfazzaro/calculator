@@ -16,22 +16,27 @@ const NUMBER_WORDS: Record<string, number> = {
   twelve: 12,
 };
 
-/**
- * Evaluate the kata's tiny spoken-expression language.
- *
- * This is intentionally a single, inconvenient starting point for the kata:
- * it tokenises, parses, performs arithmetic, formats results, and knows about
- * command-line output. The behaviour is covered; the structure is not a model
- * to emulate.
- */
-export function evaluateSpokenExpression(source: string): number {
-  const pieces = source
+/** Split spoken-expression source into lowercase words, with parentheses as their own tokens. */
+function tokenize(source: string): string[] {
+  return source
     .toLowerCase()
     .replace(/\(/g, " ( ")
     .replace(/\)/g, " ) ")
     .trim()
     .split(/\s+/)
     .filter(Boolean);
+}
+
+/**
+ * Evaluate the kata's tiny spoken-expression language.
+ *
+ * This is intentionally a single, inconvenient starting point for the kata:
+ * it parses, performs arithmetic, formats results, and knows about
+ * command-line output. The behaviour is covered; the structure is not a model
+ * to emulate.
+ */
+export function evaluateSpokenExpression(source: string): number {
+  const pieces = tokenize(source);
   let place = 0;
 
   const fail = (): never => {
