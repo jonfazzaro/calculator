@@ -39,6 +39,19 @@ export function evaluateSpokenExpression(source: string): number {
     throw new Error("Could not work that out.");
   };
 
+  const OPERATORS: Record<string, { connector: string; combine: (first: number, second: number) => number }> = {
+    add: { connector: "and", combine: (first, second) => first + second },
+    subtract: { connector: "from", combine: (first, second) => second - first },
+    multiply: { connector: "by", combine: (first, second) => first * second },
+    divide: {
+      connector: "by",
+      combine: (first, second) => {
+        if (second === 0) fail();
+        return first / second;
+      },
+    },
+  };
+
   const read = (): number => {
     const word = pieces[place++];
     if (!word) fail();
@@ -55,16 +68,9 @@ export function evaluateSpokenExpression(source: string): number {
     if (numberWord !== undefined) return numberWord;
 
     // Operators are prefix forms: <operator> <first> <connector> <second>.
-    if (word === "add") return readBinaryOperation("and", (first, second) => first + second);
-    if (word === "subtract") return readBinaryOperation("from", (first, second) => second - first);
-    if (word === "multiply") return readBinaryOperation("by", (first, second) => first * second);
-    if (word === "divide")
-      return readBinaryOperation("by", (first, second) => {
-        if (second === 0) fail();
-        return first / second;
-      });
-
-    return fail();
+    const operator = OPERATORS[word];
+    if (!operator) return fail();
+    return readBinaryOperation(operator.connector, operator.combine);
   };
 
   function readBinaryOperation(connector: string, combine: (first: number, second: number) => number): number {
