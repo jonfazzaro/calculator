@@ -1,0 +1,1 @@
+Extracted a `tokenize` function from `evaluateSpokenExpression`, naming the "turn spoken text into words" step and shrinking the main function. Behavior is unchanged—same regex/split/filter logic, just given a name and pulled out.
