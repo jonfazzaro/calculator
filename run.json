@@ -534,7 +534,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:19:59.411280Z",
-  "last_event_at": "2026-08-26T13:29:16.811383Z",
+  "last_event_at": "2026-08-26T13:29:19.446311Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -4355,9 +4355,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 491,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:29:16.821044Z",
+        "timestamp": "2026-08-26T13:29:19.439922Z",
         "current_node": "iteration_limit",
         "completed_nodes": [
           "start",
@@ -4384,6 +4384,247 @@
         ],
         "node_retries": {},
         "context_values": {
+          "internal.work_dir": "/workspace/calculator",
+          "internal.retry_count.evidence": 0,
+          "verdict": "PASS",
+          "internal.node_visit_count": 3,
+          "current_node": "iteration_limit",
+          "internal.fidelity": "compact",
+          "failure_class": "",
+          "thread.scope.current_node": "dependencies",
+          "thread.validate.current_node": "verdict",
+          "command.output": "blob://sha256/aaf0e0e595ce5b84e05a50c4920b37c9e0fee0bc3bcec990b322b32ef5b799cc",
+          "failure_signature": "",
+          "last_stage": "validate",
+          "last_response": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full build+vitest suite and reported \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" with the current working tree (veri",
+          "internal.retry_count.iteration_limit": 0,
+          "internal.retry_count.refactor": 0,
+          "internal.retry_count.baseline": 0,
+          "internal.retry_count.validate": 0,
+          "internal.thread_id": "verdict",
+          "graph.rankdir": "LR",
+          "outcome": "succeeded",
+          "thread.baseline.current_node": "refactor",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "thread.dependencies.current_node": "baseline",
+          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
+          "thread.evidence.current_node": "validate",
+          "internal.retry_count.start": 0,
+          "response.refactor": "Extracted the tokenization logic (lowercasing, spacing parentheses, splitting into words) out of `evaluateSpokenExpression` into a new, clearly named `tokenize` function. This reduces the line count and cognitive load of `evaluateSpokenExpression` while giving the tokenizing step an intention-revealing name, with no behavior change.",
+          "internal.retry_count.dependencies": 0,
+          "internal.retry_count.verdict": 0,
+          "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full build+vitest suite and reported \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" with the current working tree (verified independently, matching the recorded evidence-stage output).\n- [PASS] Reveals intention: the diff extracts the tokenising pipeline (`.toLowerCase().replace(...).split(...).filter(...)`) out of `evaluateSpokenExpression` into a standalone function named `tokenize`, so the call site now reads `const pieces = tokenize(source)` — the name states the operation in plain language and removes an unnamed inline block from the larger function.\n- [PASS] No duplication: the tokenising logic now exists in exactly one place (`tokenize`), called once; `npm run quality`'s eslint pass reports no duplication-related rule violations, only the pre-existing size/complexity findings on `evaluateSpokenExpression`.\n- [PASS] Fewest elements: no new unused code was introduced — `tokenize` is called from `evaluateSpokenExpression`, and all three exports (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) are exercised by `test/calculator.test.ts`, confirmed by inspection.\n- [PASS] Change stays within the requested target: `git show 54df8f8 --stat` shows only `src/index.ts` changed (11 insertions, 7 deletions); the current working tree's `src/index.ts` is byte-identical to that commit (`diff` produced no output), and only generated `dist/*` build artifacts differ in the working tree, which is expected build output, not scope creep.\n- [PASS] Quality no worse than baseline: baseline and current `npm run quality` both report the same 4 eslint errors on `evaluateSpokenExpression` (max-lines-per-function, cognitive-complexity, max-statements, complexity) with no new errors and no regression; the extraction reduced the function's cognitive-complexity-relevant duplicated logic without introducing new lint findings.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.iteration_limit.current_node": "baseline",
+          "thread.refactor.current_node": "evidence",
+          "thread.start.current_node": "scope",
+          "thread.verdict.current_node": "iteration_limit",
+          "internal.retry_count.scope": 0
+        },
+        "node_outcomes": {
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/1e45287afb5fcd5860b96c03371d4d1a17986321c536e3ad6bb50f92bb0749e5"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 633,
+              "active_time_ms": 633
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "verdict": "PASS",
+              "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full build+vitest suite and reported \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" with the current working tree (verified independently, matching the recorded evidence-stage output).\n- [PASS] Reveals intention: the diff extracts the tokenising pipeline (`.toLowerCase().replace(...).split(...).filter(...)`) out of `evaluateSpokenExpression` into a standalone function named `tokenize`, so the call site now reads `const pieces = tokenize(source)` — the name states the operation in plain language and removes an unnamed inline block from the larger function.\n- [PASS] No duplication: the tokenising logic now exists in exactly one place (`tokenize`), called once; `npm run quality`'s eslint pass reports no duplication-related rule violations, only the pre-existing size/complexity findings on `evaluateSpokenExpression`.\n- [PASS] Fewest elements: no new unused code was introduced — `tokenize` is called from `evaluateSpokenExpression`, and all three exports (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) are exercised by `test/calculator.test.ts`, confirmed by inspection.\n- [PASS] Change stays within the requested target: `git show 54df8f8 --stat` shows only `src/index.ts` changed (11 insertions, 7 deletions); the current working tree's `src/index.ts` is byte-identical to that commit (`diff` produced no output), and only generated `dist/*` build artifacts differ in the working tree, which is expected build output, not scope creep.\n- [PASS] Quality no worse than baseline: baseline and current `npm run quality` both report the same 4 eslint errors on `evaluateSpokenExpression` (max-lines-per-function, cognitive-complexity, max-statements, complexity) with no new errors and no regression; the extraction reduced the function's cognitive-complexity-relevant duplicated logic without introducing new lint findings.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "last_response": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full build+vitest suite and reported \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" with the current working tree (veri"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 13935,
+                    "output_tokens": 2585,
+                    "reasoning_tokens": 7248,
+                    "cache_read_tokens": 245280,
+                    "cache_write_tokens": 21877
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 21877,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 229949
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 168376,
+              "tool_time_ms": 3544,
+              "active_time_ms": 171920
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "Extracted the tokenization logic (lowercasing, spacing parentheses, splitting into words) out of `evaluateSpokenExpression` into a new, clearly named `tokenize` function. This reduces the line count a",
+              "last_stage": "refactor",
+              "response.refactor": "Extracted the tokenization logic (lowercasing, spacing parentheses, splitting into words) out of `evaluateSpokenExpression` into a new, clearly named `tokenize` function. This reduces the line count and cognitive load of `evaluateSpokenExpression` while giving the tokenizing step an intention-revealing name, with no behavior change."
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 6065,
+                    "output_tokens": 822,
+                    "reasoning_tokens": 333,
+                    "cache_read_tokens": 19267,
+                    "cache_write_tokens": 13121
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 13121,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 60336
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 16604,
+              "tool_time_ms": 72,
+              "active_time_ms": 16676
+            }
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/d148d13d209a7e191eda6dc83e1dc3e16e32e5aba5600a817b1d81bb06c419cf"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 49838,
+              "active_time_ms": 49838
+            }
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 122,
+              "active_time_ms": 122
+            }
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/aaf0e0e595ce5b84e05a50c4920b37c9e0fee0bc3bcec990b322b32ef5b799cc"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1647,
+              "active_time_ms": 1647
+            }
+          }
+        },
+        "next_node_id": "baseline",
+        "git_commit_sha": "3ffefe50059e5aaa6e71c7fa92ad75e76137bc2a",
+        "node_visits": {
+          "iteration_limit": 3,
+          "evidence": 3,
+          "refactor": 3,
+          "scope": 1,
+          "dependencies": 1,
+          "start": 1,
+          "baseline": 3,
+          "validate": 3,
+          "verdict": 3
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 31,
+          "deletions": 38
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:29:20.079170Z",
+        "current_node": "baseline",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline"
+        ],
+        "node_retries": {},
+        "context_values": {
           "internal.retry_count.verdict": 0,
           "failure_class": "",
           "thread.refactor.current_node": "evidence",
@@ -4394,10 +4635,10 @@
           "response.validate": "VERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: `npm test` ran the full build+vitest suite and reported \"Test Files 1 passed (1)\" / \"Tests 9 passed (9)\" with the current working tree (verified independently, matching the recorded evidence-stage output).\n- [PASS] Reveals intention: the diff extracts the tokenising pipeline (`.toLowerCase().replace(...).split(...).filter(...)`) out of `evaluateSpokenExpression` into a standalone function named `tokenize`, so the call site now reads `const pieces = tokenize(source)` — the name states the operation in plain language and removes an unnamed inline block from the larger function.\n- [PASS] No duplication: the tokenising logic now exists in exactly one place (`tokenize`), called once; `npm run quality`'s eslint pass reports no duplication-related rule violations, only the pre-existing size/complexity findings on `evaluateSpokenExpression`.\n- [PASS] Fewest elements: no new unused code was introduced — `tokenize` is called from `evaluateSpokenExpression`, and all three exports (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) are exercised by `test/calculator.test.ts`, confirmed by inspection.\n- [PASS] Change stays within the requested target: `git show 54df8f8 --stat` shows only `src/index.ts` changed (11 insertions, 7 deletions); the current working tree's `src/index.ts` is byte-identical to that commit (`diff` produced no output), and only generated `dist/*` build artifacts differ in the working tree, which is expected build output, not scope creep.\n- [PASS] Quality no worse than baseline: baseline and current `npm run quality` both report the same 4 eslint errors on `evaluateSpokenExpression` (max-lines-per-function, cognitive-complexity, max-statements, complexity) with no new errors and no regression; the extraction reduced the function's cognitive-complexity-relevant duplicated logic without introducing new lint findings.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
           "thread.iteration_limit.current_node": "baseline",
           "internal.retry_count.validate": 0,
-          "internal.node_visit_count": 3,
+          "internal.node_visit_count": 4,
           "internal.fidelity": "compact",
           "verdict": "PASS",
-          "command.output": "blob://sha256/aaf0e0e595ce5b84e05a50c4920b37c9e0fee0bc3bcec990b322b32ef5b799cc",
+          "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854",
           "internal.retry_count.baseline": 0,
           "internal.retry_count.dependencies": 0,
           "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
@@ -4410,11 +4651,11 @@
           "response.refactor": "Extracted the tokenization logic (lowercasing, spacing parentheses, splitting into words) out of `evaluateSpokenExpression` into a new, clearly named `tokenize` function. This reduces the line count and cognitive load of `evaluateSpokenExpression` while giving the tokenizing step an intention-revealing name, with no behavior change.",
           "internal.retry_count.start": 0,
           "thread.verdict.current_node": "iteration_limit",
-          "current_node": "iteration_limit",
+          "current_node": "baseline",
           "outcome": "succeeded",
           "thread.validate.current_node": "verdict",
           "failure_signature": "",
-          "internal.thread_id": "verdict",
+          "internal.thread_id": "iteration_limit",
           "internal.retry_count.evidence": 0,
           "thread.scope.current_node": "dependencies",
           "internal.retry_count.refactor": 0,
@@ -4438,15 +4679,15 @@
           "baseline": {
             "status": "succeeded",
             "context_updates": {
-              "command.output": "blob://sha256/1e45287afb5fcd5860b96c03371d4d1a17986321c536e3ad6bb50f92bb0749e5"
+              "command.output": "blob://sha256/3232756940d156491cd3a455d6c77229230b71188045399b47f22597d763a854"
             },
             "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
             "usage": null,
             "timing": {
               "wall_time_ms": 0,
               "inference_time_ms": 0,
-              "tool_time_ms": 633,
-              "active_time_ms": 633
+              "tool_time_ms": 627,
+              "active_time_ms": 627
             }
           },
           "start": {
@@ -4572,7 +4813,7 @@
             "usage": null
           }
         },
-        "next_node_id": "baseline",
+        "next_node_id": "refactor",
         "node_visits": {
           "validate": 3,
           "start": 1,
@@ -4580,7 +4821,7 @@
           "dependencies": 1,
           "verdict": 3,
           "scope": 1,
-          "baseline": 3,
+          "baseline": 4,
           "evidence": 3,
           "refactor": 3
         }
@@ -4700,6 +4941,35 @@
       },
       "agent_control": "running",
       "state": "succeeded"
+    },
+    "baseline@4": {
+      "first_event_seq": 494,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:29:19.445217Z",
+      "handler": "command",
+      "graph_visit": 4,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
     },
     "baseline@3": {
       "first_event_seq": 316,
@@ -6475,6 +6745,42 @@
           }
         ],
         "warnings": []
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "iteration_limit@3": {
+      "first_event_seq": 486,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Conditional node evaluated: iteration_limit",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:29:16.820190Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:29:16.817134Z",
+      "handler": "conditional",
+      "graph_visit": 3,
+      "timing": {
+        "wall_time_ms": 1,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
       },
       "agent_control": "running",
       "state": "succeeded"
