@@ -534,7 +534,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:19:59.411280Z",
-  "last_event_at": "2026-08-26T13:25:36.574323Z",
+  "last_event_at": "2026-08-26T13:25:39.130125Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -2935,9 +2935,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 313,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:25:36.585433Z",
+        "timestamp": "2026-08-26T13:25:39.123817Z",
         "current_node": "iteration_limit",
         "completed_nodes": [
           "start",
@@ -2958,6 +2958,241 @@
         ],
         "node_retries": {},
         "context_values": {
+          "internal.fidelity": "compact",
+          "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` runs `tsc` then `vitest run`, reporting `Test Files 1 passed (1)` and `Tests 9 passed (9)` with exit code 0.\n- [PASS] Reveals intention: The four near-duplicate `if (word === \"add\"/\"subtract\"/\"multiply\"/\"divide\")` branches were replaced by a single `OPERATORS` record (`src/index.ts:20-31`) whose entries name each operator's `connector` and `compute` function in plain language, and the `read()` body now reads as \"look up the operator, read its connector, and compute\" (`src/index.ts:71-77`).\n- [PASS] No duplication: The repeated `read()`/connector-check/`read()` sequence that previously appeared once per operator (and the earlier `readOperands` helper duplicated across four call sites) is now expressed exactly once for all operators; inspection of `src/index.ts` shows no remaining near-identical operator blocks.\n- [PASS] Fewest elements: The new `OPERATORS` table is exercised by every arithmetic test case (add/subtract/multiply/divide, including the divide-by-zero error path) via `test/calculator.test.ts`; no dead code or unused export was introduced, and `read()` shrank (52→34 lines, complexity 11→8, statements 24→15, cognitive complexity 12→8 per `npm run quality` before/after output) with no new error categories.\n- [PASS] Change stays within target and quality is no worse than baseline: `git diff 4406845 ab53161 -- src/index.ts` shows the only modified file is `src/index.ts` (20 insertions, 29 deletions, net simplification); `npm run quality` dropped from 5 errors to 4 errors, and every remaining metric's magnitude improved (no regressions). The only other diffs in the working tree (`dist/cli.js`, `dist/index.js`, vitest results cache) are generated build artifacts from `npm test`, consistent with prior validated iterations, not hand-authored source changes.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "internal.retry_count.dependencies": 0,
+          "thread.dependencies.current_node": "baseline",
+          "internal.retry_count.iteration_limit": 0,
+          "thread.scope.current_node": "dependencies",
+          "current_node": "iteration_limit",
+          "failure_signature": "",
+          "last_stage": "validate",
+          "internal.retry_count.evidence": 0,
+          "internal.retry_count.validate": 0,
+          "verdict": "PASS",
+          "outcome": "succeeded",
+          "response.refactor": "This collapses the four near-identical operator branches into a single data-driven lookup (`OPERATORS`), removing duplication while keeping `read()`'s control flow unchanged. Behavior is preserved: same connectors, same compute order, same divide-by-zero failure.",
+          "internal.retry_count.refactor": 0,
+          "graph.rankdir": "LR",
+          "internal.retry_count.scope": 0,
+          "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
+          "internal.retry_count.start": 0,
+          "thread.baseline.current_node": "refactor",
+          "thread.iteration_limit.current_node": "baseline",
+          "failure_class": "",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "thread.refactor.current_node": "evidence",
+          "thread.validate.current_node": "verdict",
+          "thread.evidence.current_node": "validate",
+          "command.output": "blob://sha256/e69873bdbd80585db751515ade978f0b2272c98bc19efa3b9e484fdcfbb6df4d",
+          "internal.retry_count.baseline": 0,
+          "last_response": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` runs `tsc` then `vitest run`, reporting `Test Files 1 passed (1)` and `Tests 9 passed (9)` with exit code 0.\n- [PASS] Reveals intention: ",
+          "thread.verdict.current_node": "iteration_limit",
+          "internal.thread_id": "verdict",
+          "thread.start.current_node": "scope",
+          "internal.retry_count.verdict": 0,
+          "internal.node_visit_count": 2,
+          "internal.work_dir": "/workspace/calculator"
+        },
+        "node_outcomes": {
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 122,
+              "active_time_ms": 122
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/d148d13d209a7e191eda6dc83e1dc3e16e32e5aba5600a817b1d81bb06c419cf"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 49838,
+              "active_time_ms": 49838
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 630,
+              "active_time_ms": 630
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_stage": "validate",
+              "last_response": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` runs `tsc` then `vitest run`, reporting `Test Files 1 passed (1)` and `Tests 9 passed (9)` with exit code 0.\n- [PASS] Reveals intention: ",
+              "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` runs `tsc` then `vitest run`, reporting `Test Files 1 passed (1)` and `Tests 9 passed (9)` with exit code 0.\n- [PASS] Reveals intention: The four near-duplicate `if (word === \"add\"/\"subtract\"/\"multiply\"/\"divide\")` branches were replaced by a single `OPERATORS` record (`src/index.ts:20-31`) whose entries name each operator's `connector` and `compute` function in plain language, and the `read()` body now reads as \"look up the operator, read its connector, and compute\" (`src/index.ts:71-77`).\n- [PASS] No duplication: The repeated `read()`/connector-check/`read()` sequence that previously appeared once per operator (and the earlier `readOperands` helper duplicated across four call sites) is now expressed exactly once for all operators; inspection of `src/index.ts` shows no remaining near-identical operator blocks.\n- [PASS] Fewest elements: The new `OPERATORS` table is exercised by every arithmetic test case (add/subtract/multiply/divide, including the divide-by-zero error path) via `test/calculator.test.ts`; no dead code or unused export was introduced, and `read()` shrank (52→34 lines, complexity 11→8, statements 24→15, cognitive complexity 12→8 per `npm run quality` before/after output) with no new error categories.\n- [PASS] Change stays within target and quality is no worse than baseline: `git diff 4406845 ab53161 -- src/index.ts` shows the only modified file is `src/index.ts` (20 insertions, 29 deletions, net simplification); `npm run quality` dropped from 5 errors to 4 errors, and every remaining metric's magnitude improved (no regressions). The only other diffs in the working tree (`dist/cli.js`, `dist/index.js`, vitest results cache) are generated build artifacts from `npm test`, consistent with prior validated iterations, not hand-authored source changes.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "verdict": "PASS"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 13995,
+                    "output_tokens": 1759,
+                    "reasoning_tokens": 5579,
+                    "cache_read_tokens": 188777,
+                    "cache_write_tokens": 21686
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 21686,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 193341
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 135266,
+              "tool_time_ms": 2880,
+              "active_time_ms": 138146
+            }
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "This collapses the four near-identical operator branches into a single data-driven lookup (`OPERATORS`), removing duplication while keeping `read()`'s control flow unchanged. Behavior is preserved: sa",
+              "response.refactor": "This collapses the four near-identical operator branches into a single data-driven lookup (`OPERATORS`), removing duplication while keeping `read()`'s control flow unchanged. Behavior is preserved: same connectors, same compute order, same divide-by-zero failure.",
+              "last_stage": "refactor"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 5494,
+                    "output_tokens": 1301,
+                    "reasoning_tokens": 473,
+                    "cache_read_tokens": 30044,
+                    "cache_write_tokens": 12625
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 12625,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 66300
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 21646,
+              "tool_time_ms": 94,
+              "active_time_ms": 21740
+            }
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/e69873bdbd80585db751515ade978f0b2272c98bc19efa3b9e484fdcfbb6df4d"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1646,
+              "active_time_ms": 1646
+            }
+          }
+        },
+        "next_node_id": "baseline",
+        "git_commit_sha": "f9eb4067e8674f641dd6badd90e6e869bb2b2fce",
+        "node_visits": {
+          "verdict": 2,
+          "evidence": 2,
+          "dependencies": 1,
+          "baseline": 2,
+          "start": 1,
+          "scope": 1,
+          "iteration_limit": 2,
+          "validate": 2,
+          "refactor": 2
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 1,
+          "additions": 20,
+          "deletions": 31
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:25:39.768973Z",
+        "current_node": "baseline",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline"
+        ],
+        "node_retries": {},
+        "context_values": {
           "internal.retry_count.verdict": 0,
           "failure_class": "",
           "thread.refactor.current_node": "evidence",
@@ -2968,10 +3203,10 @@
           "response.validate": "VERDICT: PASS\n\nFINDINGS:\n- [PASS] Passes its tests: `npm test` runs `tsc` then `vitest run`, reporting `Test Files 1 passed (1)` and `Tests 9 passed (9)` with exit code 0.\n- [PASS] Reveals intention: The four near-duplicate `if (word === \"add\"/\"subtract\"/\"multiply\"/\"divide\")` branches were replaced by a single `OPERATORS` record (`src/index.ts:20-31`) whose entries name each operator's `connector` and `compute` function in plain language, and the `read()` body now reads as \"look up the operator, read its connector, and compute\" (`src/index.ts:71-77`).\n- [PASS] No duplication: The repeated `read()`/connector-check/`read()` sequence that previously appeared once per operator (and the earlier `readOperands` helper duplicated across four call sites) is now expressed exactly once for all operators; inspection of `src/index.ts` shows no remaining near-identical operator blocks.\n- [PASS] Fewest elements: The new `OPERATORS` table is exercised by every arithmetic test case (add/subtract/multiply/divide, including the divide-by-zero error path) via `test/calculator.test.ts`; no dead code or unused export was introduced, and `read()` shrank (52→34 lines, complexity 11→8, statements 24→15, cognitive complexity 12→8 per `npm run quality` before/after output) with no new error categories.\n- [PASS] Change stays within target and quality is no worse than baseline: `git diff 4406845 ab53161 -- src/index.ts` shows the only modified file is `src/index.ts` (20 insertions, 29 deletions, net simplification); `npm run quality` dropped from 5 errors to 4 errors, and every remaining metric's magnitude improved (no regressions). The only other diffs in the working tree (`dist/cli.js`, `dist/index.js`, vitest results cache) are generated build artifacts from `npm test`, consistent with prior validated iterations, not hand-authored source changes.\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
           "thread.iteration_limit.current_node": "baseline",
           "internal.retry_count.validate": 0,
-          "internal.node_visit_count": 2,
+          "internal.node_visit_count": 3,
           "internal.fidelity": "compact",
           "verdict": "PASS",
-          "command.output": "blob://sha256/e69873bdbd80585db751515ade978f0b2272c98bc19efa3b9e484fdcfbb6df4d",
+          "command.output": "blob://sha256/1e45287afb5fcd5860b96c03371d4d1a17986321c536e3ad6bb50f92bb0749e5",
           "internal.retry_count.baseline": 0,
           "internal.retry_count.dependencies": 0,
           "internal.run_id": "01M0Z3MEHG3B3KA7XEVCTYFPG2",
@@ -2984,11 +3219,11 @@
           "response.refactor": "This collapses the four near-identical operator branches into a single data-driven lookup (`OPERATORS`), removing duplication while keeping `read()`'s control flow unchanged. Behavior is preserved: same connectors, same compute order, same divide-by-zero failure.",
           "internal.retry_count.start": 0,
           "thread.verdict.current_node": "iteration_limit",
-          "current_node": "iteration_limit",
+          "current_node": "baseline",
           "outcome": "succeeded",
           "thread.validate.current_node": "verdict",
           "failure_signature": "",
-          "internal.thread_id": "verdict",
+          "internal.thread_id": "iteration_limit",
           "internal.retry_count.evidence": 0,
           "thread.scope.current_node": "dependencies",
           "internal.retry_count.refactor": 0,
@@ -3012,15 +3247,15 @@
           "baseline": {
             "status": "succeeded",
             "context_updates": {
-              "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310"
+              "command.output": "blob://sha256/1e45287afb5fcd5860b96c03371d4d1a17986321c536e3ad6bb50f92bb0749e5"
             },
             "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
             "usage": null,
             "timing": {
               "wall_time_ms": 0,
               "inference_time_ms": 0,
-              "tool_time_ms": 630,
-              "active_time_ms": 630
+              "tool_time_ms": 633,
+              "active_time_ms": 633
             }
           },
           "start": {
@@ -3146,7 +3381,7 @@
             "usage": null
           }
         },
-        "next_node_id": "baseline",
+        "next_node_id": "refactor",
         "node_visits": {
           "validate": 2,
           "start": 1,
@@ -3154,7 +3389,7 @@
           "dependencies": 1,
           "verdict": 2,
           "scope": 1,
-          "baseline": 2,
+          "baseline": 3,
           "evidence": 2,
           "refactor": 2
         }
@@ -3275,16 +3510,11 @@
       "agent_control": "running",
       "state": "succeeded"
     },
-    "baseline@1": {
-      "first_event_seq": 41,
+    "baseline@3": {
+      "first_event_seq": 316,
       "prompt": null,
       "response": null,
-      "completion": {
-        "outcome": "succeeded",
-        "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
-        "failure_reason": null,
-        "timestamp": "2026-08-26T13:20:58.288204Z"
-      },
+      "completion": null,
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -3292,28 +3522,12 @@
         "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
         "language": "shell"
       },
-      "script_timing": {
-        "output": "blob://sha256/366ff23949cfce4e4e11fbbc6538b38bc22464889cadc6c30123a5bad2c5ac8c",
-        "exit_code": 0,
-        "duration_ms": 847,
-        "termination": "exited",
-        "output_bytes": 920,
-        "live_streaming": true
-      },
+      "script_timing": null,
       "parallel_results": null,
       "output": null,
-      "output_bytes": 920,
-      "live_streaming": true,
-      "termination": "exited",
-      "started_at": "2026-08-26T13:20:57.434598Z",
+      "started_at": "2026-08-26T13:25:39.129001Z",
       "handler": "command",
-      "graph_visit": 1,
-      "timing": {
-        "wall_time_ms": 851,
-        "inference_time_ms": 0,
-        "tool_time_ms": 847,
-        "active_time_ms": 847
-      },
+      "graph_visit": 3,
       "usage": {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -3323,57 +3537,7 @@
         "cache_write_tokens": 0
       },
       "agent_control": "running",
-      "state": "succeeded"
-    },
-    "evidence@2": {
-      "first_event_seq": 204,
-      "prompt": null,
-      "response": null,
-      "completion": {
-        "outcome": "succeeded",
-        "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
-        "failure_reason": null,
-        "timestamp": "2026-08-26T13:23:10.604628Z"
-      },
-      "provider_used": null,
-      "diff": null,
-      "script_invocation": {
-        "script": "{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
-        "command": "exec 2>&1\n{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
-        "language": "shell"
-      },
-      "script_timing": {
-        "output": "blob://sha256/e69873bdbd80585db751515ade978f0b2272c98bc19efa3b9e484fdcfbb6df4d",
-        "exit_code": 0,
-        "duration_ms": 1646,
-        "termination": "exited",
-        "output_bytes": 2670,
-        "live_streaming": true
-      },
-      "parallel_results": null,
-      "output": null,
-      "output_bytes": 2670,
-      "live_streaming": true,
-      "termination": "exited",
-      "started_at": "2026-08-26T13:23:08.953229Z",
-      "handler": "command",
-      "graph_visit": 2,
-      "timing": {
-        "wall_time_ms": 1649,
-        "inference_time_ms": 0,
-        "tool_time_ms": 1646,
-        "active_time_ms": 1646
-      },
-      "usage": {
-        "input_tokens": 0,
-        "output_tokens": 0,
-        "total_tokens": 0,
-        "reasoning_tokens": 0,
-        "cache_read_tokens": 0,
-        "cache_write_tokens": 0
-      },
-      "agent_control": "running",
-      "state": "succeeded"
+      "state": "running"
     },
     "dependencies@1": {
       "first_event_seq": 31,
@@ -3629,6 +3793,364 @@
           }
         ],
         "warnings": []
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "refactor@2": {
+      "first_event_seq": 168,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Stage completed: refactor",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:23:06.366377Z"
+      },
+      "provider_used": {
+        "mode": "agent",
+        "provider": "openrouter",
+        "model": "claude-sonnet-5"
+      },
+      "diff": null,
+      "script_invocation": null,
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:22:44.511445Z",
+      "handler": "agent",
+      "graph_visit": 2,
+      "timing": {
+        "wall_time_ms": 21849,
+        "inference_time_ms": 21646,
+        "tool_time_ms": 94,
+        "active_time_ms": 21740
+      },
+      "usage": {
+        "input_tokens": 5494,
+        "output_tokens": 1301,
+        "total_tokens": 49937,
+        "reasoning_tokens": 473,
+        "cache_read_tokens": 30044,
+        "cache_write_tokens": 12625,
+        "total_usd_micros": 66300
+      },
+      "model": {
+        "provider": "openrouter",
+        "model_id": "claude-sonnet-5"
+      },
+      "permission_level": "full",
+      "agent_tools": [
+        {
+          "name": "Agent",
+          "description": "Launch a child agent for an independent task. Agents run in the background by default and notify the parent when they finish. Set run_in_background to false to wait for the result synchronously.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "AskUserQuestion",
+          "description": "Ask the human up to four questions when a decision is genuinely theirs to make. The UI automatically provides an Other option for custom text.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Bash",
+          "description": "Execute a Bash command in a fresh foreground non-login shell. Use this for searches, git inspection, builds, tests, package managers, and terminal operations. Prefer `rg` for content search and `rg --files` for file discovery. Working-directory and environment changes do not persist between calls. `timeout` is in milliseconds, defaults to 120000, and is capped at 600000.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "shell",
+          "invoked": false
+        },
+        {
+          "name": "Edit",
+          "description": "Edit a file by replacing an exact string. The old_string must be an exact match and unique unless replace_all is true; include surrounding context when needed. Read the file first and preserve existing indentation.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": true
+        },
+        {
+          "name": "Read",
+          "description": "Read files before editing them. Returns line-numbered text and supports offset/limit for large files. Use this instead of shell cat, head, tail, or sed when inspecting repository files.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "read",
+          "invoked": true
+        },
+        {
+          "name": "SendMessage",
+          "description": "Send additional instructions to a background agent by its task ID. A running agent receives them at a safe turn boundary. A completed agent starts another turn in the same session with its existing history.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskCreate",
+          "description": "Create pending tasks in the current session. Use concise subjects, descriptions, optional activeForm text, and metadata. Check TaskList first to avoid duplicate tasks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskGet",
+          "description": "Get one task by taskId, including subject, status, description, owner, blockedBy, and blocks.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskList",
+          "description": "List tasks for the current session, including status, owner, and blocking dependencies. Use TaskGet with a taskId for full description and dependency details.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "TaskOutput",
+          "description": "Get a background agent's current status or wait for its final output. Automatic completion notifications make ordinary polling unnecessary.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskStop",
+          "description": "Stop a running or completed background agent by task ID.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "subagent",
+          "invoked": false
+        },
+        {
+          "name": "TaskUpdate",
+          "description": "Update an existing task's status, text, owner, metadata, or dependencies. Valid statuses are pending, in_progress, completed, and deleted. After completing a task, call TaskList to find newly unblocked work.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "WebFetch",
+          "description": "Fetch an HTTP or HTTPS URL and answer the supplied prompt from its contents.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "other",
+          "invoked": false
+        },
+        {
+          "name": "Write",
+          "description": "Create new files, or overwrite an existing file only when replacement is explicitly intended. Prefer edit_file for targeted changes to existing files because write_file overwrites the full file content.",
+          "source": {
+            "kind": "native"
+          },
+          "category": "write",
+          "invoked": false
+        }
+      ],
+      "context_window": {
+        "provider": "openrouter",
+        "model": "claude-sonnet-5",
+        "context_window_tokens": 1000000,
+        "input_tokens": 13177,
+        "usage_percent": 1.3177,
+        "count_method": "response_usage_scaled_breakdown",
+        "staleness": "live",
+        "generated_at": "2026-08-26T13:23:06.349128Z",
+        "event_seq": 194,
+        "breakdown": [
+          {
+            "category": "system_prompt",
+            "tokens": 3693,
+            "usage_percent": 0.3693
+          },
+          {
+            "category": "tools",
+            "tokens": 2715,
+            "usage_percent": 0.2715
+          },
+          {
+            "category": "conversation",
+            "tokens": 6762,
+            "usage_percent": 0.6762
+          },
+          {
+            "category": "other",
+            "tokens": 7,
+            "usage_percent": 0.0007
+          }
+        ],
+        "warnings": []
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "baseline@2": {
+      "first_event_seq": 158,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:22:41.729817Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "language": "shell"
+      },
+      "script_timing": {
+        "output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310",
+        "exit_code": 0,
+        "duration_ms": 630,
+        "termination": "exited",
+        "output_bytes": 920,
+        "live_streaming": true
+      },
+      "parallel_results": null,
+      "output": null,
+      "output_bytes": 920,
+      "live_streaming": true,
+      "termination": "exited",
+      "started_at": "2026-08-26T13:22:41.094012Z",
+      "handler": "command",
+      "graph_visit": 2,
+      "timing": {
+        "wall_time_ms": 634,
+        "inference_time_ms": 0,
+        "tool_time_ms": 630,
+        "active_time_ms": 630
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "baseline@1": {
+      "first_event_seq": 41,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:20:58.288204Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "language": "shell"
+      },
+      "script_timing": {
+        "output": "blob://sha256/366ff23949cfce4e4e11fbbc6538b38bc22464889cadc6c30123a5bad2c5ac8c",
+        "exit_code": 0,
+        "duration_ms": 847,
+        "termination": "exited",
+        "output_bytes": 920,
+        "live_streaming": true
+      },
+      "parallel_results": null,
+      "output": null,
+      "output_bytes": 920,
+      "live_streaming": true,
+      "termination": "exited",
+      "started_at": "2026-08-26T13:20:57.434598Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 851,
+        "inference_time_ms": 0,
+        "tool_time_ms": 847,
+        "active_time_ms": 847
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "evidence@2": {
+      "first_event_seq": 204,
+      "prompt": null,
+      "response": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:23:10.604628Z"
+      },
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "command": "exec 2>&1\n{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "language": "shell"
+      },
+      "script_timing": {
+        "output": "blob://sha256/e69873bdbd80585db751515ade978f0b2272c98bc19efa3b9e484fdcfbb6df4d",
+        "exit_code": 0,
+        "duration_ms": 1646,
+        "termination": "exited",
+        "output_bytes": 2670,
+        "live_streaming": true
+      },
+      "parallel_results": null,
+      "output": null,
+      "output_bytes": 2670,
+      "live_streaming": true,
+      "termination": "exited",
+      "started_at": "2026-08-26T13:23:08.953229Z",
+      "handler": "command",
+      "graph_visit": 2,
+      "timing": {
+        "wall_time_ms": 1649,
+        "inference_time_ms": 0,
+        "tool_time_ms": 1646,
+        "active_time_ms": 1646
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
       },
       "agent_control": "running",
       "state": "succeeded"
@@ -3891,214 +4413,6 @@
       "agent_control": "running",
       "state": "succeeded"
     },
-    "refactor@2": {
-      "first_event_seq": 168,
-      "prompt": null,
-      "response": null,
-      "completion": {
-        "outcome": "succeeded",
-        "notes": "Stage completed: refactor",
-        "failure_reason": null,
-        "timestamp": "2026-08-26T13:23:06.366377Z"
-      },
-      "provider_used": {
-        "mode": "agent",
-        "provider": "openrouter",
-        "model": "claude-sonnet-5"
-      },
-      "diff": null,
-      "script_invocation": null,
-      "script_timing": null,
-      "parallel_results": null,
-      "output": null,
-      "started_at": "2026-08-26T13:22:44.511445Z",
-      "handler": "agent",
-      "graph_visit": 2,
-      "timing": {
-        "wall_time_ms": 21849,
-        "inference_time_ms": 21646,
-        "tool_time_ms": 94,
-        "active_time_ms": 21740
-      },
-      "usage": {
-        "input_tokens": 5494,
-        "output_tokens": 1301,
-        "total_tokens": 49937,
-        "reasoning_tokens": 473,
-        "cache_read_tokens": 30044,
-        "cache_write_tokens": 12625,
-        "total_usd_micros": 66300
-      },
-      "model": {
-        "provider": "openrouter",
-        "model_id": "claude-sonnet-5"
-      },
-      "permission_level": "full",
-      "agent_tools": [
-        {
-          "name": "Agent",
-          "description": "Launch a child agent for an independent task. Agents run in the background by default and notify the parent when they finish. Set run_in_background to false to wait for the result synchronously.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "subagent",
-          "invoked": false
-        },
-        {
-          "name": "AskUserQuestion",
-          "description": "Ask the human up to four questions when a decision is genuinely theirs to make. The UI automatically provides an Other option for custom text.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "other",
-          "invoked": false
-        },
-        {
-          "name": "Bash",
-          "description": "Execute a Bash command in a fresh foreground non-login shell. Use this for searches, git inspection, builds, tests, package managers, and terminal operations. Prefer `rg` for content search and `rg --files` for file discovery. Working-directory and environment changes do not persist between calls. `timeout` is in milliseconds, defaults to 120000, and is capped at 600000.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "shell",
-          "invoked": false
-        },
-        {
-          "name": "Edit",
-          "description": "Edit a file by replacing an exact string. The old_string must be an exact match and unique unless replace_all is true; include surrounding context when needed. Read the file first and preserve existing indentation.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "write",
-          "invoked": true
-        },
-        {
-          "name": "Read",
-          "description": "Read files before editing them. Returns line-numbered text and supports offset/limit for large files. Use this instead of shell cat, head, tail, or sed when inspecting repository files.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "read",
-          "invoked": true
-        },
-        {
-          "name": "SendMessage",
-          "description": "Send additional instructions to a background agent by its task ID. A running agent receives them at a safe turn boundary. A completed agent starts another turn in the same session with its existing history.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "subagent",
-          "invoked": false
-        },
-        {
-          "name": "TaskCreate",
-          "description": "Create pending tasks in the current session. Use concise subjects, descriptions, optional activeForm text, and metadata. Check TaskList first to avoid duplicate tasks.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "other",
-          "invoked": false
-        },
-        {
-          "name": "TaskGet",
-          "description": "Get one task by taskId, including subject, status, description, owner, blockedBy, and blocks.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "other",
-          "invoked": false
-        },
-        {
-          "name": "TaskList",
-          "description": "List tasks for the current session, including status, owner, and blocking dependencies. Use TaskGet with a taskId for full description and dependency details.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "other",
-          "invoked": false
-        },
-        {
-          "name": "TaskOutput",
-          "description": "Get a background agent's current status or wait for its final output. Automatic completion notifications make ordinary polling unnecessary.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "subagent",
-          "invoked": false
-        },
-        {
-          "name": "TaskStop",
-          "description": "Stop a running or completed background agent by task ID.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "subagent",
-          "invoked": false
-        },
-        {
-          "name": "TaskUpdate",
-          "description": "Update an existing task's status, text, owner, metadata, or dependencies. Valid statuses are pending, in_progress, completed, and deleted. After completing a task, call TaskList to find newly unblocked work.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "other",
-          "invoked": false
-        },
-        {
-          "name": "WebFetch",
-          "description": "Fetch an HTTP or HTTPS URL and answer the supplied prompt from its contents.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "other",
-          "invoked": false
-        },
-        {
-          "name": "Write",
-          "description": "Create new files, or overwrite an existing file only when replacement is explicitly intended. Prefer edit_file for targeted changes to existing files because write_file overwrites the full file content.",
-          "source": {
-            "kind": "native"
-          },
-          "category": "write",
-          "invoked": false
-        }
-      ],
-      "context_window": {
-        "provider": "openrouter",
-        "model": "claude-sonnet-5",
-        "context_window_tokens": 1000000,
-        "input_tokens": 13177,
-        "usage_percent": 1.3177,
-        "count_method": "response_usage_scaled_breakdown",
-        "staleness": "live",
-        "generated_at": "2026-08-26T13:23:06.349128Z",
-        "event_seq": 194,
-        "breakdown": [
-          {
-            "category": "system_prompt",
-            "tokens": 3693,
-            "usage_percent": 0.3693
-          },
-          {
-            "category": "tools",
-            "tokens": 2715,
-            "usage_percent": 0.2715
-          },
-          {
-            "category": "conversation",
-            "tokens": 6762,
-            "usage_percent": 0.6762
-          },
-          {
-            "category": "other",
-            "tokens": 7,
-            "usage_percent": 0.0007
-          }
-        ],
-        "warnings": []
-      },
-      "agent_control": "running",
-      "state": "succeeded"
-    },
     "verdict@2": {
       "first_event_seq": 300,
       "prompt": null,
@@ -4135,44 +4449,30 @@
       "agent_control": "running",
       "state": "succeeded"
     },
-    "baseline@2": {
-      "first_event_seq": 158,
+    "iteration_limit@2": {
+      "first_event_seq": 308,
       "prompt": null,
       "response": null,
       "completion": {
         "outcome": "succeeded",
-        "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+        "notes": "Conditional node evaluated: iteration_limit",
         "failure_reason": null,
-        "timestamp": "2026-08-26T13:22:41.729817Z"
+        "timestamp": "2026-08-26T13:25:36.584271Z"
       },
       "provider_used": null,
       "diff": null,
-      "script_invocation": {
-        "script": "npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
-        "command": "exec 2>&1\nnpm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
-        "language": "shell"
-      },
-      "script_timing": {
-        "output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310",
-        "exit_code": 0,
-        "duration_ms": 630,
-        "termination": "exited",
-        "output_bytes": 920,
-        "live_streaming": true
-      },
+      "script_invocation": null,
+      "script_timing": null,
       "parallel_results": null,
       "output": null,
-      "output_bytes": 920,
-      "live_streaming": true,
-      "termination": "exited",
-      "started_at": "2026-08-26T13:22:41.094012Z",
-      "handler": "command",
+      "started_at": "2026-08-26T13:25:36.580927Z",
+      "handler": "conditional",
       "graph_visit": 2,
       "timing": {
-        "wall_time_ms": 634,
+        "wall_time_ms": 1,
         "inference_time_ms": 0,
-        "tool_time_ms": 630,
-        "active_time_ms": 630
+        "tool_time_ms": 0,
+        "active_time_ms": 0
       },
       "usage": {
         "input_tokens": 0,
