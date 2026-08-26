@@ -16,6 +16,70 @@ const NUMBER_WORDS: Record<string, number> = {
   twelve: 12,
 };
 
+function tokenize(source: string): string[] {
+  return source
+    .toLowerCase()
+    .replace(/\(/g, " ( ")
+    .replace(/\)/g, " ) ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+function fail(): never {
+  // Deliberately unhelpful starter error: a later kata step improves this.
+  throw new Error("Could not work that out.");
+}
+
+function parseNumberWord(word: string): number | undefined {
+  if (/^\d+$/.test(word)) return Number(word);
+  return NUMBER_WORDS[word];
+}
+
+type Cursor = { pieces: string[]; place: number };
+
+// Operators are prefix forms: <operator> <operand> <linkingWord> <operand>.
+type BinaryOperator = { linkingWord: string; compute: (first: number, second: number) => number };
+
+const OPERATORS: Record<string, BinaryOperator> = {
+  add: { linkingWord: "and", compute: (first, second) => first + second },
+  subtract: { linkingWord: "from", compute: (first, second) => second - first },
+  multiply: { linkingWord: "by", compute: (first, second) => first * second },
+  divide: {
+    linkingWord: "by",
+    compute: (first, second) => {
+      if (second === 0) fail();
+      return first / second;
+    },
+  },
+};
+
+function readBinaryOperation(cursor: Cursor, operator: BinaryOperator): number {
+  const first = readExpression(cursor);
+  if (cursor.pieces[cursor.place++] !== operator.linkingWord) fail();
+  const second = readExpression(cursor);
+  return operator.compute(first, second);
+}
+
+function readExpression(cursor: Cursor): number {
+  const word = cursor.pieces[cursor.place++];
+  if (!word) fail();
+
+  if (word === "(") {
+    const inside = readExpression(cursor);
+    if (cursor.pieces[cursor.place++] !== ")") fail();
+    return inside;
+  }
+
+  const number = parseNumberWord(word);
+  if (number !== undefined) return number;
+
+  const operator = OPERATORS[word];
+  if (operator) return readBinaryOperation(cursor, operator);
+
+  return fail();
+}
+
 /**
  * Evaluate the kata's tiny spoken-expression language.
  *
@@ -25,58 +89,9 @@ const NUMBER_WORDS: Record<string, number> = {
  * to emulate.
  */
 export function evaluateSpokenExpression(source: string): number {
-  const pieces = source
-    .toLowerCase()
-    .replace(/\(/g, " ( ")
-    .replace(/\)/g, " ) ")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-  let place = 0;
-
-  const fail = (): never => {
-    // Deliberately unhelpful starter error: a later kata step improves this.
-    throw new Error("Could not work that out.");
-  };
-
-  const read = (): number => {
-    const word = pieces[place++];
-    if (!word) fail();
-
-    if (word === "(") {
-      const inside = read();
-      if (pieces[place++] !== ")") fail();
-      return inside;
-    }
-
-    if (/^\d+$/.test(word)) return Number(word);
-
-    const numberWord = NUMBER_WORDS[word];
-    if (numberWord !== undefined) return numberWord;
-
-    // Operators are prefix forms: <operator> <operand> <linkingWord> <operand>.
-    const readBinaryOperation = (linkingWord: string, compute: (first: number, second: number) => number): number => {
-      const first = read();
-      if (pieces[place++] !== linkingWord) fail();
-      const second = read();
-      return compute(first, second);
-    };
-
-    if (word === "add") return readBinaryOperation("and", (first, second) => first + second);
-    if (word === "subtract") return readBinaryOperation("from", (first, second) => second - first);
-    if (word === "multiply") return readBinaryOperation("by", (first, second) => first * second);
-    if (word === "divide") {
-      return readBinaryOperation("by", (first, second) => {
-        if (second === 0) fail();
-        return first / second;
-      });
-    }
-
-    return fail();
-  };
-
-  const answer = read();
-  if (place !== pieces.length) fail();
+  const cursor: Cursor = { pieces: tokenize(source), place: 0 };
+  const answer = readExpression(cursor);
+  if (cursor.place !== cursor.pieces.length) fail();
   return answer;
 }
 
