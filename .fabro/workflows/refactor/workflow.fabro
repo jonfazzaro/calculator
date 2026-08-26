@@ -45,8 +45,6 @@ digraph RefactorLine {
     repaired_verdict [shape=diamond, label="Repair Passed?"]
 
     repair [label="Repair", prompt="@prompts/repair.md"]
-    commit_message [shape=tab, label="Write Commit Message", prompt="@prompts/commit-message.md"]
-    commit [label="Commit", prompt="@prompts/commit.md"]
     iteration_limit [shape=diamond, label="Five Iterations Complete?"]
     stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
 
@@ -56,14 +54,13 @@ digraph RefactorLine {
     dependencies -> baseline [condition="outcome=succeeded"]
     dependencies -> exit
     baseline -> refactor -> evidence -> validate -> verdict
-    verdict -> commit_message [label="Pass", condition="context.verdict=PASS"]
+    verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
     verdict -> repair [label="Fail", condition="context.verdict=FAIL"]
     verdict -> repair [label="Invalid Verdict"]
     repair -> evidence -> validate_after_repair -> repaired_verdict
-    repaired_verdict -> commit_message [label="Pass", condition="context.verdict=PASS"]
+    repaired_verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
     repaired_verdict -> stopped [label="Fail", condition="context.verdict=FAIL"]
     repaired_verdict -> stopped [label="Invalid Verdict"]
-    commit_message -> commit -> iteration_limit
     iteration_limit -> exit [label="Complete", condition="context.internal.node_visit_count >= 5"]
     iteration_limit -> baseline [label="Continue"]
     stopped -> exit
