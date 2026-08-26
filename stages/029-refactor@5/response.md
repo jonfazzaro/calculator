@@ -1,0 +1,1 @@
+Extracted the repeated "consume an expected token or fail" logic (used for closing parens and operator connectors) into a `consume` helper within `evaluateSpokenExpression`. This removes duplicated index-checking code, shortens `read` by two statements, and gives the pattern a name that states its intent. Behavior is unchanged—same tokens are consumed and the same errors thrown.
