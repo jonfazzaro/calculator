@@ -1,0 +1,46 @@
+diff --git a/src/index.ts b/src/index.ts
+index 5699378..42a1911 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -63,25 +63,23 @@ export function evaluateSpokenExpression(source: string): number {
+       return [first, second];
+     };
+ 
+-    if (word === "add") {
+-      const [first, second] = readOperands("and");
+-      return first + second;
+-    }
+-
+-    if (word === "subtract") {
+-      const [first, second] = readOperands("from");
+-      return second - first;
+-    }
+-
+-    if (word === "multiply") {
+-      const [first, second] = readOperands("by");
+-      return first * second;
+-    }
++    const operators: Record<string, { connector: string; apply: (first: number, second: number) => number }> = {
++      add: { connector: "and", apply: (first, second) => first + second },
++      subtract: { connector: "from", apply: (first, second) => second - first },
++      multiply: { connector: "by", apply: (first, second) => first * second },
++      divide: {
++        connector: "by",
++        apply: (first, second) => {
++          if (second === 0) fail();
++          return first / second;
++        },
++      },
++    };
+ 
+-    if (word === "divide") {
+-      const [first, second] = readOperands("by");
+-      if (second === 0) fail();
+-      return first / second;
++    const operator = operators[word];
++    if (operator) {
++      const [first, second] = readOperands(operator.connector);
++      return operator.apply(first, second);
+     }
+ 
+     return fail();

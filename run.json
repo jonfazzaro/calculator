@@ -517,7 +517,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-08-26T13:01:38.155131Z",
-  "last_event_at": "2026-08-26T13:06:37.401906Z",
+  "last_event_at": "2026-08-26T13:06:40.172780Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -1991,9 +1991,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 258,
       "checkpoint": {
-        "timestamp": "2026-08-26T13:06:37.418659Z",
+        "timestamp": "2026-08-26T13:06:40.165716Z",
         "current_node": "refactor",
         "completed_nodes": [
           "start",
@@ -2010,15 +2010,247 @@
         ],
         "node_retries": {},
         "context_values": {
+          "internal.retry_count.refactor": 0,
+          "internal.retry_count.validate": 0,
+          "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310",
+          "failure_signature": "",
+          "internal.retry_count.evidence": 0,
+          "current_node": "refactor",
+          "internal.work_dir": "/workspace/calculator",
+          "internal.retry_count.scope": 0,
+          "thread.scope.current_node": "dependencies",
+          "thread.verdict.current_node": "iteration_limit",
+          "internal.retry_count.dependencies": 0,
+          "graph.rankdir": "LR",
+          "thread.refactor.current_node": "evidence",
+          "internal.node_visit_count": 2,
+          "response.refactor": "Replaced four near-duplicate `if (word === …)` branches (add/subtract/multiply/divide) with a single `operators` lookup table mapping each operator word to its connector and arithmetic operation. This removes the repeated \"read operands, apply operation\" shape and makes adding future operators a data change rather than a new branch, while preserving exact behavior (including divide-by-zero failure).",
+          "response.validate": "All exported functions (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) remain exercised by the test suite (confirmed in `test/calculator.test.ts`), and no dead code or unused exports were introduced. The new `readOperands` helper is a private local closure used by all four operator branches, not an unnecessary abstraction — it directly removes duplicated read/verify/read sequences.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence stage output shows `npm test` ran `tsc` build then vitest, reporting \"Test Files 1 passed (1)\" and \"Tests 9 passed (9)\" with exit implied success.\n- [PASS] Reveals intention: The new `readOperands(connector: string)` helper at src/index.ts:59 names exactly what it does (reads two operands separated by a connector word), replacing four inline copies of \"read, verify connector, read\" with one clearly-named call per operator (src/index.ts:66-85).\n- [PASS] No duplication: Before the change (git show b6e4fd8:src/index.ts, lines 42-90) each of add/subtract/multiply/divide repeated the identical three-statement pattern `const first = read(); if (pieces[place++] !== X) fail(); const second = read();` with only the connector word differing. After the change (src/index.ts:59-85) that pattern exists once as `readOperands`, and the eslint quality run's cognitive-complexity/statement-count errors for the `read` arrow function are unchanged in the after-quality output but the underlying duplicated branches are gone — this is a diagnosed, credible duplication removal even though the max-lines/complexity thresholds still fail (a later iteration's job).\n- [PASS] Fewest elements: `readOperands` is used by all four operator branches (add/subtract/multiply/divide) and is not exported or dead; every exported function (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) is still called from test/calculator.test.ts, matching the pre-refactor test coverage exactly — no new unused code was added.\n- [PASS] Quality no worse than baseline / change stays within target: Diff (`git diff HEAD~1 --name-only`) touches only `src/index.ts` (the declared scope target) plus generated `dist/cli.js`, `dist/index.js`, and the vitest results cache, all produced by the build/test run rather than manual edits; the recorded evidence-stage quality output for the current state matches the same 5-error signature as baseline (max-lines-per-function, cognitive-complexity, max-statements, complexity on the `read` function), i.e. no new or additional errors were introduced.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+          "thread.iteration_limit.current_node": "baseline",
+          "thread.start.current_node": "scope",
+          "last_stage": "refactor",
+          "internal.retry_count.verdict": 0,
+          "internal.retry_count.iteration_limit": 0,
+          "internal.thread_id": "baseline",
+          "thread.validate.current_node": "verdict",
+          "verdict": "PASS",
+          "last_response": "Replaced four near-duplicate `if (word === …)` branches (add/subtract/multiply/divide) with a single `operators` lookup table mapping each operator word to its connector and arithmetic operation. Th",
+          "thread.evidence.current_node": "validate",
+          "internal.fidelity": "compact",
+          "failure_class": "",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.run_id": "01M0Z2JTK0XJ6PHFM9NPXFY51R",
+          "outcome": "succeeded",
+          "thread.baseline.current_node": "refactor",
+          "internal.retry_count.start": 0,
+          "internal.retry_count.baseline": 0,
+          "thread.dependencies.current_node": "baseline"
+        },
+        "node_outcomes": {
+          "dependencies": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/a95bd6c79b25fc6b25f70e4c52c0ef7c715bf6609bcec36129e31cd006905160"
+            },
+            "notes": "Script completed: npm install --package-lock=false",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 42938,
+              "active_time_ms": 42938
+            }
+          },
+          "iteration_limit": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: iteration_limit",
+            "usage": null
+          },
+          "refactor": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "Replaced four near-duplicate `if (word === …)` branches (add/subtract/multiply/divide) with a single `operators` lookup table mapping each operator word to its connector and arithmetic operation. Th",
+              "response.refactor": "Replaced four near-duplicate `if (word === …)` branches (add/subtract/multiply/divide) with a single `operators` lookup table mapping each operator word to its connector and arithmetic operation. This removes the repeated \"read operands, apply operation\" shape and makes adding future operators a data change rather than a new branch, while preserving exact behavior (including divide-by-zero failure).",
+              "last_stage": "refactor"
+            },
+            "notes": "Stage completed: refactor",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 5103,
+                    "output_tokens": 966,
+                    "reasoning_tokens": 857,
+                    "cache_read_tokens": 18089,
+                    "cache_write_tokens": 11995
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 11995,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 62042
+            },
+            "files_touched": [
+              "/workspace/calculator/src/index.ts"
+            ],
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 21486,
+              "tool_time_ms": 62,
+              "active_time_ms": 21548
+            }
+          },
+          "baseline": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310"
+            },
+            "notes": "Script completed: npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 630,
+              "active_time_ms": 630
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "evidence": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/71cca879d457007401fad94f058a825628bc315b01abbc5b1910a33e4b27b3b2"
+            },
+            "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 1753,
+              "active_time_ms": 1753
+            }
+          },
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 134,
+              "active_time_ms": 134
+            }
+          },
+          "validate": {
+            "status": "succeeded",
+            "context_updates": {
+              "last_response": "All exported functions (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) remain exercised by the test suite (confirmed in `test/calculator.test.ts`), and no dead code or unused exports were intro",
+              "response.validate": "All exported functions (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) remain exercised by the test suite (confirmed in `test/calculator.test.ts`), and no dead code or unused exports were introduced. The new `readOperands` helper is a private local closure used by all four operator branches, not an unnecessary abstraction — it directly removes duplicated read/verify/read sequences.\n\nVERDICT: PASS\n\n```text\nFINDINGS:\n- [PASS] Passes its tests: Evidence stage output shows `npm test` ran `tsc` build then vitest, reporting \"Test Files 1 passed (1)\" and \"Tests 9 passed (9)\" with exit implied success.\n- [PASS] Reveals intention: The new `readOperands(connector: string)` helper at src/index.ts:59 names exactly what it does (reads two operands separated by a connector word), replacing four inline copies of \"read, verify connector, read\" with one clearly-named call per operator (src/index.ts:66-85).\n- [PASS] No duplication: Before the change (git show b6e4fd8:src/index.ts, lines 42-90) each of add/subtract/multiply/divide repeated the identical three-statement pattern `const first = read(); if (pieces[place++] !== X) fail(); const second = read();` with only the connector word differing. After the change (src/index.ts:59-85) that pattern exists once as `readOperands`, and the eslint quality run's cognitive-complexity/statement-count errors for the `read` arrow function are unchanged in the after-quality output but the underlying duplicated branches are gone — this is a diagnosed, credible duplication removal even though the max-lines/complexity thresholds still fail (a later iteration's job).\n- [PASS] Fewest elements: `readOperands` is used by all four operator branches (add/subtract/multiply/divide) and is not exported or dead; every exported function (`evaluateSpokenExpression`, `formatAnswer`, `runCli`) is still called from test/calculator.test.ts, matching the pre-refactor test coverage exactly — no new unused code was added.\n- [PASS] Quality no worse than baseline / change stays within target: Diff (`git diff HEAD~1 --name-only`) touches only `src/index.ts` (the declared scope target) plus generated `dist/cli.js`, `dist/index.js`, and the vitest results cache, all produced by the build/test run rather than manual edits; the recorded evidence-stage quality output for the current state matches the same 5-error signature as baseline (max-lines-per-function, cognitive-complexity, max-statements, complexity on the `read` function), i.e. no new or additional errors were introduced.\n```\n\n```json\n{\"context_updates\":{\"verdict\":\"PASS\"}}\n```",
+              "last_stage": "validate",
+              "verdict": "PASS"
+            },
+            "notes": "Stage completed: validate",
+            "usage": {
+              "input": {
+                "usage": {
+                  "model": {
+                    "provider": "openrouter",
+                    "model_id": "claude-sonnet-5"
+                  },
+                  "tokens": {
+                    "input_tokens": 10575,
+                    "output_tokens": 3017,
+                    "reasoning_tokens": 9310,
+                    "cache_read_tokens": 223413,
+                    "cache_write_tokens": 19212
+                  }
+                },
+                "facts": {
+                  "algorithm": "anthropic",
+                  "cache_write_5m_tokens": 19212,
+                  "cache_write_1h_tokens": 0
+                }
+              },
+              "total_usd_micros": 237133
+            },
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 183717,
+              "tool_time_ms": 2210,
+              "active_time_ms": 185927
+            }
+          },
+          "verdict": {
+            "status": "succeeded",
+            "notes": "Conditional node evaluated: verdict",
+            "usage": null
+          }
+        },
+        "next_node_id": "evidence",
+        "git_commit_sha": "5affa8942b9b7924173f2cb4dbdbb5955d408e47",
+        "node_visits": {
+          "iteration_limit": 1,
+          "scope": 1,
+          "refactor": 2,
+          "baseline": 2,
+          "validate": 1,
+          "verdict": 1,
+          "start": 1,
+          "evidence": 1,
+          "dependencies": 1
+        }
+      },
+      "diff": {
+        "patch": "diff --git a/src/index.ts b/src/index.ts\nindex 5699378..42a1911 100644\n--- a/src/index.ts\n+++ b/src/index.ts\n@@ -63,25 +63,23 @@ export function evaluateSpokenExpression(source: string): number {\n       return [first, second];\n     };\n \n-    if (word === \"add\") {\n-      const [first, second] = readOperands(\"and\");\n-      return first + second;\n-    }\n-\n-    if (word === \"subtract\") {\n-      const [first, second] = readOperands(\"from\");\n-      return second - first;\n-    }\n-\n-    if (word === \"multiply\") {\n-      const [first, second] = readOperands(\"by\");\n-      return first * second;\n-    }\n+    const operators: Record<string, { connector: string; apply: (first: number, second: number) => number }> = {\n+      add: { connector: \"and\", apply: (first, second) => first + second },\n+      subtract: { connector: \"from\", apply: (first, second) => second - first },\n+      multiply: { connector: \"by\", apply: (first, second) => first * second },\n+      divide: {\n+        connector: \"by\",\n+        apply: (first, second) => {\n+          if (second === 0) fail();\n+          return first / second;\n+        },\n+      },\n+    };\n \n-    if (word === \"divide\") {\n-      const [first, second] = readOperands(\"by\");\n-      if (second === 0) fail();\n-      return first / second;\n+    const operator = operators[word];\n+    if (operator) {\n+      const [first, second] = readOperands(operator.connector);\n+      return operator.apply(first, second);\n     }\n \n     return fail();\n",
+        "summary": {
+          "files_changed": 1,
+          "additions": 24,
+          "deletions": 27
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-08-26T13:06:41.712796Z",
+        "current_node": "evidence",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies",
+          "baseline",
+          "refactor",
+          "evidence",
+          "validate",
+          "verdict",
+          "iteration_limit",
+          "baseline",
+          "refactor",
+          "evidence"
+        ],
+        "node_retries": {},
+        "context_values": {
           "thread.start.current_node": "scope",
           "last_response": "Replaced four near-duplicate `if (word === …)` branches (add/subtract/multiply/divide) with a single `operators` lookup table mapping each operator word to its connector and arithmetic operation. Th",
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "last_stage": "refactor",
           "internal.retry_count.evidence": 0,
           "thread.scope.current_node": "dependencies",
-          "internal.thread_id": "baseline",
+          "internal.thread_id": "refactor",
           "internal.retry_count.dependencies": 0,
-          "current_node": "refactor",
+          "current_node": "evidence",
           "thread.dependencies.current_node": "baseline",
           "verdict": "PASS",
           "thread.iteration_limit.current_node": "baseline",
@@ -2044,21 +2276,21 @@
           "thread.verdict.current_node": "iteration_limit",
           "internal.work_dir": "/workspace/calculator",
           "internal.retry_count.iteration_limit": 0,
-          "command.output": "blob://sha256/47683fb7199f4145831de1783e1b2018243e5404f9414d6853eb52f54dad4310"
+          "command.output": "blob://sha256/7ab72c5d49cfb34c9a5509f4b3e82da419048d920cfaf264788de0202ad3068f"
         },
         "node_outcomes": {
           "evidence": {
             "status": "succeeded",
             "context_updates": {
-              "command.output": "blob://sha256/71cca879d457007401fad94f058a825628bc315b01abbc5b1910a33e4b27b3b2"
+              "command.output": "blob://sha256/7ab72c5d49cfb34c9a5509f4b3e82da419048d920cfaf264788de0202ad3068f"
             },
             "notes": "Script completed: { printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
             "usage": null,
             "timing": {
               "wall_time_ms": 0,
               "inference_time_ms": 0,
-              "tool_time_ms": 1753,
-              "active_time_ms": 1753
+              "tool_time_ms": 1534,
+              "active_time_ms": 1534
             }
           },
           "iteration_limit": {
@@ -2198,7 +2430,7 @@
             "usage": null
           }
         },
-        "next_node_id": "evidence",
+        "next_node_id": "validate",
         "node_visits": {
           "refactor": 2,
           "verdict": 1,
@@ -2206,7 +2438,7 @@
           "scope": 1,
           "start": 1,
           "dependencies": 1,
-          "evidence": 1,
+          "evidence": 2,
           "baseline": 2,
           "iteration_limit": 1
         }
@@ -2454,7 +2686,12 @@
       "first_event_seq": 230,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Stage completed: refactor",
+        "failure_reason": null,
+        "timestamp": "2026-08-26T13:06:37.416605Z"
+      },
       "provider_used": {
         "mode": "agent",
         "provider": "openrouter",
@@ -2468,8 +2705,12 @@
       "started_at": "2026-08-26T13:06:15.759316Z",
       "handler": "agent",
       "graph_visit": 2,
-      "live_inference_ms": 21485,
-      "live_tool_ms": 61,
+      "timing": {
+        "wall_time_ms": 21653,
+        "inference_time_ms": 21486,
+        "tool_time_ms": 62,
+        "active_time_ms": 21548
+      },
       "usage": {
         "input_tokens": 5103,
         "output_tokens": 966,
@@ -2647,7 +2888,7 @@
         "warnings": []
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "succeeded"
     },
     "baseline@2": {
       "first_event_seq": 220,
@@ -2884,6 +3125,35 @@
       },
       "agent_control": "running",
       "state": "succeeded"
+    },
+    "evidence@2": {
+      "first_event_seq": 261,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "command": "exec 2>&1\n{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }",
+        "language": "shell"
+      },
+      "script_timing": null,
+      "parallel_results": null,
+      "output": null,
+      "started_at": "2026-08-26T13:06:40.171740Z",
+      "handler": "command",
+      "graph_visit": 2,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "running"
     },
     "iteration_limit@1": {
       "first_event_seq": 212,
