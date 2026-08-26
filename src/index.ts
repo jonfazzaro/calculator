@@ -16,6 +16,19 @@ const NUMBER_WORDS: Record<string, number> = {
   twelve: 12,
 };
 
+type Compute = (first: number, second: number, fail: () => never) => number;
+
+/** Prefix operators are spoken as: <operator> <first> <connector> <second>. */
+const OPERATORS: Record<string, { connector: string; compute: Compute }> = {
+  add: { connector: "and", compute: (first, second) => first + second },
+  subtract: { connector: "from", compute: (first, second) => second - first },
+  multiply: { connector: "by", compute: (first, second) => first * second },
+  divide: {
+    connector: "by",
+    compute: (first, second, fail) => (second === 0 ? fail() : first / second),
+  },
+};
+
 /**
  * Evaluate the kata's tiny spoken-expression language.
  *
@@ -54,36 +67,13 @@ export function evaluateSpokenExpression(source: string): number {
     const numberWord = NUMBER_WORDS[word];
     if (numberWord !== undefined) return numberWord;
 
-    // Operators are prefix forms: <operator> <first> <connector> <second>.
-    const readOperands = (connector: string): [number, number] => {
-      const first = read();
-      if (pieces[place++] !== connector) fail();
-      const second = read();
-      return [first, second];
-    };
+    const operator = OPERATORS[word];
+    if (!operator) return fail();
 
-    if (word === "add") {
-      const [first, second] = readOperands("and");
-      return first + second;
-    }
-
-    if (word === "subtract") {
-      const [first, second] = readOperands("from");
-      return second - first;
-    }
-
-    if (word === "multiply") {
-      const [first, second] = readOperands("by");
-      return first * second;
-    }
-
-    if (word === "divide") {
-      const [first, second] = readOperands("by");
-      if (second === 0) fail();
-      return first / second;
-    }
-
-    return fail();
+    const first = read();
+    if (pieces[place++] !== operator.connector) fail();
+    const second = read();
+    return operator.compute(first, second, fail);
   };
 
   const answer = read();
