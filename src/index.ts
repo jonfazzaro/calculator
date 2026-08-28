@@ -16,6 +16,35 @@ const NUMBER_WORDS: Record<string, number> = {
   twelve: 12,
 };
 
+// Operators are prefix forms: "<operator> <first> <connector> <second>".
+const OPERATORS: Record<string, { connector: string; compute: (first: number, second: number) => number }> = {
+  add: { connector: "and", compute: (first, second) => first + second },
+  subtract: { connector: "from", compute: (first, second) => second - first },
+  multiply: { connector: "by", compute: (first, second) => first * second },
+  divide: {
+    connector: "by",
+    compute: (first, second) => {
+      if (second === 0) throw new Error("Could not work that out.");
+      return first / second;
+    },
+  },
+};
+
+function parseLiteral(word: string): number | undefined {
+  if (/^\d+$/.test(word)) return Number(word);
+  return NUMBER_WORDS[word];
+}
+
+function tokenize(source: string): string[] {
+  return source
+    .toLowerCase()
+    .replace(/\(/g, " ( ")
+    .replace(/\)/g, " ) ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
 /**
  * Evaluate the kata's tiny spoken-expression language.
  *
@@ -25,18 +54,16 @@ const NUMBER_WORDS: Record<string, number> = {
  * to emulate.
  */
 export function evaluateSpokenExpression(source: string): number {
-  const pieces = source
-    .toLowerCase()
-    .replace(/\(/g, " ( ")
-    .replace(/\)/g, " ) ")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
+  const pieces = tokenize(source);
   let place = 0;
 
   const fail = (): never => {
     // Deliberately unhelpful starter error: a later kata step improves this.
     throw new Error("Could not work that out.");
+  };
+
+  const consume = (expected: string): void => {
+    if (pieces[place++] !== expected) fail();
   };
 
   const read = (): number => {
@@ -45,47 +72,20 @@ export function evaluateSpokenExpression(source: string): number {
 
     if (word === "(") {
       const inside = read();
-      if (pieces[place++] !== ")") fail();
+      consume(")");
       return inside;
     }
 
-    if (/^\d+$/.test(word)) return Number(word);
+    const literal = parseLiteral(word);
+    if (literal !== undefined) return literal;
 
-    const numberWord = NUMBER_WORDS[word];
-    if (numberWord !== undefined) return numberWord;
+    const operator = OPERATORS[word];
+    if (!operator) return fail();
 
-    // Operators are prefix forms. Each branch repeats the same parser work on
-    // purpose, leaving several safe seams for the refactoring lesson.
-    if (word === "add") {
-      const first = read();
-      if (pieces[place++] !== "and") fail();
-      const second = read();
-      return first + second;
-    }
-
-    if (word === "subtract") {
-      const first = read();
-      if (pieces[place++] !== "from") fail();
-      const second = read();
-      return second - first;
-    }
-
-    if (word === "multiply") {
-      const first = read();
-      if (pieces[place++] !== "by") fail();
-      const second = read();
-      return first * second;
-    }
-
-    if (word === "divide") {
-      const first = read();
-      if (pieces[place++] !== "by") fail();
-      const second = read();
-      if (second === 0) fail();
-      return first / second;
-    }
-
-    return fail();
+    const first = read();
+    consume(operator.connector);
+    const second = read();
+    return operator.compute(first, second);
   };
 
   const answer = read();
