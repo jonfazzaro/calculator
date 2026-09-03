@@ -531,7 +531,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-09-03T18:06:48.986722Z",
-  "last_event_at": "2026-09-03T18:06:50.894439Z",
+  "last_event_at": "2026-09-03T18:06:53.951291Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -570,9 +570,9 @@
       "diff": {}
     },
     {
-      "seq": 0,
+      "seq": 28,
       "checkpoint": {
-        "timestamp": "2026-09-03T18:06:51.024027Z",
+        "timestamp": "2026-09-03T18:06:53.947142Z",
         "current_node": "scope",
         "completed_nodes": [
           "start",
@@ -580,22 +580,94 @@
         ],
         "node_retries": {},
         "context_values": {
-          "internal.fidelity": "compact",
           "internal.retry_count.scope": 0,
+          "internal.node_visit_count": 1,
+          "current_node": "scope",
+          "internal.retry_count.start": 0,
+          "internal.run_id": "01M1M77C209XP51E0PWXVTH914",
+          "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "internal.thread_id": "start",
           "failure_signature": "",
+          "internal.work_dir": "/workspace/calculator",
           "outcome": "succeeded",
           "failure_class": "",
+          "thread.start.current_node": "scope",
+          "internal.fidelity": "compact"
+        },
+        "node_outcomes": {
+          "scope": {
+            "status": "succeeded",
+            "context_updates": {
+              "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749"
+            },
+            "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+            "usage": null,
+            "timing": {
+              "wall_time_ms": 0,
+              "inference_time_ms": 0,
+              "tool_time_ms": 122,
+              "active_time_ms": 122
+            }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          }
+        },
+        "next_node_id": "dependencies",
+        "git_commit_sha": "f8804a99d46827accbbdf90d3ccfd0b05369a23a",
+        "node_visits": {
+          "scope": 1,
+          "start": 1
+        }
+      },
+      "diff": {
+        "summary": {
+          "files_changed": 0,
+          "additions": 0,
+          "deletions": 0
+        }
+      }
+    },
+    {
+      "seq": 0,
+      "checkpoint": {
+        "timestamp": "2026-09-03T18:06:55.824762Z",
+        "current_node": "dependencies",
+        "completed_nodes": [
+          "start",
+          "scope",
+          "dependencies"
+        ],
+        "node_retries": {},
+        "context_values": {
+          "internal.fidelity": "compact",
+          "internal.retry_count.scope": 0,
+          "failure_signature": "dependencies|canceled|script cancelled: npm install --package-lock=false",
+          "thread.scope.current_node": "dependencies",
+          "outcome": "failed",
+          "failure_class": "canceled",
           "internal.run_id": "01M1M77C209XP51E0PWXVTH914",
           "internal.node_visit_count": 1,
+          "internal.retry_count.dependencies": 0,
           "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
           "internal.work_dir": "/workspace/calculator",
-          "internal.thread_id": "start",
+          "internal.thread_id": "scope",
           "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
           "thread.start.current_node": "scope",
           "internal.retry_count.start": 0,
-          "current_node": "scope"
+          "current_node": "dependencies"
         },
         "node_outcomes": {
+          "dependencies": {
+            "status": "failed",
+            "failure": {
+              "message": "Script cancelled: npm install --package-lock=false",
+              "category": "canceled"
+            },
+            "usage": null
+          },
           "start": {
             "status": "succeeded",
             "usage": null
@@ -615,8 +687,9 @@
             }
           }
         },
-        "next_node_id": "dependencies",
+        "next_node_id": "exit",
         "node_visits": {
+          "dependencies": 1,
           "scope": 1,
           "start": 1
         }
@@ -691,7 +764,12 @@
       "first_event_seq": 21,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "succeeded",
+        "notes": "Script completed: test -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
+        "failure_reason": null,
+        "timestamp": "2026-09-03T18:06:51.022692Z"
+      },
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -699,10 +777,55 @@
         "command": "exec 2>&1\ntest -e src/index.ts && printf 'Target: %s\\n' src/index.ts",
         "language": "shell"
       },
+      "script_timing": {
+        "output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
+        "exit_code": 0,
+        "duration_ms": 122,
+        "termination": "exited",
+        "output_bytes": 21,
+        "live_streaming": true
+      },
+      "parallel_results": null,
+      "output": null,
+      "output_bytes": 21,
+      "live_streaming": true,
+      "termination": "exited",
+      "started_at": "2026-09-03T18:06:50.894313Z",
+      "handler": "command",
+      "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 126,
+        "inference_time_ms": 0,
+        "tool_time_ms": 122,
+        "active_time_ms": 122
+      },
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "reasoning_tokens": 0,
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0
+      },
+      "agent_control": "running",
+      "state": "succeeded"
+    },
+    "dependencies@1": {
+      "first_event_seq": 31,
+      "prompt": null,
+      "response": null,
+      "completion": null,
+      "provider_used": null,
+      "diff": null,
+      "script_invocation": {
+        "script": "npm install --package-lock=false",
+        "command": "exec 2>&1\nnpm install --package-lock=false",
+        "language": "shell"
+      },
       "script_timing": null,
       "parallel_results": null,
       "output": null,
-      "started_at": "2026-09-03T18:06:50.894313Z",
+      "started_at": "2026-09-03T18:06:53.950545Z",
       "handler": "command",
       "graph_visit": 1,
       "usage": {
