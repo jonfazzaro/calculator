@@ -531,7 +531,7 @@
     "kind": "running"
   },
   "status_updated_at": "2026-09-03T18:06:48.986722Z",
-  "last_event_at": "2026-09-03T18:06:53.951291Z",
+  "last_event_at": "2026-09-03T18:06:58.732186Z",
   "pending_control": null,
   "checkpoints": [
     {
@@ -631,9 +631,9 @@
       }
     },
     {
-      "seq": 0,
+      "seq": 39,
       "checkpoint": {
-        "timestamp": "2026-09-03T18:06:55.824762Z",
+        "timestamp": "2026-09-03T18:06:58.732117Z",
         "current_node": "dependencies",
         "completed_nodes": [
           "start",
@@ -642,36 +642,24 @@
         ],
         "node_retries": {},
         "context_values": {
-          "internal.fidelity": "compact",
-          "internal.retry_count.scope": 0,
-          "failure_signature": "dependencies|canceled|script cancelled: npm install --package-lock=false",
-          "thread.scope.current_node": "dependencies",
-          "outcome": "failed",
-          "failure_class": "canceled",
-          "internal.run_id": "01M1M77C209XP51E0PWXVTH914",
-          "internal.node_visit_count": 1,
-          "internal.retry_count.dependencies": 0,
-          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
-          "internal.work_dir": "/workspace/calculator",
-          "internal.thread_id": "scope",
-          "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
-          "thread.start.current_node": "scope",
           "internal.retry_count.start": 0,
-          "current_node": "dependencies"
+          "internal.work_dir": "/workspace/calculator",
+          "failure_class": "canceled",
+          "internal.retry_count.dependencies": 0,
+          "thread.start.current_node": "scope",
+          "current_node": "dependencies",
+          "internal.node_visit_count": 1,
+          "internal.run_id": "01M1M77C209XP51E0PWXVTH914",
+          "outcome": "failed",
+          "internal.thread_id": "scope",
+          "thread.scope.current_node": "dependencies",
+          "internal.retry_count.scope": 0,
+          "graph.goal": "Make one small, behavior-preserving calculator refactoring per iteration",
+          "command.output": "blob://sha256/4c96d3d4f5cee41c482e49ff0e9408a38ec8cf9516273b501d969a7478d8b749",
+          "failure_signature": "dependencies|canceled|script cancelled: npm install --package-lock=false",
+          "internal.fidelity": "compact"
         },
         "node_outcomes": {
-          "dependencies": {
-            "status": "failed",
-            "failure": {
-              "message": "Script cancelled: npm install --package-lock=false",
-              "category": "canceled"
-            },
-            "usage": null
-          },
-          "start": {
-            "status": "succeeded",
-            "usage": null
-          },
           "scope": {
             "status": "succeeded",
             "context_updates": {
@@ -685,19 +673,98 @@
               "tool_time_ms": 122,
               "active_time_ms": 122
             }
+          },
+          "start": {
+            "status": "succeeded",
+            "usage": null
+          },
+          "dependencies": {
+            "status": "failed",
+            "failure": {
+              "message": "Script cancelled: npm install --package-lock=false",
+              "category": "canceled"
+            },
+            "usage": null
           }
         },
         "next_node_id": "exit",
+        "git_commit_sha": "a10e73e9c57a0c949ee7bde86c53c9b24c224f15",
         "node_visits": {
-          "dependencies": 1,
           "scope": 1,
-          "start": 1
+          "start": 1,
+          "dependencies": 1
         }
       },
-      "diff": {}
+      "diff": {
+        "summary": {
+          "files_changed": 0,
+          "additions": 0,
+          "deletions": 0
+        }
+      }
     }
   ],
-  "conclusion": null,
+  "conclusion": {
+    "timestamp": "2026-09-03T18:06:58.752125Z",
+    "status": "failed",
+    "timing": {
+      "wall_time_ms": 9746,
+      "inference_time_ms": 0,
+      "tool_time_ms": 122,
+      "active_time_ms": 122
+    },
+    "failure": {
+      "reason": "cancelled",
+      "detail": {
+        "message": "Pipeline cancelled",
+        "category": "canceled"
+      }
+    },
+    "final_git_commit_sha": "a10e73e9c57a0c949ee7bde86c53c9b24c224f15",
+    "stages": [
+      {
+        "stage_id": "start",
+        "stage_label": "start",
+        "timing": {
+          "wall_time_ms": 0,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "scope",
+        "stage_label": "scope",
+        "timing": {
+          "wall_time_ms": 126,
+          "inference_time_ms": 0,
+          "tool_time_ms": 122,
+          "active_time_ms": 122
+        },
+        "retries": 0
+      },
+      {
+        "stage_id": "dependencies",
+        "stage_label": "dependencies",
+        "timing": {
+          "wall_time_ms": 1869,
+          "inference_time_ms": 0,
+          "tool_time_ms": 0,
+          "active_time_ms": 0
+        },
+        "retries": 0
+      }
+    ],
+    "total_retries": 0,
+    "diff": {
+      "summary": {
+        "files_changed": 0,
+        "additions": 0,
+        "deletions": 0
+      }
+    }
+  },
   "sandbox": {
     "kind": "ready",
     "plan": {
@@ -814,7 +881,12 @@
       "first_event_seq": 31,
       "prompt": null,
       "response": null,
-      "completion": null,
+      "completion": {
+        "outcome": "failed",
+        "notes": null,
+        "failure_reason": "Script cancelled: npm install --package-lock=false",
+        "timestamp": "2026-09-03T18:06:55.823874Z"
+      },
       "provider_used": null,
       "diff": null,
       "script_invocation": {
@@ -822,12 +894,27 @@
         "command": "exec 2>&1\nnpm install --package-lock=false",
         "language": "shell"
       },
-      "script_timing": null,
+      "script_timing": {
+        "output": "blob://sha256/12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+        "duration_ms": 1866,
+        "termination": "cancelled",
+        "output_bytes": 0,
+        "live_streaming": true
+      },
       "parallel_results": null,
       "output": null,
+      "output_bytes": 0,
+      "live_streaming": true,
+      "termination": "cancelled",
       "started_at": "2026-09-03T18:06:53.950545Z",
       "handler": "command",
       "graph_visit": 1,
+      "timing": {
+        "wall_time_ms": 1869,
+        "inference_time_ms": 0,
+        "tool_time_ms": 0,
+        "active_time_ms": 0
+      },
       "usage": {
         "input_tokens": 0,
         "output_tokens": 0,
@@ -837,7 +924,7 @@
         "cache_write_tokens": 0
       },
       "agent_control": "running",
-      "state": "running"
+      "state": "cancelled"
     }
   }
 }

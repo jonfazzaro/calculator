@@ -1,0 +1,6 @@
+{
+  "outcome": "failed",
+  "notes": null,
+  "failure_reason": "Script cancelled: npm install --package-lock=false",
+  "timestamp": "2026-09-03T18:06:55.823874Z"
+}
