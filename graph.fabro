@@ -1,0 +1,77 @@
+digraph RefactorLine {
+    graph [goal="Make one small, behavior-preserving calculator refactoring per iteration"]
+
+    start [shape=Mdiamond, label="Start"]
+
+    scope [
+        shape=parallelogram
+        label="Check Target Path"
+        script="test -e {{ inputs.target_path }} && printf 'Target: %s\\n' {{ inputs.target_path }}"
+        max_retries=0
+    ]
+
+    dependencies [
+        shape=parallelogram
+        label="Install Dependencies"
+        script="npm install --package-lock=false"
+        max_retries=0
+    ]
+
+    baseline [
+        shape=parallelogram
+        label="Record Quality Baseline"
+        script="npm run quality 2>&1 | tee /tmp/fabro-refactor-quality-before.txt || true"
+        max_retries=0
+    ]
+
+    refactor [
+        label="Refactor"
+        prompt="@prompts/refactor.md"
+        max_visits=5
+    ]
+
+    evidence [
+        shape=parallelogram
+        label="Gather Evidence"
+        script="{ printf '%s\\n' '=== QUALITY BEFORE ==='; cat /tmp/fabro-refactor-quality-before.txt; printf '%s\\n' '=== QUALITY NOW ==='; npm run quality 2>&1 || true; printf '%s\\n' '=== TESTS ==='; npm test 2>&1 || true; printf '%s\\n' '=== WORKING DIFF SUMMARY ==='; git diff --stat; git diff --check || true; }"
+        max_retries=0
+    ]
+
+    validate [label="Validate", prompt="@prompts/validate.md"]
+    verdict [shape=diamond, label="Validation Passed?"]
+
+    repair [label="Repair", prompt="@prompts/repair.md"]
+
+    validate_after_repair [label="Validate Repair", prompt="@prompts/validate.md"]
+    repaired_verdict [shape=diamond, label="Repair Passed?"]
+
+    iteration_limit [shape=diamond, label="Five Iterations Complete?"]
+    summarize [label="Summarize Pull Request", prompt="@prompts/summary.md"]
+    stopped [shape=tab, label="Stop After Two Failures", prompt="@prompts/stopped.md"]
+
+    exit [shape=Msquare, label="Exit"]
+
+    start -> scope
+    scope -> dependencies [condition="outcome=succeeded"]
+    scope -> exit
+
+    dependencies -> baseline [condition="outcome=succeeded"]
+    dependencies -> exit
+
+    baseline -> refactor -> evidence -> validate -> verdict
+
+    verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
+    verdict -> repair [label="Fail", condition="context.verdict=FAIL"]
+    verdict -> repair [label="Invalid Verdict"]
+
+    repair -> evidence -> validate_after_repair -> repaired_verdict
+
+    repaired_verdict -> iteration_limit [label="Pass", condition="context.verdict=PASS"]
+    repaired_verdict -> stopped [label="Fail", condition="context.verdict=FAIL"]
+    repaired_verdict -> stopped [label="Invalid Verdict"]
+
+    iteration_limit -> summarize [label="Complete", condition="context.internal.node_visit_count >= 5"]
+    iteration_limit -> baseline [label="Continue"]
+    summarize -> exit
+    stopped -> exit
+}
